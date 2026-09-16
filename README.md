@@ -2,6 +2,8 @@
 
 A Sinhala-first, single-page Astro visitor guide for Pettah Floating Market, Colombo, Sri Lanka.
 
+**Live origin:** `https://pettahfloating.com` (configured in `astro.config.ts`).
+
 > **Delivery status:** This archive is a source candidate, not a QA-accepted production build. The current execution container cannot resolve `registry.npmjs.org`, so a synchronized `pnpm-lock.yaml` could not be generated and the required frozen install / `astro check` / build sequence could not be run here. See `QA-NOTICE.md` and `LOCKFILE-SOURCE.md`. Do not treat the project as production-verified until `scripts/verify-clean.sh` passes in a networked environment.
 
 ## Stack
@@ -12,16 +14,17 @@ A Sinhala-first, single-page Astro visitor guide for Pettah Floating Market, Col
 - pnpm
 - Cloudflare Workers Static Assets
 - GA4: `G-HXM22WWPKP`
+- PWA manifest + offline-first service worker
 
 ## Site URL: one configuration point
 
-Edit **only** `SITE` in `astro.config.ts` after you own the final domain:
+The domain is already set in `astro.config.ts`:
 
 ```ts
-const SITE = ''; // replace the empty string with the real owned origin
+const SITE = 'https://pettahfloating.com';
 ```
 
-Leave it as an empty string before the domain is chosen. The project still builds without a site URL. Canonical and Open Graph absolute URL tags are omitted when no `site` is set, and `@astrojs/sitemap` is enabled only when `site` has a real value.
+Changing `SITE` will also toggle the `@astrojs/sitemap` integration, canonical / Open Graph absolute URLs, and the JSON-LD `@id`/`url` values.
 
 ## Commands
 
@@ -39,18 +42,17 @@ Once `pnpm-lock.yaml` exists and is committed, normal CI should start directly w
 
 The Cloudflare deployment is a static Astro build served by **Workers Static Assets**, using `assets.directory = ./dist` in `wrangler.jsonc`. No database, authentication, CMS, server rendering, or Worker runtime code is needed.
 
+## Entity-bound SEO highlights
+
+- Domain set to `pettahfloating.com`; canonical, `og:url`, and JSON-LD `url`/`@id` generated automatically.
+- `TouristAttraction` + `LocalBusiness` JSON-LD with `@id`, `image`, `isAccessibleForFree`, `hasMap`, `sameAs`, and `AggregateRating`.
+- `FAQPage` JSON-LD covering English location/free-to-visit questions and Sinhala practical questions.
+- Google Maps rating displayed on the page only (synced 3.7 / 18,836 reviews · September 2026) with clear source attribution; no individual review text is reproduced or injected as structured data.
+- PWA manifest + service worker for offline caching of static assets.
+
 ## Images
 
-The four photos are real Pettah Floating Market photographs from Wikimedia Commons under CC BY-SA 4.0. This package includes a source/attribution manifest at `public/images/README.md`. The page currently uses the Commons originals directly; to self-host later, download the originals, keep the attribution, and update the four `src` fields in `src/pages/index.astro`.
-
-## Domain-independent SEO behavior
-
-- No placeholder domain is used.
-- Canonical URL is rendered only if `Astro.site` exists.
-- `og:url` is rendered only if `Astro.site` exists.
-- JSON-LD `url` is added only if `Astro.site` exists.
-- Sitemap integration runs only if `SITE` is non-empty.
-- No manually authored sitemap or fabricated `lastmod` is included.
+All four hero/gallery photos are real Pettah Floating Market photographs from Wikimedia Commons under CC BY-SA 4.0. They are self-hosted in `public/images/` so the page does not depend on Wikimedia thumbnail availability. The source/attribution manifest is at `public/images/README.md`.
 
 ## Map localization
 

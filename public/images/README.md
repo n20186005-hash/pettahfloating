@@ -1,12 +1,14 @@
 # Real-photo source manifest
 
-The page currently references these verified Wikimedia Commons photographs directly so the build stays reproducible even when the build environment has no image-downloader step. If you later self-host them, keep these filenames and replace the `src` values in `src/pages/index.astro`.
+All four photographs are self-hosted in this folder (no hotlinking, so the site keeps working even when Wikimedia rate-limits thumbnail requests). Every image is a real photograph of Pettah Floating Market published on Wikimedia Commons under CC BY-SA 4.0; attribution and a link to the original file page are rendered next to each photo on the page.
 
-| Suggested local filename | Original file | Photographer | License |
+| Local filename | Original Commons file | Photographer | License |
 |---|---|---|---|
-| pettah-floating-market-boardwalk.jpg | https://upload.wikimedia.org/wikipedia/commons/e/e5/PFM_-_01.jpg | Dan arndt | CC BY-SA 4.0 |
-| pettah-floating-market-stalls.jpg | https://upload.wikimedia.org/wikipedia/commons/0/0c/PFM_-_02.jpg | Dan arndt | CC BY-SA 4.0 |
-| pettah-floating-market-waterfront.jpg | https://upload.wikimedia.org/wikipedia/commons/d/db/Pettah_Floating_Market.jpg | Azeez Abubakr | CC BY-SA 4.0 |
-| pettah-floating-market-sunset.jpg | https://upload.wikimedia.org/wikipedia/commons/e/e8/Pettah_Floating_Market_Colombo%2C_Sri_Lanka.jpg | Shanka Anuranga | CC BY-SA 4.0 |
+| pettah-floating-market-boardwalk.jpg | https://commons.wikimedia.org/wiki/File:PFM_-_01.jpg | Dan arndt | CC BY-SA 4.0 |
+| pettah-floating-market-stalls.jpg | https://commons.wikimedia.org/wiki/File:PFM_-_02.jpg | Dan arndt | CC BY-SA 4.0 |
+| pettah-floating-market-waterfront.jpg | https://commons.wikimedia.org/wiki/File:Pettah_Floating_Market.jpg | Azeez Abubakr | CC BY-SA 4.0 |
+| hero.jpg | https://commons.wikimedia.org/wiki/File:Pettah_Floating_Market_Colombo,_Sri_Lanka.jpg | Shanka Anuranga | CC BY-SA 4.0 |
 
-License pages are linked in the page captions. Keep attribution when redistributing modified or self-hosted copies.
+`hero.jpg` is also the Open Graph / JSON-LD `image` for the site (absolute URL: `https://pettahfloating.com/images/hero.jpg`).
+
+When redistributing modified or self-hosted copies, keep the attribution and the CC BY-SA 4.0 license notice.

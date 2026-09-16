@@ -1,0 +1,41 @@
+{
+  "name": "Floating Market - Pettah | පිටකොටුව පාවෙන වෙළඳපොළ",
+  "short_name": "Pettah Floating",
+  "description": "Floating Market - Pettah (Colombo) සංචාරක මාර්ගෝපදේශය — සිතියම, විවෘත වේලාවන්, ගාස්තු, ආහාර සහ අසල්වැසි ස්ථාන.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#fffaf0",
+  "theme_color": "#092c2c",
+  "lang": "si",
+  "dir": "ltr",
+  "categories": ["travel", "navigation"],
+  "icons": [
+    {
+      "src": "/icons/icon-512.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/maskable-icon-512.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/favicon-32.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

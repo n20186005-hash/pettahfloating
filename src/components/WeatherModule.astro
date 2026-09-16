@@ -1,0 +1,214 @@
+---
+const LATITUDE = 6.9329;
+const LONGITUDE = 79.8554;
+const TIMEZONE = 'Asia/Colombo';
+const API_URL =
+  `https://api.open-meteo.com/v1/forecast?latitude=${LATITUDE}&longitude=${LONGITUDE}` +
+  `&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m` +
+  `&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,sunrise,sunset` +
+  `&timezone=${encodeURIComponent(TIMEZONE)}&forecast_days=7`;
+
+const WMO: Record<string, { si: string; icon: string }> = {
+  '0': { si: 'පැහැදිලි අහස', icon: '☀️' },
+  '1': { si: 'බොහෝමට පැහැදිලි', icon: '🌤️' },
+  '2': { si: 'අර්ධ වශයෙන් වලාකුළු', icon: '⛅' },
+  '3': { si: 'වලාකුළු අහස', icon: '☁️' },
+  '45': { si: 'මීදුම / කුණු', icon: '🌫️' },
+  '48': { si: 'මීදුම / කුණු', icon: '🌫️' },
+  '51': { si: 'මෘදු වැසි', icon: '🌦️' },
+  '53': { si: 'මෘදු වැසි', icon: '🌦️' },
+  '55': { si: 'මෘදු වැසි', icon: '🌦️' },
+  '61': { si: 'වැසි', icon: '🌧️' },
+  '63': { si: 'වැසි', icon: '🌧️' },
+  '65': { si: 'තීව්‍ර වැසි', icon: '🌧️' },
+  '66': { si: 'ටික වැසි', icon: '🌧️' },
+  '67': { si: 'ටික වැසි', icon: '🌧️' },
+  '71': { si: 'ස්නෝ', icon: '❄️' },
+  '73': { si: 'ස්නෝ', icon: '❄️' },
+  '75': { si: 'ස්නෝ', icon: '❄️' },
+  '80': { si: 'වැසි පැද්දීම්', icon: '🌦️' },
+  '81': { si: 'වැසි පැද්දීම්', icon: '🌦️' },
+  '82': { si: 'වැසි පැද්දීම්', icon: '🌦️' },
+  '85': { si: 'ස්නෝ පැද්දීම්', icon: '🌨️' },
+  '86': { si: 'ස්නෝ පැද්දීම්', icon: '🌨️' },
+  '95': { si: 'කුණාටු / කෙරිලි', icon: '⛈️' },
+  '96': { si: 'කුණාටු සහ අයිස්', icon: '⛈️' },
+  '99': { si: 'කුණාටු සහ අයිස්', icon: '⛈️' },
+};
+const WEEKDAYS_SI = ['ඉරිදා', 'සඳුදා', 'අඟහරුවාදා', 'බදාදා', 'බ්‍රහස්පතින්දා', 'සිකුරාදා', 'සෙනසුරාදා'];
+function describe(code: number | string) {
+  return WMO[String(code)] ?? { si: 'කාලගුණය වෙනස්', icon: '🌡️' };
+}
+function weekdaySi(iso: string) {
+  return WEEKDAYS_SI[new Date(`${iso}T00:00:00`).getDay()];
+}
+
+type WeatherData = any;
+function renderWeather(data: WeatherData): string {
+  const c = data.current;
+  const d = data.daily;
+  const cur = describe(c.weather_code);
+  const rainNow = (c.precipitation || 0) > 0.1;
+  const todayProb = d.precipitation_probability_max ? d.precipitation_probability_max[0] : 0;
+  const bringUmbrella = rainNow || todayProb >= 50;
+  const umbrella = bringUmbrella
+    ? `දෙබෙන්න කත්තරයක් සහ වැසි ආරක්ෂක ගන්න — වැසි ඇදීමේ සුලභත්වය ${todayProb}%`
+    : `කත්තරයක් අවශ්‍ය නැත — වැසි ඇදීමේ සුලභත්වය ${todayProb}%`;
+  let days = '';
+  for (let i = 0; i < d.time.length; i++) {
+    const w = describe(d.weather_code[i]);
+    const label = i === 0 ? 'අද' : weekdaySi(d.time[i]);
+    days +=
+      '<div class="rounded-2xl border border-white/10 bg-white/5 p-4 text-center">' +
+      '<p class="text-xs font-bold text-lagoon-100/70">' + label + '</p>' +
+      '<p class="my-2 text-3xl">' + w.icon + '</p>' +
+      '<p class="text-xs leading-5 text-lagoon-100/80">' + w.si + '</p>' +
+      '<p class="mt-3 text-sm font-black">' + Math.round(d.temperature_2m_max[i]) + '° / ' + Math.round(d.temperature_2m_min[i]) + '°</p>' +
+      '<p class="mt-1 text-[11px] text-sun-400">වැසි ' + (d.precipitation_probability_max[i] ?? 0) + '%</p>' +
+      '</div>';
+  }
+  return (
+    '<div class="grid gap-6 lg:grid-cols-[1fr_1.4fr]">' +
+      '<div class="rounded-[2rem] border border-white/15 bg-white/5 p-7">' +
+        '<p class="text-xs font-black uppercase tracking-[.18em] text-sun-400">අද</p>' +
+        '<div class="mt-3 flex items-center gap-4">' +
+          '<span class="text-6xl">' + cur.icon + '</span>' +
+          '<div><p class="text-5xl font-black leading-none">' + Math.round(c.temperature_2m) + '°</p>' +
+          '<p class="mt-1 text-sm text-lagoon-100/80">' + cur.si + '</p></div>' +
+        '</div>' +
+        '<dl class="mt-6 grid grid-cols-2 gap-4 text-sm">' +
+          '<div><dt class="text-lagoon-100/60">අත්හදාගත හැඟීම</dt><dd class="mt-1 font-black">' + Math.round(c.apparent_temperature) + '°</dd></div>' +
+          '<div><dt class="text-lagoon-100/60">ආර්ද්‍රතාව</dt><dd class="mt-1 font-black">' + c.relative_humidity_2m + '%</dd></div>' +
+          '<div><dt class="text-lagoon-100/60">සුළං</dt><dd class="mt-1 font-black">' + Math.round(c.wind_speed_10m) + ' km/h</dd></div>' +
+          '<div><dt class="text-lagoon-100/60">වැසි</dt><dd class="mt-1 font-black">' + (c.precipitation || 0) + ' mm</dd></div>' +
+        '</dl>' +
+        '<p class="mt-6 rounded-xl bg-sun-400/15 px-4 py-3 text-sm font-bold text-sun-400">' + umbrella + '</p>' +
+      '</div>' +
+      '<div class="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-7">' + days + '</div>' +
+    '</div>'
+  );
+}
+
+let initial: WeatherData = null;
+try {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 4000);
+  const res = await fetch(API_URL, { headers: { Accept: 'application/json' }, signal: controller.signal });
+  clearTimeout(timer);
+  if (res.ok) initial = await res.json();
+} catch {
+  initial = null;
+}
+---
+
+<section id="weather" class="bg-lagoon-950 py-20 text-white md:py-28">
+  <div class="mx-auto max-w-7xl px-5 lg:px-8">
+    <div class="max-w-3xl">
+      <p class="section-rule text-sm font-black uppercase tracking-[.18em] text-sun-400">කොළඹ කාලගුණය</p>
+      <h2 class="mt-4 text-4xl font-black md:text-5xl">
+        <span class="mb-2 block text-lg font-extrabold text-sun-400 md:text-xl" lang="en">Current Weather &amp; 7-Day Forecast</span>
+        අද කාලගුණය සහ සතියක පුරෝකථනය.
+      </h2>
+      <p class="mt-4 text-sm leading-6 text-lagoon-100/70">පැමිණීමට පෙර කාලගුණය බලන්න — වැසි ඇදෙනවාද යන්න දැනගෙන කත්තරයක් ගැනීම නොමඳ වේලාවක් ඉතිරි කරයි.</p>
+    </div>
+
+    <div id="weather-root" class="mt-10" data-url={API_URL}>
+      {initial ? (
+        <Fragment set:html={renderWeather(initial)} />
+      ) : (
+        <p class="rounded-2xl border border-white/10 bg-white/5 p-6 text-lagoon-100/80">පහත් කාලගුණ දත්ත ලබාගනිමින්…</p>
+      )}
+    </div>
+
+    <p class="mt-4 max-w-3xl text-xs leading-5 text-lagoon-100/50">කාලගුණ දත්ත නැවුම් ප්‍රදේශීය වේලාව (Asia/Colombo) අනුව සැපයේ. කෙටි කාලයක් ඇතුළත කාලගුණය වෙනස් විය හැකි බැවින් පැමිණීමට පෙර නැවුම් තත්ත්වය නැවත පරීක්ෂා කරන්න.</p>
+  </div>
+</section>
+
+<script is:inline>
+  const WMO = {
+    '0': { si: 'පැහැදිලි අහස', icon: '☀️' },
+    '1': { si: 'බොහෝමට පැහැදිලි', icon: '🌤️' },
+    '2': { si: 'අර්ධ වශයෙන් වලාකුළු', icon: '⛅' },
+    '3': { si: 'වලාකුළු අහස', icon: '☁️' },
+    '45': { si: 'මීදුම / කුණු', icon: '🌫️' },
+    '48': { si: 'මීදුම / කුණු', icon: '🌫️' },
+    '51': { si: 'මෘදු වැසි', icon: '🌦️' },
+    '53': { si: 'මෘදු වැසි', icon: '🌦️' },
+    '55': { si: 'මෘදු වැසි', icon: '🌦️' },
+    '61': { si: 'වැසි', icon: '🌧️' },
+    '63': { si: 'වැසි', icon: '🌧️' },
+    '65': { si: 'තීව්‍ර වැසි', icon: '🌧️' },
+    '66': { si: 'ටික වැසි', icon: '🌧️' },
+    '67': { si: 'ටික වැසි', icon: '🌧️' },
+    '71': { si: 'ස්නෝ', icon: '❄️' },
+    '73': { si: 'ස්නෝ', icon: '❄️' },
+    '75': { si: 'ස්නෝ', icon: '❄️' },
+    '80': { si: 'වැසි පැද්දීම්', icon: '🌦️' },
+    '81': { si: 'වැසි පැද්දීම්', icon: '🌦️' },
+    '82': { si: 'වැසි පැද්දීම්', icon: '🌦️' },
+    '85': { si: 'ස්නෝ පැද්දීම්', icon: '🌨️' },
+    '86': { si: 'ස්නෝ පැද්දීම්', icon: '🌨️' },
+    '95': { si: 'කුණාටු / කෙරිලි', icon: '⛈️' },
+    '96': { si: 'කුණාටු සහ අයිස්', icon: '⛈️' },
+    '99': { si: 'කුණාටු සහ අයිස්', icon: '⛈️' },
+  };
+  const WEEKDAYS_SI = ['ඉරිදා', 'සඳුදා', 'අඟහරුවාදා', 'බදාදා', 'බ්‍රහස්පතින්දා', 'සිකුරාදා', 'සෙනසුරාදා'];
+  function describe(code) { return WMO[String(code)] ?? { si: 'කාලගුණය වෙනස්', icon: '🌡️' }; }
+  function weekdaySi(iso) { return WEEKDAYS_SI[new Date(iso + 'T00:00:00').getDay()]; }
+  function renderWeather(data) {
+    const c = data.current;
+    const d = data.daily;
+    const cur = describe(c.weather_code);
+    const rainNow = (c.precipitation || 0) > 0.1;
+    const todayProb = d.precipitation_probability_max ? d.precipitation_probability_max[0] : 0;
+    const bringUmbrella = rainNow || todayProb >= 50;
+    const umbrella = bringUmbrella
+      ? 'දෙබෙන්න කත්තරයක් සහ වැසි ආරක්ෂක ගන්න — වැසි ඇදීමේ සුලභත්වය ' + todayProb + '%'
+      : 'කත්තරයක් අවශ්‍ය නැත — වැසි ඇදීමේ සුලභත්වය ' + todayProb + '%';
+    let days = '';
+    for (let i = 0; i < d.time.length; i++) {
+      const w = describe(d.weather_code[i]);
+      const label = i === 0 ? 'අද' : weekdaySi(d.time[i]);
+      days +=
+        '<div class="rounded-2xl border border-white/10 bg-white/5 p-4 text-center">' +
+        '<p class="text-xs font-bold text-lagoon-100/70">' + label + '</p>' +
+        '<p class="my-2 text-3xl">' + w.icon + '</p>' +
+        '<p class="text-xs leading-5 text-lagoon-100/80">' + w.si + '</p>' +
+        '<p class="mt-3 text-sm font-black">' + Math.round(d.temperature_2m_max[i]) + '° / ' + Math.round(d.temperature_2m_min[i]) + '°</p>' +
+        '<p class="mt-1 text-[11px] text-sun-400">වැසි ' + (d.precipitation_probability_max[i] ?? 0) + '%</p>' +
+        '</div>';
+    }
+    return (
+      '<div class="grid gap-6 lg:grid-cols-[1fr_1.4fr]">' +
+        '<div class="rounded-[2rem] border border-white/15 bg-white/5 p-7">' +
+          '<p class="text-xs font-black uppercase tracking-[.18em] text-sun-400">අද</p>' +
+          '<div class="mt-3 flex items-center gap-4">' +
+            '<span class="text-6xl">' + cur.icon + '</span>' +
+            '<div><p class="text-5xl font-black leading-none">' + Math.round(c.temperature_2m) + '°</p>' +
+            '<p class="mt-1 text-sm text-lagoon-100/80">' + cur.si + '</p></div>' +
+          '</div>' +
+          '<dl class="mt-6 grid grid-cols-2 gap-4 text-sm">' +
+            '<div><dt class="text-lagoon-100/60">අත්හදාගත හැඟීම</dt><dd class="mt-1 font-black">' + Math.round(c.apparent_temperature) + '°</dd></div>' +
+            '<div><dt class="text-lagoon-100/60">ආර්ද්‍රතාව</dt><dd class="mt-1 font-black">' + c.relative_humidity_2m + '%</dd></div>' +
+            '<div><dt class="text-lagoon-100/60">සුළං</dt><dd class="mt-1 font-black">' + Math.round(c.wind_speed_10m) + ' km/h</dd></div>' +
+            '<div><dt class="text-lagoon-100/60">වැසි</dt><dd class="mt-1 font-black">' + (c.precipitation || 0) + ' mm</dd></div>' +
+          '</dl>' +
+          '<p class="mt-6 rounded-xl bg-sun-400/15 px-4 py-3 text-sm font-bold text-sun-400">' + umbrella + '</p>' +
+        '</div>' +
+        '<div class="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-7">' + days + '</div>' +
+      '</div>'
+    );
+  }
+  function refreshWeather() {
+    const root = document.getElementById('weather-root');
+    if (!root) return;
+    const url = root.getAttribute('data-url');
+    if (!url) return;
+    fetch(url, { headers: { Accept: 'application/json' } })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => { if (data) root.innerHTML = renderWeather(data); })
+      .catch(() => {});
+  }
+  refreshWeather();
+  setInterval(refreshWeather, 30 * 60 * 1000);
+</script>
