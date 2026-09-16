@@ -4,8 +4,8 @@ const LONGITUDE = 79.8554;
 const TIMEZONE = 'Asia/Colombo';
 const API_URL =
   `https://api.open-meteo.com/v1/forecast?latitude=${LATITUDE}&longitude=${LONGITUDE}` +
-  `&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m` +
-  `&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,sunrise,sunset` +
+  `&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,uv_index` +
+  `&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,uv_index_max,sunrise,sunset` +
   `&timezone=${encodeURIComponent(TIMEZONE)}&forecast_days=7`;
 
 const WMO: Record<string, { si: string; icon: string }> = {
@@ -28,7 +28,7 @@ const WMO: Record<string, { si: string; icon: string }> = {
   '75': { si: 'ස්නෝ', icon: '❄️' },
   '80': { si: 'වැසි පැද්දීම්', icon: '🌦️' },
   '81': { si: 'වැසි පැද්දීම්', icon: '🌦️' },
-  '82': { si: 'වැසි පැද්දීම්', icon: '🌦️' },
+  '82': { si: 'වැසි පැද්දීම්', icon: '🌧️' },
   '85': { si: 'ස්නෝ පැද්දීම්', icon: '🌨️' },
   '86': { si: 'ස්නෝ පැද්දීම්', icon: '🌨️' },
   '95': { si: 'කුණාටු / කෙරිලි', icon: '⛈️' },
@@ -42,31 +42,141 @@ function describe(code: number | string) {
 function weekdaySi(iso: string) {
   return WEEKDAYS_SI[new Date(`${iso}T00:00:00`).getDay()];
 }
+function beaufort(kmh: number): number {
+  const t = [1, 6, 12, 20, 29, 39, 50, 62, 75, 89, 103, 117];
+  let l = 0;
+  for (let i = 0; i < t.length; i++) if (kmh >= t[i]) l = i + 1;
+  return l;
+}
+type W = any;
+function adviceFor(c: W, d: W, i = 0) {
+  const wcode = d.weather_code[i];
+  const tmax = d.temperature_2m_max[i];
+  const tmin = d.temperature_2m_min[i];
+  const prob = d.precipitation_probability_max ? d.precipitation_probability_max[i] : 0;
+  const uv = d.uv_index_max ? d.uv_index_max[i] : 0;
+  const wind = c.wind_speed_10m;
+  const b = beaufort(wind);
+  const clothing: string[] = [], activity: string[] = [], items: string[] = [], risk: string[] = [];
 
-type WeatherData = any;
-function renderWeather(data: WeatherData): string {
+  const isLight = [51, 53, 55, 61, 80].includes(wcode);
+  const isModHeavy = [63, 65, 81, 82].includes(wcode);
+  const isThunder = [95, 96, 99].includes(wcode);
+  const isFog = [45, 48].includes(wcode);
+  const isClear = wcode === 0 || wcode === 1;
+  const isCloud = wcode === 2 || wcode === 3;
+  const raining = (c.precipitation || 0) > 0.1 || isLight || isModHeavy || isThunder;
+
+  if (prob >= 60 && !isModHeavy && !isThunder) {
+    clothing.push('සම්භාව්‍යයෙන් වැසි ඇදෙනු ඇත්තේ නිසා කත්තරයක් රැගෙන යන්න');
+    activity.push('ආරක්ෂිත හා වසන ඉඩ තෝරාගන්න; වෙළඳපොළ කුටිවල නැවතී සෙවණ සොයන්න');
+    items.push('කත්තරය / වැසි ඇඳුම');
+  }
+  if (isLight) {
+    clothing.push('සමන් කුඩා වැසිය; පාරේ පෙදෙස් උළු විය හැකි බැවින් සැලකිලිමත්ව ඇවිදින්න');
+    activity.push('විවෘත ස්ථානවල අත්දැකීම මදක් අඩු විය හැක');
+    items.push('හැකිළිය හැකි කත්තරය');
+  }
+  if (isModHeavy) {
+    risk.push('වැසි වැඩිබල් නිසා ජලය රැඳී ඇති පෙදෙස් හා ජලතීරයේ සීමාවන්වලින් වැළකී සිටින්න');
+    activity.push('වැසි කාලයේ දීර්ඝ ජලතීර ඇවිදීම වළක්වා, කුටි ආශ්‍රිතව සීමිතව ගමන් කරන්න');
+    items.push('වැසි ඇඳුම (සුළං හේතුවෙන් දිගු කත්තරය සුදුසු නොවේ)');
+  }
+  if (isThunder) {
+    risk.push('කෙරිලි හා කුණාටු අවස්ථාවේ ජලතීරයේ සෙල්ලම් කිරීම, ගස් යටින් සෙවණ සොයාගැනීම වළක්වන්න');
+    activity.push('ජල මත ක්‍රියාකාරකම් වසා දැමිය හැක');
+  }
+  if (isFog) {
+    risk.push('දෘශ්‍යතාව අඩු නිසා ජලතීර ඡායාරූප හා දුර දැක්ම සීමිත වේ');
+    activity.push('දුර දැක්ම සහිත ස්ථාන නරඹීමට ගැළපෙන්නේ නැත');
+    items.push('සීමිත ගුවන් විදුලි පළාත');
+  }
+
+  if (tmax >= 32) {
+    clothing.push('උෂ්ණත්වය වැඩි නිසා මධ්‍යාහ්නයේ යාම වළක්වා, සැහැල්ලු හා වායු ගමන් ඇඳුම් අදින්න');
+    activity.push('ජලතීරයේ වේලාව කෙටි කර ජලය වැඩිපුර බුද්ගලයින්ට ලබාදෙන්න');
+    items.push('හිරු ආරක්ෂක, ප්‍රමාණවත් ජලය, උණුසුම් වැළැක්වීමේ උපකරණ');
+  }
+  if (uv >= 5) {
+    clothing.push('අධික නිසා හිරු ආරක්ෂක අවශ්‍ය වේ');
+    items.push('හිරු කිරීමේ ක්‍රීම්, දර්පණ කණ්ණාඩි, හිරු තොප්පි');
+  }
+  if (tmax - tmin > 8) {
+    clothing.push('දවසේ හා රාත්‍රියේ උෂ්ණත්ව ඵලකය විශාල නිසා ඇඳුම් එකතු කිරීමට පහසු ජැකට් එකක් රැගෙන යන්න');
+  }
+  if (tmax <= 10) {
+    clothing.push('උෂ්ණත්වය අඩු නිසා සීතලට ආරක්ෂා වන්න');
+    items.push('ඝන ජැකට්, ගෙල් රෙද්ද');
+  }
+
+  if (b >= 7) {
+    risk.push('සුළං හේතුවෙන් දැන්වීම් පුවරු, ජලතීර ආරක්ෂක බාධක වැනි ස්ථානවලින් වැළකී සිටින්න');
+    activity.push('ජල මත ක්‍රියාකාරකම් වසා දැමිය හැක');
+  } else if (b >= 5) {
+    clothing.push('සුළං තත්ත්වය සැලකිල්ලට ගන්න');
+    activity.push('ජලතීර යාත්‍රා හා විවෘත ක්‍රීඩා වසා දැමිය හැක');
+    items.push('මූඩිය ඉවත් විය හැකි නිසා විශාල හැකිළි ඇඳුම් නොඅදින්න');
+  }
+
+  if (!raining && isClear) {
+    activity.push('පැහැදිලි කාලගුණය ජලතීර ඇවිදීම සහ හිරු උදාව/සුරිය බිම් ඡායාරූප සඳහා සුදුසු');
+    items.push('හිරු ආරක්ෂක මතක් කරන්න');
+  } else if (!raining && isCloud) {
+    activity.push('ආලෝකය මෘදු නිසා ඡායාරූප සඳහා හොඳයි; දීර්ඝ වේලාවක් ජලතීරයේ ගත කිරීමට සුදුසු');
+  }
+
+  const uniq = (a: string[]) => Array.from(new Set(a));
+  return { clothing: uniq(clothing), activity: uniq(activity), items: uniq(items), risk: uniq(risk) };
+}
+
+function renderWeather(data: W): string {
   const c = data.current;
   const d = data.daily;
   const cur = describe(c.weather_code);
-  const rainNow = (c.precipitation || 0) > 0.1;
-  const todayProb = d.precipitation_probability_max ? d.precipitation_probability_max[0] : 0;
-  const bringUmbrella = rainNow || todayProb >= 50;
-  const umbrella = bringUmbrella
-    ? `දෙබෙන්න කත්තරයක් සහ වැසි ආරක්ෂක ගන්න — වැසි ඇදීමේ සුලභත්වය ${todayProb}%`
-    : `කත්තරයක් අවශ්‍ය නැත — වැසි ඇදීමේ සුලභත්වය ${todayProb}%`;
+  const tmax0 = Math.round(d.temperature_2m_max[0]);
+  const tmin0 = Math.round(d.temperature_2m_min[0]);
+  const prob0 = d.precipitation_probability_max ? d.precipitation_probability_max[0] : 0;
+  const uv0 = d.uv_index_max ? d.uv_index_max[0] : null;
+  const windB = beaufort(c.wind_speed_10m);
+  const adv = adviceFor(c, d, 0);
+
+  const riskHtml = adv.risk.length
+    ? '<div class="rounded-2xl border border-red-400/50 bg-red-500/15 p-5">' +
+      '<p class="font-black text-red-200">⚠️ අවදානම් දැනුම්දීම</p>' +
+      '<ul class="mt-2 space-y-1 text-sm text-red-100/90">' +
+      adv.risk.map((x: string) => '<li>' + x + '</li>').join('') + '</ul></div>'
+    : '';
+
+  const panel = (title: string, icon: string, arr: string[]) => {
+    if (!arr.length) return '';
+    return (
+      '<div class="rounded-2xl border border-white/10 bg-white/5 p-5">' +
+      '<h4 class="text-sm font-black text-sun-400">' + icon + ' ' + title + '</h4>' +
+      '<ul class="mt-3 space-y-2 text-sm leading-6 text-lagoon-100/85">' +
+      arr.map((x: string) => '<li>' + x + '</li>').join('') + '</ul></div>'
+    );
+  };
+  const panelsHtml =
+    panel('ගමනේ ඇඳුම්', '👕', adv.clothing) +
+    panel('විනෝද කටයුතු', '🗺️', adv.activity) +
+    panel('සමඟ රැගෙන යන දෑ', '🎒', adv.items);
+
   let days = '';
   for (let i = 0; i < d.time.length; i++) {
     const w = describe(d.weather_code[i]);
     const label = i === 0 ? 'අද' : weekdaySi(d.time[i]);
+    const dv = adviceFor(c, d, i);
+    const flag = dv.risk.length ? ' ⚠️' : '';
     days +=
       '<div class="rounded-2xl border border-white/10 bg-white/5 p-4 text-center">' +
       '<p class="text-xs font-bold text-lagoon-100/70">' + label + '</p>' +
       '<p class="my-2 text-3xl">' + w.icon + '</p>' +
-      '<p class="text-xs leading-5 text-lagoon-100/80">' + w.si + '</p>' +
+      '<p class="text-xs leading-5 text-lagoon-100/80">' + w.si + flag + '</p>' +
       '<p class="mt-3 text-sm font-black">' + Math.round(d.temperature_2m_max[i]) + '° / ' + Math.round(d.temperature_2m_min[i]) + '°</p>' +
       '<p class="mt-1 text-[11px] text-sun-400">වැසි ' + (d.precipitation_probability_max[i] ?? 0) + '%</p>' +
       '</div>';
   }
+
   return (
     '<div class="grid gap-6 lg:grid-cols-[1fr_1.4fr]">' +
       '<div class="rounded-[2rem] border border-white/15 bg-white/5 p-7">' +
@@ -79,17 +189,20 @@ function renderWeather(data: WeatherData): string {
         '<dl class="mt-6 grid grid-cols-2 gap-4 text-sm">' +
           '<div><dt class="text-lagoon-100/60">අත්හදාගත හැඟීම</dt><dd class="mt-1 font-black">' + Math.round(c.apparent_temperature) + '°</dd></div>' +
           '<div><dt class="text-lagoon-100/60">ආර්ද්‍රතාව</dt><dd class="mt-1 font-black">' + c.relative_humidity_2m + '%</dd></div>' +
-          '<div><dt class="text-lagoon-100/60">සුළං</dt><dd class="mt-1 font-black">' + Math.round(c.wind_speed_10m) + ' km/h</dd></div>' +
-          '<div><dt class="text-lagoon-100/60">වැසි</dt><dd class="mt-1 font-black">' + (c.precipitation || 0) + ' mm</dd></div>' +
+          '<div><dt class="text-lagoon-100/60">සුළං</dt><dd class="mt-1 font-black">' + windB + ' ශ්‍රේණි (' + Math.round(c.wind_speed_10m) + ' km/h)</dd></div>' +
+          '<div><dt class="text-lagoon-100/60">වැසි න්‍යාය</dt><dd class="mt-1 font-black">' + prob0 + '%</dd></div>' +
+          (uv0 != null ? '<div><dt class="text-lagoon-100/60">අතිනීල කිරණ</dt><dd class="mt-1 font-black">' + uv0 + '</dd></div>' : '') +
+          (c.uv_index != null ? '<div><dt class="text-lagoon-100/60">වර්තමාන අතිනීල</dt><dd class="mt-1 font-black">' + c.uv_index + '</dd></div>' : '') +
         '</dl>' +
-        '<p class="mt-6 rounded-xl bg-sun-400/15 px-4 py-3 text-sm font-bold text-sun-400">' + umbrella + '</p>' +
       '</div>' +
       '<div class="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-7">' + days + '</div>' +
-    '</div>'
+    '</div>' +
+    (riskHtml ? '<div class="mt-6">' + riskHtml + '</div>' : '') +
+    (panelsHtml ? '<div class="mt-6 grid gap-4 md:grid-cols-3">' + panelsHtml + '</div>' : '')
   );
 }
 
-let initial: WeatherData = null;
+let initial: W = null;
 try {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 4000);
@@ -107,9 +220,9 @@ try {
       <p class="section-rule text-sm font-black uppercase tracking-[.18em] text-sun-400">කොළඹ කාලගුණය</p>
       <h2 class="mt-4 text-4xl font-black md:text-5xl">
         <span class="mb-2 block text-lg font-extrabold text-sun-400 md:text-xl" lang="en">Current Weather &amp; 7-Day Forecast</span>
-        අද කාලගුණය සහ සතියක පුරෝකථනය.
+        අද කාලගුණය සහ සතියක පුරෝකථනය — ඔබට අවශ්‍ය යන්ත්‍රණමය යෝජනා.
       </h2>
-      <p class="mt-4 text-sm leading-6 text-lagoon-100/70">පැමිණීමට පෙර කාලගුණය බලන්න — වැසි ඇදෙනවාද යන්න දැනගෙන කත්තරයක් ගැනීම නොමඳ වේලාවක් ඉතිරි කරයි.</p>
+      <p class="mt-4 text-sm leading-6 text-lagoon-100/70">කාලගුණ දත්ත මත පදනම්ව, "කත්තරය ගැනීම අවශ්‍යද" වැනි ප්‍රශ්නවලට පිළිතුරු සහ ගමනේ කළ යුතු දෑ කාලගුණය අනුව ස්වයංක්‍රියව පෙන්වයි.</p>
     </div>
 
     <div id="weather-root" class="mt-10" data-url={API_URL}>
@@ -120,7 +233,7 @@ try {
       )}
     </div>
 
-    <p class="mt-4 max-w-3xl text-xs leading-5 text-lagoon-100/50">කාලගුණ දත්ත නැවුම් ප්‍රදේශීය වේලාව (Asia/Colombo) අනුව සැපයේ. කෙටි කාලයක් ඇතුළත කාලගුණය වෙනස් විය හැකි බැවින් පැමිණීමට පෙර නැවුම් තත්ත්වය නැවත පරීක්ෂා කරන්න.</p>
+    <p class="mt-4 max-w-3xl text-xs leading-5 text-lagoon-100/50">කාලගුණ දත්ත නැවුම් ප්‍රදේශීය වේලාව (Asia/Colombo) අනුව සැපයේ. කෙටි කාලයක් ඇතුළත කාලගුණය වෙනස් විය හැකි බැවින් පැමිණීමට පෙර නැවුම් තත්ත්වය නැවත පරීක්ෂා කරන්න. (වත්මන් දත්ත මූලාශ්‍රය කාලගුණ නිරීක්ෂණ ජාලයකි; සම්පූර්ණ රාජ්‍ය අවදානම් දැන්වීම් නොසපයයි — නිල අවදානම් දැන්වීම් සඳහා ප්‍රාදේශීය අධිකාරිය බලන්න.)</p>
   </div>
 </section>
 
@@ -145,7 +258,7 @@ try {
     '75': { si: 'ස්නෝ', icon: '❄️' },
     '80': { si: 'වැසි පැද්දීම්', icon: '🌦️' },
     '81': { si: 'වැසි පැද්දීම්', icon: '🌦️' },
-    '82': { si: 'වැසි පැද්දීම්', icon: '🌦️' },
+    '82': { si: 'වැසි පැද්දීම්', icon: '🌧️' },
     '85': { si: 'ස්නෝ පැද්දීම්', icon: '🌨️' },
     '86': { si: 'ස්නෝ පැද්දීම්', icon: '🌨️' },
     '95': { si: 'කුණාටු / කෙරිලි', icon: '⛈️' },
@@ -155,25 +268,110 @@ try {
   const WEEKDAYS_SI = ['ඉරිදා', 'සඳුදා', 'අඟහරුවාදා', 'බදාදා', 'බ්‍රහස්පතින්දා', 'සිකුරාදා', 'සෙනසුරාදා'];
   function describe(code) { return WMO[String(code)] ?? { si: 'කාලගුණය වෙනස්', icon: '🌡️' }; }
   function weekdaySi(iso) { return WEEKDAYS_SI[new Date(iso + 'T00:00:00').getDay()]; }
+  function beaufort(kmh) { const t = [1,6,12,20,29,39,50,62,75,89,103,117]; let l=0; for (let i=0;i<t.length;i++) if (kmh>=t[i]) l=i+1; return l; }
+  function adviceFor(c, d, i) {
+    i = i || 0;
+    const wcode = d.weather_code[i];
+    const tmax = d.temperature_2m_max[i];
+    const tmin = d.temperature_2m_min[i];
+    const prob = d.precipitation_probability_max ? d.precipitation_probability_max[i] : 0;
+    const uv = d.uv_index_max ? d.uv_index_max[i] : 0;
+    const wind = c.wind_speed_10m;
+    const b = beaufort(wind);
+    const clothing = [], activity = [], items = [], risk = [];
+    const isLight = [51,53,55,61,80].indexOf(wcode) >= 0;
+    const isModHeavy = [63,65,81,82].indexOf(wcode) >= 0;
+    const isThunder = [95,96,99].indexOf(wcode) >= 0;
+    const isFog = [45,48].indexOf(wcode) >= 0;
+    const isClear = wcode === 0 || wcode === 1;
+    const isCloud = wcode === 2 || wcode === 3;
+    const raining = (c.precipitation || 0) > 0.1 || isLight || isModHeavy || isThunder;
+
+    if (prob >= 60 && !isModHeavy && !isThunder) {
+      clothing.push('සම්භාව්‍යයෙන් වැසි ඇදෙනු ඇත්තේ නිසා කත්තරයක් රැගෙන යන්න');
+      activity.push('ආරක්ෂිත හා වසන ඉඩ තෝරාගන්න; වෙළඳපොළ කුටිවල නැවතී සෙවණ සොයන්න');
+      items.push('කත්තරය / වැසි ඇඳුම');
+    }
+    if (isLight) {
+      clothing.push('සමන් කුඩා වැසිය; පාරේ පෙදෙස් උළු විය හැකි බැවින් සැලකිලිමත්ව ඇවිදින්න');
+      activity.push('විවෘත ස්ථානවල අත්දැකීම මදක් අඩු විය හැක');
+      items.push('හැකිළිය හැකි කත්තරය');
+    }
+    if (isModHeavy) {
+      risk.push('වැසි වැඩිබල් නිසා ජලය රැඳී ඇති පෙදෙස් හා ජලතීරයේ සීමාවන්වලින් වැළකී සිටින්න');
+      activity.push('වැසි කාලයේ දීර්ඝ ජලතීර ඇවිදීම වළක්වා, කුටි ආශ්‍රිතව සීමිතව ගමන් කරන්න');
+      items.push('වැසි ඇඳුම (සුළං හේතුවෙන් දිගු කත්තරය සුදුසු නොවේ)');
+    }
+    if (isThunder) {
+      risk.push('කෙරිලි හා කුණාටු අවස්ථාවේ ජලතීරයේ සෙල්ලම් කිරීම, ගස් යටින් සෙවණ සොයාගැනීම වළක්වන්න');
+      activity.push('ජල මත ක්‍රියාකාරකම් වසා දැමිය හැක');
+    }
+    if (isFog) {
+      risk.push('දෘශ්‍යතාව අඩු නිසා ජලතීර ඡායාරූප හා දුර දැක්ම සීමිත වේ');
+      activity.push('දුර දැක්ම සහිත ස්ථාන නරඹීමට ගැළපෙන්නේ නැත');
+      items.push('සීමිත ගුවන් විදුලි පළාත');
+    }
+    if (tmax >= 32) {
+      clothing.push('උෂ්ණත්වය වැඩි නිසා මධ්‍යාහ්නයේ යාම වළක්වා, සැහැල්ලු හා වායු ගමන් ඇඳුම් අදින්න');
+      activity.push('ජලතීරයේ වේලාව කෙටි කර ජලය වැඩිපුර බුද්ගලයින්ට ලබාදෙන්න');
+      items.push('හිරු ආරක්ෂක, ප්‍රමාණවත් ජලය, උණුසුම් වැළැක්වීමේ උපකරණ');
+    }
+    if (uv >= 5) {
+      clothing.push('අධික නිසා හිරු ආරක්ෂක අවශ්‍ය වේ');
+      items.push('හිරු කිරීමේ ක්‍රීම්, දර්පණ කණ්ණාඩි, හිරු තොප්පි');
+    }
+    if (tmax - tmin > 8) {
+      clothing.push('දවසේ හා රාත්‍රියේ උෂ්ණත්ව ඵලකය විශාල නිසා ඇඳුම් එකතු කිරීමට පහසු ජැකට් එකක් රැගෙන යන්න');
+    }
+    if (tmax <= 10) {
+      clothing.push('උෂ්ණත්වය අඩු නිසා සීතලට ආරක්ෂා වන්න');
+      items.push('ඝන ජැකට්, ගෙල් රෙද්ද');
+    }
+    if (b >= 7) {
+      risk.push('සුළං හේතුවෙන් දැන්වීම් පුවරු, ජලතීර ආරක්ෂක බාධක වැනි ස්ථානවලින් වැළකී සිටින්න');
+      activity.push('ජල මත ක්‍රියාකාරකම් වසා දැමිය හැක');
+    } else if (b >= 5) {
+      clothing.push('සුළං තත්ත්වය සැලකිල්ලට ගන්න');
+      activity.push('ජලතීර යාත්‍රා හා විවෘත ක්‍රීඩා වසා දැමිය හැක');
+      items.push('මූඩිය ඉවත් විය හැකි නිසා විශාල හැකිළි ඇඳුම් නොඅදින්න');
+    }
+    if (!raining && isClear) {
+      activity.push('පැහැදිලි කාලගුණය ජලතීර ඇවිදීම සහ හිරු උදාව/සුරිය බිම් ඡායාරූප සඳහා සුදුසු');
+      items.push('හිරු ආරක්ෂක මතක් කරන්න');
+    } else if (!raining && isCloud) {
+      activity.push('ආලෝකය මෘදු නිසා ඡායාරූප සඳහා හොඳයි; දීර්ඝ වේලාවක් ජලතීරයේ ගත කිරීමට සුදුසු');
+    }
+    const uniq = (a) => Array.from(new Set(a));
+    return { clothing: uniq(clothing), activity: uniq(activity), items: uniq(items), risk: uniq(risk) };
+  }
   function renderWeather(data) {
-    const c = data.current;
-    const d = data.daily;
+    const c = data.current, d = data.daily;
     const cur = describe(c.weather_code);
-    const rainNow = (c.precipitation || 0) > 0.1;
-    const todayProb = d.precipitation_probability_max ? d.precipitation_probability_max[0] : 0;
-    const bringUmbrella = rainNow || todayProb >= 50;
-    const umbrella = bringUmbrella
-      ? 'දෙබෙන්න කත්තරයක් සහ වැසි ආරක්ෂක ගන්න — වැසි ඇදීමේ සුලභත්වය ' + todayProb + '%'
-      : 'කත්තරයක් අවශ්‍ය නැත — වැසි ඇදීමේ සුලභත්වය ' + todayProb + '%';
+    const tmax0 = Math.round(d.temperature_2m_max[0]);
+    const tmin0 = Math.round(d.temperature_2m_min[0]);
+    const prob0 = d.precipitation_probability_max ? d.precipitation_probability_max[0] : 0;
+    const uv0 = d.uv_index_max ? d.uv_index_max[0] : null;
+    const windB = beaufort(c.wind_speed_10m);
+    const adv = adviceFor(c, d, 0);
+    const riskHtml = adv.risk.length
+      ? '<div class="rounded-2xl border border-red-400/50 bg-red-500/15 p-5"><p class="font-black text-red-200">⚠️ අවදානම් දැනුම්දීම</p><ul class="mt-2 space-y-1 text-sm text-red-100/90">' + adv.risk.map((x) => '<li>' + x + '</li>').join('') + '</ul></div>'
+      : '';
+    const panel = (title, icon, arr) => {
+      if (!arr.length) return '';
+      return '<div class="rounded-2xl border border-white/10 bg-white/5 p-5"><h4 class="text-sm font-black text-sun-400">' + icon + ' ' + title + '</h4><ul class="mt-3 space-y-2 text-sm leading-6 text-lagoon-100/85">' + arr.map((x) => '<li>' + x + '</li>').join('') + '</ul></div>';
+    };
+    const panelsHtml = panel('ගමනේ ඇඳුම්', '👕', adv.clothing) + panel('විනෝද කටයුතු', '🗺️', adv.activity) + panel('සමඟ රැගෙන යන දෑ', '🎒', adv.items);
     let days = '';
     for (let i = 0; i < d.time.length; i++) {
       const w = describe(d.weather_code[i]);
       const label = i === 0 ? 'අද' : weekdaySi(d.time[i]);
+      const dv = adviceFor(c, d, i);
+      const flag = dv.risk.length ? ' ⚠️' : '';
       days +=
         '<div class="rounded-2xl border border-white/10 bg-white/5 p-4 text-center">' +
         '<p class="text-xs font-bold text-lagoon-100/70">' + label + '</p>' +
         '<p class="my-2 text-3xl">' + w.icon + '</p>' +
-        '<p class="text-xs leading-5 text-lagoon-100/80">' + w.si + '</p>' +
+        '<p class="text-xs leading-5 text-lagoon-100/80">' + w.si + flag + '</p>' +
         '<p class="mt-3 text-sm font-black">' + Math.round(d.temperature_2m_max[i]) + '° / ' + Math.round(d.temperature_2m_min[i]) + '°</p>' +
         '<p class="mt-1 text-[11px] text-sun-400">වැසි ' + (d.precipitation_probability_max[i] ?? 0) + '%</p>' +
         '</div>';
@@ -190,13 +388,16 @@ try {
           '<dl class="mt-6 grid grid-cols-2 gap-4 text-sm">' +
             '<div><dt class="text-lagoon-100/60">අත්හදාගත හැඟීම</dt><dd class="mt-1 font-black">' + Math.round(c.apparent_temperature) + '°</dd></div>' +
             '<div><dt class="text-lagoon-100/60">ආර්ද්‍රතාව</dt><dd class="mt-1 font-black">' + c.relative_humidity_2m + '%</dd></div>' +
-            '<div><dt class="text-lagoon-100/60">සුළං</dt><dd class="mt-1 font-black">' + Math.round(c.wind_speed_10m) + ' km/h</dd></div>' +
-            '<div><dt class="text-lagoon-100/60">වැසි</dt><dd class="mt-1 font-black">' + (c.precipitation || 0) + ' mm</dd></div>' +
+            '<div><dt class="text-lagoon-100/60">සුළං</dt><dd class="mt-1 font-black">' + windB + ' ශ්‍රේණි (' + Math.round(c.wind_speed_10m) + ' km/h)</dd></div>' +
+            '<div><dt class="text-lagoon-100/60">වැසි න්‍යාය</dt><dd class="mt-1 font-black">' + prob0 + '%</dd></div>' +
+            (uv0 != null ? '<div><dt class="text-lagoon-100/60">අතිනීල කිරණ</dt><dd class="mt-1 font-black">' + uv0 + '</dd></div>' : '') +
+            (c.uv_index != null ? '<div><dt class="text-lagoon-100/60">වර්තමාන අතිනීල</dt><dd class="mt-1 font-black">' + c.uv_index + '</dd></div>' : '') +
           '</dl>' +
-          '<p class="mt-6 rounded-xl bg-sun-400/15 px-4 py-3 text-sm font-bold text-sun-400">' + umbrella + '</p>' +
         '</div>' +
         '<div class="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-7">' + days + '</div>' +
-      '</div>'
+      '</div>' +
+      (riskHtml ? '<div class="mt-6">' + riskHtml + '</div>' : '') +
+      (panelsHtml ? '<div class="mt-6 grid gap-4 md:grid-cols-3">' + panelsHtml + '</div>' : '')
     );
   }
   function refreshWeather() {
