@@ -1,0 +1,370 @@
+---
+import '../styles/global.css';
+
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+const pageTitle = 'පිටකොටුව පාවෙන වෙළඳපොළ | කොළඹ ජලතීර වෙළඳපොළ මාර්ගෝපදේශය';
+const description = 'බේරේ වැව අසල පිටකොටුව පාවෙන වෙළඳපොළට පැමිණීම සඳහා ගමනාගමනය, විවෘත වේලාවන්, ගාස්තු, ආහාර, රථගාල් සහ අසල්වැසි ස්ථාන පිළිබඳ සංක්ෂිප්ත මාර්ගෝපදේශයක්.';
+
+const imageSources = [
+  {
+    src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/PFM_-_01.jpg/1600px-PFM_-_01.jpg',
+    alt: 'පිටකොටුව පාවෙන වෙළඳපොළේ ජලය අසල වෙළඳ කුටි සහ ගමන් මාර්ගය',
+    credit: 'Dan arndt · CC BY-SA 4.0',
+    href: 'https://commons.wikimedia.org/wiki/File:PFM_-_01.jpg',
+  },
+  {
+    src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/PFM_-_02.jpg/1600px-PFM_-_02.jpg',
+    alt: 'පිටකොටුව පාවෙන වෙළඳපොළේ රතු වහල සහිත කුටි',
+    credit: 'Dan arndt · CC BY-SA 4.0',
+    href: 'https://commons.wikimedia.org/wiki/File:PFM_-_02.jpg',
+  },
+  {
+    src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Pettah_Floating_Market.jpg/1600px-Pettah_Floating_Market.jpg',
+    alt: 'පාවෙන වෙළඳපොළේ බේරේ වැව දෙසට දිගහැරෙන ගමන් පථය',
+    credit: 'Azeez Abubakr · CC BY-SA 4.0',
+    href: 'https://commons.wikimedia.org/wiki/File:Pettah_Floating_Market.jpg',
+  },
+  {
+    src: 'https://upload.wikimedia.org/wikipedia/commons/e/e8/Pettah_Floating_Market_Colombo%2C_Sri_Lanka.jpg',
+    alt: 'හිරු බැස යන වේලාවේ පිටකොටුව පාවෙන වෙළඳපොළ',
+    credit: 'Shanka Anuranga · CC BY-SA 4.0',
+    href: 'https://commons.wikimedia.org/wiki/File:Pettah_Floating_Market_Colombo,_Sri_Lanka.jpg',
+  },
+];
+
+const placeSchema: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': ['TouristAttraction', 'LocalBusiness'],
+  name: 'පිටකොටුව පාවෙන වෙළඳපොළ',
+  alternateName: 'Floating Market - Pettah',
+  description,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'W E Bastian Mawatha',
+    addressLocality: 'Colombo',
+    postalCode: '01000',
+    addressCountry: 'LK',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 6.9329,
+    longitude: 79.8554,
+  },
+  telephone: '+94 11 287 3640',
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+      opens: '08:00',
+      closes: '22:30',
+    },
+  ],
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: 3.7,
+    bestRating: 5,
+  },
+};
+if (canonical) placeSchema.url = canonical;
+
+const faqs = [
+  {
+    q: 'ඇතුල්වීමට ටිකට් පතක් අවශ්‍යද?',
+    a: 'සාමාන්‍ය ප්‍රවේශය නොමිලේ ලෙස සඳහන් වේ. ඔබ මිලදී ගන්නා ආහාර, බීම, අත්කම් හෝ වෙනත් භාණ්ඩ සඳහා පමණක් වෙනම ගෙවීම සිදු වේ.',
+  },
+  {
+    q: 'පැමිණීමට හොඳම වේලාව කුමක්ද?',
+    a: 'උදෑසන සාපේක්ෂව නිස්කලංක අත්දැකීමක් ලබා දෙයි. ඡායාරූප සහ ජලතීර ආලෝකය සඳහා සවස අවසාන පැය වඩාත් සුන්දරය. වර්ෂාව සහ උණුසුම සැලකිල්ලට ගන්න.',
+  },
+  {
+    q: 'කොපමණ වේලාවක් වෙන් කරගත යුතුද?',
+    a: 'වෙළඳ කුටි, ජලතීරය සහ කෙටි ආහාර විවේකයක් සඳහා මිනිත්තු 30–60ක් සාමාන්‍යයෙන් ප්‍රමාණවත්ය. අසල්වැසි පිටකොටුව සමඟ එක් කළහොත් වැඩි කාලයක් වෙන් කරන්න.',
+  },
+  {
+    q: 'Fort දුම්රිය ස්ථානයෙන් පැමිණිය හැකිද?',
+    a: 'ඔව්. මෙම වෙළඳපොළ Fort දුම්රිය ස්ථානය සහ පිටකොටුව බස් මධ්‍යස්ථානයට ආසන්නව පිහිටා ඇති නිසා පොදු ප්‍රවාහනය ඉතා පහසු විකල්පයකි.',
+  },
+  {
+    q: 'රථ ගාල් පහසුකම් තිබේද?',
+    a: 'නාගරික සංවර්ධන අධිකාරියේ ව්‍යාපෘති තොරතුරු අනුව පාරිභෝගික සහ වෙළඳුන් සඳහා රථ ගාල් පහසුකම් සලසා ඇත. කාර්යබහුල පිටකොටුව ප්‍රදේශයේ ඉඩකඩ වෙනස් විය හැකි බැවින් පොදු ප්‍රවාහනය වඩාත් පහසු විය හැක.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(({ q, a }) => ({
+    '@type': 'Question',
+    name: q,
+    acceptedAnswer: { '@type': 'Answer', text: a },
+  })),
+};
+---
+<!doctype html>
+<html lang="si">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="theme-color" content="#113f3e" />
+    <meta name="description" content={description} />
+    <title>{pageTitle}</title>
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="si_LK" />
+    {canonical && <meta property="og:url" content={canonical} />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <script type="application/ld+json" set:html={JSON.stringify(placeSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-HXM22WWPKP"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HXM22WWPKP', { anonymize_ip: true });
+    </script>
+  </head>
+  <body>
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-white focus:px-4 focus:py-2">ප්‍රධාන අන්තර්ගතයට යන්න</a>
+
+    <header class="sticky top-0 z-50 border-b border-lagoon-900/10 glass">
+      <div class="mx-auto flex max-w-7xl items-center justify-between gap-6 px-5 py-3 lg:px-8">
+        <a href="#top" aria-label="මුල් පිටුව" class="shrink-0">
+          <img src="/logo.svg" width="310" height="68" alt="පිටකොටුව පාවෙන වෙළඳපොළ" class="h-12 w-auto" />
+        </a>
+        <nav aria-label="ප්‍රධාන සංචාලනය" class="hidden items-center gap-5 text-sm font-bold text-lagoon-900 lg:flex">
+          <a href="#experience" class="hover:text-clay-500">අත්දැකීම</a>
+          <a href="#visit" class="hover:text-clay-500">සංචාරය</a>
+          <a href="#food" class="hover:text-clay-500">ආහාර</a>
+          <a href="#nearby" class="hover:text-clay-500">අසල</a>
+          <a href="#map" class="hover:text-clay-500">සිතියම</a>
+          <a href="#faq" class="hover:text-clay-500">ප්‍රශ්න</a>
+        </nav>
+        <a href="https://maps.app.goo.gl/tWzta29n1pzYXYG67" rel="noopener noreferrer" target="_blank" class="rounded-full bg-clay-500 px-4 py-2.5 text-sm font-extrabold text-white shadow-sm transition hover:bg-clay-700">Google Maps</a>
+      </div>
+    </header>
+
+    <main id="main">
+      <section id="top" class="relative overflow-hidden bg-lagoon-950">
+        <div class="absolute inset-0">
+          <img src={imageSources[3].src} alt={imageSources[3].alt} class="h-full w-full object-cover opacity-55" fetchpriority="high" />
+          <div class="absolute inset-0 bg-gradient-to-r from-lagoon-950 via-lagoon-950/75 to-lagoon-950/20"></div>
+          <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-lagoon-950 to-transparent"></div>
+        </div>
+        <div class="relative mx-auto grid min-h-[78vh] max-w-7xl items-end gap-12 px-5 pb-14 pt-32 lg:grid-cols-[1.25fr_.75fr] lg:px-8 lg:pb-20">
+          <div class="max-w-4xl">
+            <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-bold text-sand-100 backdrop-blur">
+              <span class="h-2 w-2 rounded-full bg-sun-400"></span>
+              බේරේ වැව · පිටකොටුව · කොළඹ 01
+            </div>
+            <h1 class="max-w-4xl text-5xl font-black leading-[1.08] tracking-tight text-white md:text-7xl">ජලය අසල නගරයේ වෙනස් රිද්මයක්.</h1>
+            <p class="mt-6 max-w-2xl text-lg leading-8 text-sand-100/90 md:text-xl">වෙළඳ කුටි, කුඩා ආහාර විවේක, ජලතීර පාර සහ පිටකොටුවේ නගර ශබ්දය අතර නිස්කලංක විරාමයක් — මේ තමයි පිටකොටුව පාවෙන වෙළඳපොළ.</p>
+            <div class="mt-8 flex flex-wrap gap-3">
+              <a href="#visit" class="rounded-full bg-sun-400 px-6 py-3 font-black text-lagoon-950 transition hover:-translate-y-0.5">සංචාරය සැලසුම් කරන්න</a>
+              <a href="#map" class="rounded-full border border-white/30 bg-white/10 px-6 py-3 font-black text-white backdrop-blur transition hover:bg-white/20">සිතියම බලන්න</a>
+            </div>
+          </div>
+          <aside class="rounded-[2rem] border border-white/15 bg-white/10 p-6 text-white backdrop-blur-lg hero-shadow">
+            <p class="text-xs font-black uppercase tracking-[.22em] text-sun-400">ඉක්මන් තොරතුරු</p>
+            <dl class="mt-5 grid grid-cols-2 gap-5">
+              <div><dt class="text-sm text-sand-100/65">ශ්‍රේණිගත කිරීම</dt><dd class="mt-1 text-2xl font-black">3.7 / 5</dd></div>
+              <div><dt class="text-sm text-sand-100/65">සාමාන්‍ය ප්‍රවේශය</dt><dd class="mt-1 text-2xl font-black">නොමිලේ</dd></div>
+              <div><dt class="text-sm text-sand-100/65">වේලාව</dt><dd class="mt-1 text-lg font-black">සඳු–සෙන 08:00–22:30</dd></div>
+              <div><dt class="text-sm text-sand-100/65">යෝජිත කාලය</dt><dd class="mt-1 text-lg font-black">30–60 මිනි.</dd></div>
+            </dl>
+            <p class="mt-5 border-t border-white/15 pt-4 text-xs leading-5 text-sand-100/65">විවෘත වේලාවන් සහ සේවා තත්ත්වය වෙනස් විය හැක. පිටත්වීමට පෙර Google Maps හෝ ස්ථානයෙන් තහවුරු කරන්න.</p>
+          </aside>
+        </div>
+        <a href={imageSources[3].href} class="photo-credit absolute bottom-3 right-4 text-[11px] text-white/70 underline" target="_blank" rel="license noopener noreferrer">ඡායාරූපය: {imageSources[3].credit}</a>
+      </section>
+
+      <section id="experience" class="ripple-grid py-20 md:py-28">
+        <div class="mx-auto max-w-7xl px-5 lg:px-8">
+          <div class="grid gap-12 lg:grid-cols-[.9fr_1.1fr] lg:items-center">
+            <div>
+              <p class="section-rule text-sm font-black uppercase tracking-[.18em] text-clay-500">ස්ථානයේ කතාව</p>
+              <h2 class="mt-4 text-4xl font-black leading-tight text-lagoon-950 md:text-5xl">පිටකොටුවේ වෙළඳ ශක්තිය ජලතීරයට ගෙනා නගර අවකාශයක්.</h2>
+              <p class="mt-6 text-lg leading-8 text-ink/80">බේරේ වැව අසල පැරණි Bastian Mawatha ප්‍රදේශය නැවත සංවර්ධනය කර නිර්මාණය කළ මෙම වෙළඳපොළ 2014දී ජනතාවට විවෘත විය. නාගරික සංවර්ධන අධිකාරියේ තොරතුරු අනුව මෙහි වෙළඳ කුටි 92ක් ඇති අතර, ඇතැම් කුටි ජලය මත පිහිටුවා තිබේ.</p>
+              <p class="mt-4 text-lg leading-8 text-ink/80">අත්කම්, ඇඳුම්, අමතර භාණ්ඩ, පලතුරු සහ කුඩා ආහාර අත්දැකීම් එකම ජලතීර ගමන් මාර්ගයක එකතුවීම මෙහි විශේෂත්වයයි. අද පැමිණීමේ ප්‍රධාන ආකර්ෂණය වෙළඳාමට අමතරව ජලය අසල ඇවිදීම, නගර ඡායාරූප සහ පිටකොටුවේ කාර්යබහුලත්වයෙන් කෙටි විරාමයක් ගැනීමයි.</p>
+            </div>
+            <figure class="overflow-hidden rounded-[2.25rem] bg-lagoon-900 water-card">
+              <img src={imageSources[0].src} alt={imageSources[0].alt} loading="lazy" class="aspect-[4/3] w-full object-cover" />
+              <figcaption class="flex items-center justify-between gap-4 px-5 py-4 text-xs text-lagoon-100">
+                <span>ජලතීර වෙළඳ කුටි සහ ගමන් මාර්ගය</span>
+                <a href={imageSources[0].href} target="_blank" rel="license noopener noreferrer" class="underline">{imageSources[0].credit}</a>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-white py-20 md:py-28">
+        <div class="mx-auto max-w-7xl px-5 lg:px-8">
+          <div class="mb-10 max-w-2xl">
+            <p class="section-rule text-sm font-black uppercase tracking-[.18em] text-clay-500">දෘශ්‍ය අත්දැකීම</p>
+            <h2 class="mt-4 text-4xl font-black text-lagoon-950 md:text-5xl">වහල, ජලය සහ සවස ආලෝකය.</h2>
+          </div>
+          <div class="grid gap-5 md:grid-cols-12">
+            {imageSources.slice(1).map((image, index) => (
+              <figure class:list={["group relative overflow-hidden rounded-[1.75rem] bg-lagoon-900", index === 0 ? "md:col-span-7" : index === 1 ? "md:col-span-5" : "md:col-span-12"]}>
+                <img src={image.src} alt={image.alt} loading="lazy" class:list={["w-full object-cover transition duration-500 group-hover:scale-[1.02]", index === 2 ? "aspect-[16/7]" : "aspect-[4/3]"]} />
+                <figcaption class="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 bg-gradient-to-t from-black/75 to-transparent px-5 pb-4 pt-16 text-xs text-white">
+                  <span>{index === 0 ? 'රතු වහල සහිත වෙළඳ කුටි' : index === 1 ? 'ජලතීර ගමන් පථය' : 'හිරු බැස යන වෙලාවේ වෙළඳපොළ'}</span>
+                  <a href={image.href} class="photo-credit underline" target="_blank" rel="license noopener noreferrer">{image.credit}</a>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="visit" class="bg-lagoon-950 py-20 text-white md:py-28">
+        <div class="mx-auto max-w-7xl px-5 lg:px-8">
+          <div class="max-w-3xl">
+            <p class="section-rule text-sm font-black uppercase tracking-[.18em] text-sun-400">පැමිණීම සැලසුම් කරන්න</p>
+            <h2 class="mt-4 text-4xl font-black md:text-5xl">වෙළඳපොළට යාමට පෙර දැනගත යුතු දේ.</h2>
+          </div>
+          <div class="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+            <article class="rounded-[1.75rem] border border-white/10 bg-white/5 p-6">
+              <div class="text-3xl">◎</div><h3 class="mt-5 text-xl font-black">ටිකට් / ගාස්තු</h3>
+              <p class="mt-3 leading-7 text-lagoon-100/80">සාමාන්‍ය ප්‍රවේශය නොමිලේ. මිලදී ගන්නා ආහාර, බීම සහ භාණ්ඩ සඳහා පමණක් ගෙවීම අවශ්‍ය වේ.</p>
+            </article>
+            <article class="rounded-[1.75rem] border border-white/10 bg-white/5 p-6">
+              <div class="text-3xl">◷</div><h3 class="mt-5 text-xl font-black">හොඳම වේලාව</h3>
+              <p class="mt-3 leading-7 text-lagoon-100/80">නිස්කලංකව ඇවිදීමට උදෑසන. ඡායාරූප, මෘදු ආලෝකය සහ ජලයේ ප්‍රතිබිම්බ සඳහා සවස අවසාන පැය.</p>
+            </article>
+            <article class="rounded-[1.75rem] border border-white/10 bg-white/5 p-6">
+              <div class="text-3xl">≈</div><h3 class="mt-5 text-xl font-black">යෝජිත කාලය</h3>
+              <p class="mt-3 leading-7 text-lagoon-100/80">මිනිත්තු 30–60ක් ප්‍රමාණවත්. පිටකොටුව වෙළඳපොළ සහ රතු පල්ලියද එක් කළහොත් අර්ධ දිනක් වෙන් කළ හැක.</p>
+            </article>
+            <article class="rounded-[1.75rem] border border-white/10 bg-white/5 p-6">
+              <div class="text-3xl">P</div><h3 class="mt-5 text-xl font-black">රථ ගාල්</h3>
+              <p class="mt-3 leading-7 text-lagoon-100/80">ව්‍යාපෘති තොරතුරු අනුව පාරිභෝගික රථ ගාල් ඇත. කාර්යබහුල කාලවල ඉඩකඩ අඩු විය හැකි බැවින් දුම්රිය හෝ බස් වඩා පහසුය.</p>
+            </article>
+          </div>
+
+          <div class="mt-10 rounded-[2rem] bg-sun-400 p-7 text-lagoon-950 md:p-9">
+            <div class="grid gap-8 lg:grid-cols-[.65fr_1.35fr]">
+              <div><p class="text-sm font-black uppercase tracking-[.18em]">විවෘත වේලාව</p><p class="mt-2 text-4xl font-black">සඳු–සෙන · 08:00–22:30</p><p class="mt-2 text-sm font-bold opacity-75">වත්මන් ලැයිස්තුගත කිරීම් අනුව ඉරිදා වසා ඇත. වේලාවන් වෙනස් විය හැක.</p></div>
+              <div><h3 class="text-xl font-black">කුඩා මතක් කිරීමක්</h3><p class="mt-3 max-w-3xl leading-7">රජයේ නිවාඩු, නඩත්තු, වෙළඳ කුටි ක්‍රියාකාරිත්වය සහ විශේෂ අවස්ථා නිසා සැබෑ වේලාවන් වෙනස් විය හැක. පැමිණීමට පෙර දුරකථනයෙන් <a href="tel:+94112873640" class="font-black underline">+94 11 287 3640</a> හෝ Google Maps හරහා තහවුරු කරන්න.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="ripple-grid py-20 md:py-28">
+        <div class="mx-auto max-w-7xl px-5 lg:px-8">
+          <div class="grid gap-12 lg:grid-cols-2">
+            <div>
+              <p class="section-rule text-sm font-black uppercase tracking-[.18em] text-clay-500">විස්තරාත්මක ගමනාගමනය</p>
+              <h2 class="mt-4 text-4xl font-black text-lagoon-950">Fort සහ Pettah හරහා පහසුවෙන්.</h2>
+              <div class="mt-8 space-y-4">
+                <article class="rounded-3xl bg-white p-6 water-card"><h3 class="font-black text-lagoon-950">දුම්රියෙන්</h3><p class="mt-2 leading-7 text-ink/75">Colombo Fort දුම්රිය ස්ථානයෙන් Pettah / Bastian Mawatha දිශාවට පැමිණිය හැක. ස්ථානය වෙළඳපොළට ආසන්න ප්‍රධාන පොදු ප්‍රවාහන පිවිසුමකි.</p></article>
+                <article class="rounded-3xl bg-white p-6 water-card"><h3 class="font-black text-lagoon-950">බස් රථයෙන්</h3><p class="mt-2 leading-7 text-ink/75">Pettah හි මධ්‍යම බස් පර්යන්ත සහ Bastian Mawatha ප්‍රදේශයට සේවය කරන මාර්ග භාවිතා කරන්න. බැසීමෙන් පසු වෙළඳපොළ දක්වා කෙටි නගර ඇවිදීමක් ඇත.</p></article>
+                <article class="rounded-3xl bg-white p-6 water-card"><h3 class="font-black text-lagoon-950">ටුක්-ටුක් / ටැක්සි</h3><p class="mt-2 leading-7 text-ink/75">“Pettah Floating Market, W E Bastian Mawatha” ලෙස ගමනාන්තය දෙන්න. කාර්යබහුල වේලාවල Pettah මාර්ග තදබදය සැලකිල්ලට ගන්න.</p></article>
+              </div>
+            </div>
+            <div class="rounded-[2.25rem] bg-lagoon-900 p-8 text-white md:p-10">
+              <p class="text-sm font-black uppercase tracking-[.18em] text-sun-400">ලිපිනය</p>
+              <h3 class="mt-4 text-3xl font-black">W E Bastian Mawatha,<br />Colombo 01000</h3>
+              <p class="mt-6 leading-7 text-lagoon-100/80">Plus Code: WVM4+344 · කොළඹ, ශ්‍රී ලංකාව</p>
+              <div class="mt-8 border-t border-white/10 pt-8">
+                <p class="text-sm font-bold text-lagoon-100/70">ස්ථාන ඛණ්ඩාංක</p>
+                <p class="mt-2 font-mono text-lg">6.9329, 79.8554</p>
+              </div>
+              <a href="https://maps.app.goo.gl/tWzta29n1pzYXYG67" target="_blank" rel="noopener noreferrer" class="mt-10 inline-flex rounded-full bg-sun-400 px-6 py-3 font-black text-lagoon-950">Google Maps හි විවෘත කරන්න ↗</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="food" class="bg-white py-20 md:py-28">
+        <div class="mx-auto max-w-7xl px-5 lg:px-8">
+          <div class="max-w-3xl">
+            <p class="section-rule text-sm font-black uppercase tracking-[.18em] text-clay-500">අසල ආහාර</p>
+            <h2 class="mt-4 text-4xl font-black text-lagoon-950 md:text-5xl">වෙළඳපොළ ඇතුළත කෙටි කෑමකින්, පිටකොටුවේ දේශීය රසයට.</h2>
+          </div>
+          <div class="mt-10 grid gap-5 md:grid-cols-3">
+            <article class="rounded-[1.75rem] border border-lagoon-900/10 bg-sand-50 p-7"><p class="text-xs font-black uppercase tracking-[.18em] text-clay-500">වෙළඳපොළ ඇතුළත</p><h3 class="mt-3 text-2xl font-black">Food Court</h3><p class="mt-3 leading-7 text-ink/75">කෙටි කෑම, සිසිල් බීම සහ ඇවිදීම අතර විවේකයක් සඳහා පහසුම තේරීම. සියලු කුටි සෑම වේලාවකම විවෘත නොවිය හැක.</p></article>
+            <article class="rounded-[1.75rem] border border-lagoon-900/10 bg-sand-50 p-7"><p class="text-xs font-black uppercase tracking-[.18em] text-clay-500">Fort අසල</p><h3 class="mt-3 text-2xl font-black">Oldfort Cafe</h3><p class="mt-3 leading-7 text-ink/75">ශ්‍රී ලාංකික සහ ජාත්‍යන්තර කෑම සඳහා නගර මධ්‍යයේ සැහැල්ලු කැෆේ විකල්පයක්.</p></article>
+            <article class="rounded-[1.75rem] border border-lagoon-900/10 bg-sand-50 p-7"><p class="text-xs font-black uppercase tracking-[.18em] text-clay-500">දේශීය කෑම</p><h3 class="mt-3 text-2xl font-black">Matara Gedara</h3><p class="mt-3 leading-7 text-ink/75">බත්, කරි සහ දේශීය රසවලට කැමති අයට Pettah / Fort ප්‍රදේශයේ සරල විකල්පයක්.</p></article>
+          </div>
+          <p class="mt-5 text-sm leading-6 text-ink/60">ආහාර ස්ථානවල වේලාවන් සහ සේවා වෙනස් විය හැක. යාමට පෙර වත්මන් තොරතුරු පරීක්ෂා කරන්න.</p>
+        </div>
+      </section>
+
+      <section id="nearby" class="bg-sand-100 py-20 md:py-28">
+        <div class="mx-auto max-w-7xl px-5 lg:px-8">
+          <div class="max-w-3xl">
+            <p class="section-rule text-sm font-black uppercase tracking-[.18em] text-clay-500">අසල්වැසි ස්ථාන</p>
+            <h2 class="mt-4 text-4xl font-black text-lagoon-950 md:text-5xl">එකම නගර ගමනක එකතු කරගන්න.</h2>
+          </div>
+          <div class="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+            <article class="rounded-[1.75rem] bg-white p-6 water-card"><span class="text-3xl">◫</span><h3 class="mt-5 text-xl font-black">Pettah Market</h3><p class="mt-2 leading-7 text-ink/70">කොළඹේ වඩාත් ජවසම්පන්න වෙළඳ වීදි අත්දැකීමට.</p></article>
+            <article class="rounded-[1.75rem] bg-white p-6 water-card"><span class="text-3xl">◷</span><h3 class="mt-5 text-xl font-black">Khan Clock Tower</h3><p class="mt-2 leading-7 text-ink/70">Pettah ප්‍රවේශයේ හඳුනාගත හැකි ඓතිහාසික නගර සලකුණක්.</p></article>
+            <article class="rounded-[1.75rem] bg-white p-6 water-card"><span class="text-3xl">◆</span><h3 class="mt-5 text-xl font-black">Jami Ul-Alfar Mosque</h3><p class="mt-2 leading-7 text-ink/70">රතු-සුදු මුහුණත නිසා කොළඹේ වඩාත් ප්‍රසිද්ධ ගොඩනැගිලිවලින් එකක්.</p></article>
+            <article class="rounded-[1.75rem] bg-white p-6 water-card"><span class="text-3xl">△</span><h3 class="mt-5 text-xl font-black">Colombo Lotus Tower</h3><p class="mt-2 leading-7 text-ink/70">නගර දසුන් සඳහා බේරේ වැව අසල නවීන උසස් සලකුණක්.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="map" class="bg-lagoon-950 py-20 md:py-28">
+        <div class="mx-auto max-w-7xl px-5 lg:px-8">
+          <div class="mb-10 flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
+            <div class="max-w-3xl"><p class="section-rule text-sm font-black uppercase tracking-[.18em] text-sun-400">සිතියම</p><h2 class="mt-4 text-4xl font-black text-white md:text-5xl">W E Bastian Mawatha වෙත සෘජුව.</h2></div>
+            <p class="max-w-md text-sm leading-6 text-lagoon-100/70">සිතියම Google සේවාවෙන් පැටවේ. දත්ත භාවිතය සහ Google හි පෞද්ගලිකත්ව නීති අදාළ විය හැක.</p>
+          </div>
+          <div class="overflow-hidden rounded-[2.25rem] border border-white/10 bg-white/5 p-2">
+            <iframe
+              title="පිටකොටුව පාවෙන වෙළඳපොළ Google සිතියම"
+              class="map-frame w-full rounded-[1.8rem] border-0"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps?hl=si&gl=lk&output=embed&q=Floating+Market+-+Pettah%2C+W+E+Bastian+Mawatha%2C+Colombo+01000%2C+Sri+Lanka">
+            </iframe>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq" class="ripple-grid py-20 md:py-28">
+        <div class="mx-auto max-w-5xl px-5 lg:px-8">
+          <div class="text-center"><p class="text-sm font-black uppercase tracking-[.18em] text-clay-500">නිතර අසන ප්‍රශ්න</p><h2 class="mt-4 text-4xl font-black text-lagoon-950 md:text-5xl">ගමනට පෙර කෙටි පිළිතුරු.</h2></div>
+          <div class="mt-10 space-y-4">
+            {faqs.map((faq) => (
+              <details class="group rounded-3xl border border-lagoon-900/10 bg-white p-6 water-card">
+                <summary class="flex cursor-pointer items-center justify-between gap-6 font-black text-lagoon-950">
+                  <span>{faq.q}</span><span aria-hidden="true" class="text-2xl text-clay-500 transition group-open:rotate-45">+</span>
+                </summary>
+                <p class="mt-4 max-w-4xl leading-7 text-ink/75">{faq.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="border-t border-lagoon-900/10 bg-white py-12">
+        <div class="mx-auto max-w-7xl px-5 lg:px-8">
+          <h2 class="text-sm font-black uppercase tracking-[.18em] text-lagoon-900">තොරතුරු සහ ඡායාරූප මූලාශ්‍ර</h2>
+          <p class="mt-4 max-w-5xl text-sm leading-7 text-ink/65">ප්‍රධාන ස්ථාන තොරතුරු ශ්‍රී ලංකා නාගරික සංවර්ධන අධිකාරිය, ශ්‍රී ලංකා සංචාරක තොරතුරු, Google Maps ලැයිස්තුගත කිරීම් සහ Wikimedia Commons හි බලපත්‍රිත ඡායාරූප මත සකස් කර ඇත. ඡායාරූප සබැඳිවල ඔවුන්ගේ මුල් බලපත්‍ර සහ කර්තෘ තොරතුරු පෙන්වයි.</p>
+          <div class="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm font-bold">
+            <a class="underline" href="https://www.uda.gov.lk/floating-market.html" target="_blank" rel="noopener noreferrer">UDA</a>
+            <a class="underline" href="https://www.srilanka.travel/" target="_blank" rel="noopener noreferrer">Sri Lanka Tourism</a>
+            <a class="underline" href="https://maps.app.goo.gl/tWzta29n1pzYXYG67" target="_blank" rel="noopener noreferrer">Google Maps</a>
+            <a class="underline" href="https://commons.wikimedia.org/wiki/Category:Pettah_Floating_Market" target="_blank" rel="license noopener noreferrer">Wikimedia Commons</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-lagoon-950 px-5 py-10 text-lagoon-100/70">
+      <div class="mx-auto flex max-w-7xl flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+        <div class="flex items-center gap-3"><img src="/favicon.svg" width="42" height="42" alt="" aria-hidden="true" /><span class="font-black text-white">පිටකොටුව පාවෙන වෙළඳපොළ</span></div>
+        <p class="max-w-2xl text-sm leading-6 lg:text-right">මෙය නිල වෙබ් අඩවියක් නොවේ; සංචාර සැලසුම් කිරීම සඳහා ස්වාධීන තොරතුරු මාර්ගෝපදේශයකි.</p>
+      </div>
+    </footer>
+  </body>
+</html>

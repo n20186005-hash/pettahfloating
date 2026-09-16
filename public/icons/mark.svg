@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title">
+  <title id="title">පිටකොටුව පාවෙන වෙළඳපොළ සලකුණ</title>
+  <rect width="128" height="128" rx="28" fill="#113f3e"/>
+  <circle cx="91" cy="31" r="11" fill="#f4b942"/>
+  <path d="M25 58 64 31l39 27v10H25Z" fill="#c85f3d"/>
+  <path d="M37 67h54v15H37Z" fill="#f3dfb6"/>
+  <path d="M15 89c13-8 25-8 38 0 13 8 25 8 38 0 8-5 15-6 22-4v11c-7-2-14-1-22 4-13 8-25 8-38 0-13-8-25-8-38 0Z" fill="#67b7ad"/>
+  <path d="M19 106c11-6 22-6 33 0s22 6 33 0 21-7 30-3" fill="none" stroke="#d9f0e9" stroke-width="7" stroke-linecap="round"/>
+</svg>

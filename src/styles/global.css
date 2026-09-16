@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Noto Sans Sinhala", "Iskoola Pota", "Nirmala UI", system-ui, sans-serif;
+  --color-lagoon-950: #092c2c;
+  --color-lagoon-900: #113f3e;
+  --color-lagoon-700: #286d68;
+  --color-lagoon-500: #67b7ad;
+  --color-lagoon-100: #d9f0e9;
+  --color-clay-700: #9f432c;
+  --color-clay-500: #c85f3d;
+  --color-sun-400: #f4b942;
+  --color-sand-50: #fffaf0;
+  --color-sand-100: #f7eedb;
+  --color-ink: #173b38;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: #fffaf0;
+  color: #173b38;
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+}
+::selection { background: #f4b942; color: #092c2c; }
+a { text-underline-offset: 4px; }
+
+.ripple-grid {
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(244,185,66,.12), transparent 26rem),
+    repeating-radial-gradient(ellipse at 0 100%, transparent 0 20px, rgba(103,183,173,.10) 21px 22px, transparent 23px 42px);
+}
+.hero-shadow { box-shadow: 0 30px 80px rgba(9,44,44,.22); }
+.glass { backdrop-filter: blur(14px); background: rgba(255,250,240,.88); }
+.section-rule::before {
+  content: "";
+  display: inline-block;
+  width: 2.8rem;
+  height: .28rem;
+  margin-right: .7rem;
+  border-radius: 999px;
+  background: #c85f3d;
+  vertical-align: middle;
+}
+.water-card { box-shadow: 0 18px 48px rgba(17,63,62,.10); }
+.photo-credit { text-shadow: 0 1px 3px rgba(0,0,0,.65); }
+.map-frame { min-height: 430px; }
+summary::-webkit-details-marker { display: none; }
+summary { list-style: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
