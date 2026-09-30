@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GuideSections from '../../components/GuideSections.astro';
+import { meta, faqs } from '../../data/content';
+import { buildPlaceSchema, buildFaqSchema } from '../../lib/schema';
+import type { Locale } from '../../i18n';
+import { SITE_URL } from '../../config';
+
+const locale: Locale = 'zh';
+const m = meta[locale];
+const basePath = '/';
+const faqList = faqs[locale];
+const canonical = SITE_URL.replace(/\/$/, '') + '/zh/';
+const jsonLd = [buildPlaceSchema(SITE_URL, locale, canonical), buildFaqSchema(faqList)];
+---
+
+<BaseLayout locale={locale} basePath={basePath} title={m.title} description={m.description} jsonLd={jsonLd}>
+  <GuideSections locale={locale} />
+</BaseLayout>

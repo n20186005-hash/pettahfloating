@@ -1,0 +1,376 @@
+---
+import type { Locale } from '../i18n';
+import { localeMeta } from '../i18n';
+import {
+  hero, about, galleryCaptions, history, visit, directions, gettingHere,
+  food, nearby, services, seasons, itineraries, responsible, reviews, map, faqs, sources,
+} from '../data/content';
+import { imageSources, mapsEmbedSrc, MAPS_SHARE_URL, GOVT_TOURISM_URL, NATIONAL_TOURISM_URL, REVIEW_SYNC_PERIOD } from '../data/site';
+import WeatherModule from './WeatherModule.astro';
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+
+const h = hero[locale];
+const a = about[locale];
+const g = galleryCaptions[locale];
+const hi = history[locale];
+const v = visit[locale];
+const d = directions[locale];
+const gh = gettingHere[locale];
+const f = food[locale];
+const n = nearby[locale];
+const s = services[locale];
+const se = seasons[locale];
+const it = itineraries[locale];
+const r = responsible[locale];
+const rv = reviews[locale];
+const m = map[locale];
+const faqList = faqs[locale];
+const sc = sources[locale];
+const period = REVIEW_SYNC_PERIOD[locale];
+---
+
+<!-- HERO -->
+<section class="relative overflow-hidden bg-gradient-to-b from-teal-50 to-white">
+  <div class="mx-auto max-w-5xl px-4 py-14 md:py-20">
+    <div class="grid items-center gap-10 md:grid-cols-2">
+      <div>
+        <span class="inline-flex items-center rounded-full bg-teal-100 px-3 py-1 text-xs font-medium text-teal-800">{h.badge}</span>
+        <h1 class="mt-4 text-3xl font-extrabold leading-tight text-slate-900 md:text-4xl">
+          {h.titleName} <span class="text-teal-700">{h.titleCity}</span>
+        </h1>
+        <p class="mt-3 text-lg text-slate-600">{h.titleSub}</p>
+        <p class="mt-4 text-base leading-relaxed text-slate-700">{h.lead}</p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href={`#visit`} class="rounded-lg bg-teal-700 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-teal-800">{h.ctaPlan}</a>
+          <a href={`#map`} class="rounded-lg border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50">{h.ctaMap}</a>
+        </div>
+      </div>
+      <aside class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div class="grid grid-cols-2 gap-4 text-sm">
+          <div>
+            <p class="text-slate-400">{h.quick.rating}</p>
+            <p class="text-2xl font-bold text-slate-900">3.7 <span class="text-sm text-amber-500">★</span></p>
+            <p class="text-xs text-slate-400">{h.quick.reviews} 18,853</p>
+          </div>
+          <div>
+            <p class="text-slate-400">{h.quick.free}</p>
+            <p class="text-lg font-semibold text-slate-900">Free</p>
+            <p class="text-xs text-slate-400">{h.quick.time} 30–60 min</p>
+          </div>
+          <div class="col-span-2 border-t border-slate-100 pt-3">
+            <p class="text-slate-400">{h.quick.hours}</p>
+            <p class="font-semibold text-slate-900">{h.quick.hoursValue}</p>
+            <p class="mt-1 text-[11px] text-slate-400">{h.quick.mapsNote} · {period}</p>
+          </div>
+        </div>
+        <p class="mt-3 text-[11px] leading-snug text-slate-400">{h.quick.ratingNote}</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="mx-auto max-w-5xl px-4 py-14">
+  <p class="text-xs font-semibold uppercase tracking-wide text-teal-700">{a.label}</p>
+  <h2 class="mt-2 text-2xl font-bold text-slate-900 md:text-3xl">{a.title}</h2>
+  <div class="mt-6 grid gap-8 md:grid-cols-2">
+    <div class="space-y-4 text-slate-700">
+      <p>{a.p1}</p>
+      <p>{a.p2}</p>
+      <p>{a.p3}</p>
+    </div>
+    <figure class="overflow-hidden rounded-xl border border-slate-200">
+      <img src={imageSources[0].src} alt={imageSources[0].altEn} loading="lazy" decoding="async" class="h-64 w-full object-cover" />
+      <figcaption class="bg-slate-50 px-3 py-2 text-xs text-slate-500">{g[0]} · <a href={imageSources[0].href} class="underline hover:text-teal-700" target="_blank" rel="noopener">Wikimedia</a> · {imageSources[0].credit}</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="mx-auto max-w-5xl px-4 pb-14">
+  <div class="grid grid-cols-2 gap-3 md:grid-cols-4">
+    {imageSources.slice(0, 4).map((img, i) => (
+      <figure class="overflow-hidden rounded-xl border border-slate-200">
+        <img src={img.src} alt={img.altEn} loading="lazy" decoding="async" class="h-40 w-full object-cover" />
+        <figcaption class="truncate bg-slate-50 px-2 py-1 text-[11px] text-slate-500">{g[i]}</figcaption>
+      </figure>
+    ))}
+  </div>
+</section>
+
+<!-- HISTORY -->
+<section id="history" class="border-y border-slate-200 bg-slate-50">
+  <div class="mx-auto max-w-5xl px-4 py-14">
+    <p class="text-xs font-semibold uppercase tracking-wide text-teal-700">{hi.label}</p>
+    <h2 class="mt-2 text-2xl font-bold text-slate-900 md:text-3xl">{hi.title}</h2>
+    <div class="mt-6 space-y-4 text-slate-700">
+      <p>{hi.p1}</p>
+      <p>{hi.p2}</p>
+      <p>{hi.p3}</p>
+      <h3 class="pt-2 text-lg font-semibold text-slate-900">{hi.sub}</h3>
+      <div class="rounded-lg border-l-4 border-teal-600 bg-white p-4 text-sm text-slate-600">
+        <p class="font-semibold text-slate-800">{hi.legendTitle}</p>
+        <p class="mt-1">{hi.legendText}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISIT -->
+<section id="visit" class="mx-auto max-w-5xl px-4 py-14">
+  <p class="text-xs font-semibold uppercase tracking-wide text-teal-700">{v.label}</p>
+  <h2 class="mt-2 text-2xl font-bold text-slate-900 md:text-3xl">{v.title}</h2>
+  <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    {v.cards.map((c) => (
+      <div class="rounded-xl border border-slate-200 p-4">
+        <h3 class="font-semibold text-slate-900">{c.title}</h3>
+        <p class="mt-2 text-sm text-slate-600">{c.text}</p>
+      </div>
+    ))}
+  </div>
+  <div class="mt-6 grid gap-4 md:grid-cols-2">
+    <div class="rounded-xl bg-teal-50 p-4">
+      <p class="text-sm font-semibold text-teal-900">{v.hoursLabel}</p>
+      <p class="mt-1 text-lg font-bold text-slate-900">{v.hoursValue}</p>
+      <p class="mt-1 text-xs text-slate-500">{v.hoursNote}</p>
+    </div>
+    <div class="rounded-xl border border-amber-200 bg-amber-50 p-4">
+      <h3 class="text-sm font-semibold text-amber-900">ℹ️</h3>
+      <p class="mt-1 text-sm text-slate-700">{v.note}</p>
+    </div>
+  </div>
+</section>
+
+<!-- DIRECTIONS -->
+<section id="directions" class="border-y border-slate-200 bg-slate-50">
+  <div class="mx-auto max-w-5xl px-4 py-14">
+    <p class="text-xs font-semibold uppercase tracking-wide text-teal-700">{d.label}</p>
+    <h2 class="mt-2 text-2xl font-bold text-slate-900 md:text-3xl">{d.title}</h2>
+    <div class="mt-6 grid gap-4 md:grid-cols-3">
+      {d.articles.map((art) => (
+        <div class="rounded-xl border border-slate-200 bg-white p-4">
+          <h3 class="font-semibold text-slate-900">{art.title}</h3>
+          <p class="mt-2 text-sm text-slate-600">{art.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- WEATHER -->
+<section id="weather" class="mx-auto max-w-5xl px-4 py-14">
+  <WeatherModule locale={locale} />
+</section>
+
+<!-- GETTING HERE -->
+<section id="getting-here" class="border-y border-slate-200 bg-slate-50">
+  <div class="mx-auto max-w-5xl px-4 py-14">
+    <p class="text-xs font-semibold uppercase tracking-wide text-teal-700">{gh.label}</p>
+    <h2 class="mt-2 text-2xl font-bold text-slate-900 md:text-3xl">{gh.title}</h2>
+    <div class="mt-6 space-y-6">
+      {gh.articles.map((art) => (
+        <div class="rounded-xl border border-slate-200 bg-white p-5">
+          <h3 class="font-semibold text-slate-900">{art.title}</h3>
+          <p class="mt-2 text-sm text-slate-600">{art.text}</p>
+          {art.list.length > 0 && (
+            <ul class="mt-3 list-disc space-y-1 pl-5 text-sm text-slate-600">
+              {art.list.map((li) => <li>{li}</li>)}
+            </ul>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- FOOD -->
+<section id="food" class="mx-auto max-w-5xl px-4 py-14">
+  <p class="text-xs font-semibold uppercase tracking-wide text-teal-700">{f.label}</p>
+  <h2 class="mt-2 text-2xl font-bold text-slate-900 md:text-3xl">{f.title}</h2>
+  <div class="mt-6 grid gap-4 md:grid-cols-3">
+    {f.cards.map((c) => (
+      <div class="rounded-xl border border-slate-200 p-4">
+        <p class="text-xs font-semibold uppercase tracking-wide text-teal-700">{c.kicker}</p>
+        <h3 class="mt-1 font-semibold text-slate-900">{c.title}</h3>
+        <p class="mt-2 text-sm text-slate-600">{c.text}</p>
+      </div>
+    ))}
+  </div>
+  <p class="mt-4 text-xs text-slate-400">{f.note}</p>
+</section>
+
+<!-- NEARBY -->
+<section id="nearby" class="border-y border-slate-200 bg-slate-50">
+  <div class="mx-auto max-w-5xl px-4 py-14">
+    <p class="text-xs font-semibold uppercase tracking-wide text-teal-700">{n.label}</p>
+    <h2 class="mt-2 text-2xl font-bold text-slate-900 md:text-3xl">{n.title}</h2>
+    <p class="mt-3 max-w-3xl text-slate-600">{n.intro}</p>
+    <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {n.cards.map((c) => (
+        <div class="rounded-xl border border-slate-200 bg-white p-4">
+          <h3 class="font-semibold text-slate-900">{c.title}</h3>
+          <p class="mt-2 text-sm text-slate-600">{c.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="mx-auto max-w-5xl px-4 py-14">
+  <p class="text-xs font-semibold uppercase tracking-wide text-teal-700">{s.label}</p>
+  <h2 class="mt-2 text-2xl font-bold text-slate-900 md:text-3xl">{s.title}</h2>
+  <p class="mt-3 max-w-3xl text-sm text-slate-600">{s.intro}</p>
+  <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {s.cards.map((c) => (
+      <div class="rounded-xl border border-slate-200 p-4">
+        <div class="text-2xl">{c.icon}</div>
+        <h3 class="mt-2 font-semibold text-slate-900">{c.title}</h3>
+        <p class="mt-2 text-sm text-slate-600">{c.text}</p>
+      </div>
+    ))}
+  </div>
+</section>
+
+<!-- SEASONS -->
+<section id="seasons" class="border-y border-slate-200 bg-slate-50">
+  <div class="mx-auto max-w-5xl px-4 py-14">
+    <p class="text-xs font-semibold uppercase tracking-wide text-teal-700">{se.label}</p>
+    <h2 class="mt-2 text-2xl font-bold text-slate-900 md:text-3xl">{se.title}</h2>
+    <p class="mt-3 max-w-3xl text-slate-600">{se.intro}</p>
+    <div class="mt-6 overflow-hidden rounded-xl border border-slate-200">
+      <table class="w-full text-left text-sm">
+        <thead class="bg-teal-700 text-white">
+          <tr>
+            <th class="px-4 py-2 font-semibold">{se.label}</th>
+            <th class="px-4 py-2 font-semibold">Weather</th>
+            <th class="px-4 py-2 font-semibold">Advice</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200 bg-white">
+          {se.rows.map((row) => (
+            <tr>
+              <td class="px-4 py-2 font-medium text-slate-900">{row.period}</td>
+              <td class="px-4 py-2 text-slate-600">{row.weather}</td>
+              <td class="px-4 py-2 text-slate-600">{row.advice}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="mt-3 text-xs text-slate-400">{se.note}</p>
+  </div>
+</section>
+
+<!-- ITINERARIES -->
+<section id="itineraries" class="mx-auto max-w-5xl px-4 py-14">
+  <p class="text-xs font-semibold uppercase tracking-wide text-teal-700">{it.label}</p>
+  <h2 class="mt-2 text-2xl font-bold text-slate-900 md:text-3xl">{it.title}</h2>
+  <div class="mt-6 grid gap-4 md:grid-cols-3">
+    {it.cards.map((c) => (
+      <div class="rounded-xl border border-slate-200 p-4">
+        <p class="text-xs font-semibold uppercase tracking-wide text-teal-700">{c.kicker}</p>
+        <h3 class="mt-1 font-semibold text-slate-900">{c.title}</h3>
+        <p class="mt-2 text-sm text-slate-600">{c.text}</p>
+      </div>
+    ))}
+  </div>
+  <div class="mt-6 grid gap-4 md:grid-cols-2">
+    <div class="rounded-xl bg-teal-50 p-4">
+      <h3 class="font-semibold text-teal-900">{it.halfDay.title}</h3>
+      <p class="mt-1 text-sm text-slate-700">{it.halfDay.text}</p>
+    </div>
+    <div class="rounded-xl border border-slate-200 p-4">
+      <h3 class="font-semibold text-slate-900">{it.fullDay.title}</h3>
+      <p class="mt-1 text-sm text-slate-700">{it.fullDay.text}</p>
+    </div>
+  </div>
+</section>
+
+<!-- RESPONSIBLE -->
+<section id="responsible" class="border-y border-slate-200 bg-slate-50">
+  <div class="mx-auto max-w-5xl px-4 py-14">
+    <p class="text-xs font-semibold uppercase tracking-wide text-teal-700">{r.label}</p>
+    <h2 class="mt-2 text-2xl font-bold text-slate-900 md:text-3xl">{r.title}</h2>
+    <p class="mt-3 max-w-3xl text-slate-600">{r.intro}</p>
+    <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {r.cards.map((c) => (
+        <div class="rounded-xl border border-slate-200 bg-white p-4">
+          <h3 class="font-semibold text-slate-900">{c.title}</h3>
+          <p class="mt-2 text-sm text-slate-600">{c.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews" class="mx-auto max-w-5xl px-4 py-14">
+  <p class="text-xs font-semibold uppercase tracking-wide text-teal-700">{rv.label}</p>
+  <h2 class="mt-2 text-2xl font-bold text-slate-900 md:text-3xl">{rv.title}</h2>
+  <p class="mt-2 text-slate-600">{rv.intro}</p>
+  <div class="mt-4 flex flex-wrap items-center gap-3">
+    <span class="text-3xl font-extrabold text-slate-900">3.7 <span class="text-amber-500">★</span></span>
+    <span class="rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-600">18,853 {rv.label}</span>
+  </div>
+  <p class="mt-2 text-[11px] text-slate-400">{rv.ratingNote}</p>
+  <ul class="mt-4 grid gap-2 sm:grid-cols-2">
+    {rv.topics.map((t) => (
+      <li class="flex items-start gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-600">
+        <span class="mt-0.5 text-teal-600">✓</span><span>{t}</span>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<!-- MAP -->
+<section id="map" class="border-y border-slate-200 bg-slate-50">
+  <div class="mx-auto max-w-5xl px-4 py-14">
+    <p class="text-xs font-semibold uppercase tracking-wide text-teal-700">{m.label}</p>
+    <h2 class="mt-2 text-2xl font-bold text-slate-900 md:text-3xl">{m.title}</h2>
+    <div class="mt-6 overflow-hidden rounded-xl border border-slate-200">
+      <iframe title={m.title} src={mapsEmbedSrc(localeMeta(locale).mapsHl)} loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="h-80 w-full border-0"></iframe>
+    </div>
+    <p class="mt-2 text-xs text-slate-400">{m.note}</p>
+    <div class="mt-4 flex flex-wrap gap-3 text-xs">
+      <a href={GOVT_TOURISM_URL} class="rounded-lg border border-slate-300 px-3 py-1.5 text-slate-600 hover:bg-white" target="_blank" rel="noopener">{m.govtLabel} ↗</a>
+      <a href={NATIONAL_TOURISM_URL} class="rounded-lg border border-slate-300 px-3 py-1.5 text-slate-600 hover:bg-white" target="_blank" rel="noopener">{m.nationalLabel} ↗</a>
+      <a href={MAPS_SHARE_URL} class="rounded-lg border border-slate-300 px-3 py-1.5 text-slate-600 hover:bg-white" target="_blank" rel="noopener">Google Maps ↗</a>
+    </div>
+    <p class="mt-3 text-[11px] text-slate-400">{m.footer}</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="mx-auto max-w-3xl px-4 py-14">
+  <h2 class="text-2xl font-bold text-slate-900 md:text-3xl">FAQ</h2>
+  <div class="mt-6 divide-y divide-slate-200 border-y border-slate-200">
+    {faqList.map((item) => (
+      <details class="py-3">
+        <summary class="cursor-pointer font-medium text-slate-900">{item.q}</summary>
+        <p class="mt-2 text-sm text-slate-600">{item.a}</p>
+      </details>
+    ))}
+  </div>
+</section>
+
+<!-- SOURCES -->
+<section id="sources" class="border-t border-slate-200 bg-slate-50">
+  <div class="mx-auto max-w-5xl px-4 py-10 text-xs text-slate-500">
+    <h2 class="text-sm font-semibold text-slate-700">{sc.title}</h2>
+    <p class="mt-2">{sc.intro}</p>
+    <div class="mt-3 grid gap-3 sm:grid-cols-2">
+      <div class="rounded-lg border border-slate-200 bg-white p-3">
+        <p class="font-semibold text-slate-700">{sc.reviewsKicker}</p>
+        <p>{sc.reviewsText}</p>
+      </div>
+      <div class="rounded-lg border border-slate-200 bg-white p-3">
+        <p class="font-semibold text-slate-700">{sc.placeKicker}</p>
+        <p>{sc.placeText}</p>
+      </div>
+    </div>
+    <p class="mt-3">{sc.footer}</p>
+  </div>
+</section>

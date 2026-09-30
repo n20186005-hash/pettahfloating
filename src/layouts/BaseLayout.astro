@@ -1,0 +1,153 @@
+---
+import { LOCALES, localeMeta, hreflangAlternates, localizedPath, type Locale } from '../i18n';
+import { SITE_URL } from '../config';
+import { SITE_NAME, MAPS_SHARE_URL, GOVT_TOURISM_URL, NATIONAL_TOURISM_URL } from '../data/site';
+import { ui } from '../data/content';
+
+interface Props {
+  locale: Locale;
+  basePath?: string;
+  title: string;
+  description: string;
+  jsonLd: Record<string, unknown>[] | Record<string, unknown>;
+}
+
+const { locale, basePath = '/', title, description, jsonLd } = Astro.props;
+const meta = localeMeta(locale);
+const canonical = SITE_URL.replace(/\/$/, '') + localizedPath(locale, basePath);
+const alternates = hreflangAlternates(SITE_URL, basePath);
+const u = ui[locale];
+const langSwitcher = LOCALES.map((l) => ({
+  code: l.code,
+  label: l.label,
+  short: l.shortLabel,
+  href: SITE_URL.replace(/\/$/, '') + (l.code === 'en' ? '/' : `/${l.code}/`),
+  current: l.code === locale,
+}));
+
+const jsonLdArr = Array.isArray(jsonLd) ? jsonLd : [jsonLd];
+const GA_ID = 'G-HXM22WWPKP';
+---
+
+<!doctype html>
+<html lang={meta.htmlLang} dir={meta.dir}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {alternates.map((a) => (
+      <link rel="alternate" hreflang={a.hreflang} href={a.href} />
+    ))}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE_NAME[locale]} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={meta.ogLocale} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="theme-color" content="#0f766e" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    {jsonLdArr.map((j) => (
+      <script type="application/ld+json" set:html={JSON.stringify(j)} />
+    ))}
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <link rel="preconnect" href="https://www.google.com" />
+    <link rel="dns-prefetch" href="https://www.google.com" />
+    <link rel="preconnect" href="https://api.open-meteo.com" />
+  </head>
+  <body class="min-h-screen bg-white text-slate-800 antialiased">
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:m-2 focus:rounded focus:bg-white focus:px-3 focus:py-2 focus:text-sm focus:text-slate-900">{u.skip}</a>
+
+    <header class="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur">
+      <div class="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-3">
+        <a href={langSwitcher[0].href} class="flex flex-col leading-tight">
+          <span class="text-sm font-bold text-slate-900 md:text-base">Pettah Floating Market</span>
+          <span class="text-[11px] text-slate-500">Colombo · Beira Lake</span>
+        </a>
+
+        <nav class="hidden items-center gap-4 text-sm text-slate-600 md:flex" aria-label="primary">
+          <a href={`#about`} class="hover:text-slate-900">{u.navAbout}</a>
+          <a href={`#weather`} class="hover:text-slate-900">{u.navWeather}</a>
+          <a href={`#getting-here`} class="hover:text-slate-900">{u.navGettingHere}</a>
+          <a href={`#services`} class="hover:text-slate-900">{u.navServices}</a>
+          <a href={`#nearby`} class="hover:text-slate-900">{u.navNearby}</a>
+          <a href={`#faq`} class="hover:text-slate-900">{u.navFaq}</a>
+        </nav>
+
+        <div class="flex items-center gap-1 rounded-full border border-slate-200 p-0.5 text-xs" role="group" aria-label={u.language}>
+          {langSwitcher.map((l) => (
+            <a
+              href={l.href}
+              hreflang={l.code === 'en' ? 'en' : l.code}
+              aria-current={l.current ? 'true' : undefined}
+              class={`rounded-full px-2.5 py-1 transition ${l.current ? 'bg-teal-700 text-white' : 'text-slate-600 hover:bg-slate-100'}`}
+              title={l.label}
+            >{l.short}</a>
+          ))}
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="mt-16 border-t border-slate-200 bg-slate-50">
+      <div class="mx-auto grid max-w-5xl gap-8 px-4 py-10 sm:grid-cols-2 md:grid-cols-4">
+        <div>
+          <h3 class="text-sm font-semibold text-slate-900">Pettah Floating Market</h3>
+          <p class="mt-2 text-xs leading-relaxed text-slate-500">W E Bastian Mawatha, Colombo 01000, Sri Lanka · Beira Lake</p>
+          <a href={MAPS_SHARE_URL} class="mt-2 inline-block text-xs text-teal-700 hover:underline" target="_blank" rel="noopener">{u.googleMaps} ↗</a>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold text-slate-900">{u.navAbout}</h3>
+          <ul class="mt-2 space-y-1 text-xs text-slate-500">
+            <li><a href={`#history`} class="hover:text-slate-900">{u.navAbout}</a></li>
+            <li><a href={`#seasons`} class="hover:text-slate-900">{u.navSeasons}</a></li>
+            <li><a href={`#itineraries`} class="hover:text-slate-900">{u.navItineraries}</a></li>
+            <li><a href={`#responsible`} class="hover:text-slate-900">{u.navReviews}</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold text-slate-900">{u.navGettingHere}</h3>
+          <ul class="mt-2 space-y-1 text-xs text-slate-500">
+            <li><a href={`#directions`} class="hover:text-slate-900">{u.navGettingHere}</a></li>
+            <li><a href={`#services`} class="hover:text-slate-900">{u.navServices}</a></li>
+            <li><a href={`#food`} class="hover:text-slate-900">{u.navFood}</a></li>
+            <li><a href={`#map`} class="hover:text-slate-900">{u.navMap}</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold text-slate-900">Official</h3>
+          <ul class="mt-2 space-y-1 text-xs text-slate-500">
+            <li><a href={GOVT_TOURISM_URL} class="hover:text-slate-900" target="_blank" rel="noopener">UDA Sri Lanka ↗</a></li>
+            <li><a href={NATIONAL_TOURISM_URL} class="hover:text-slate-900" target="_blank" rel="noopener">Sri Lanka Tourism ↗</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-slate-200 py-4 text-center text-[11px] text-slate-400">
+        © 2026 {SITE_NAME[locale]}
+      </div>
+    </footer>
+
+    <script is:inline>
+      (function () {
+        if (document.cookie.indexOf('gtag_consent=granted') === -1) return;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-HXM22WWPKP';
+        document.head.appendChild(s);
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-HXM22WWPKP');
+      })();
+    </script>
+  </body>
+</html>

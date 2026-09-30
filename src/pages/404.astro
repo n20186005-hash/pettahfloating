@@ -1,28 +1,43 @@
 ---
-import '../styles/global.css';
+// Self-contained 404 (no external assets). Served by the Worker when a path is not found.
 ---
 <!doctype html>
-<html lang="si">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width" />
-  <meta name="robots" content="noindex" />
-  <meta name="theme-color" content="#113f3e" />
-  <title>පිටුව හමු නොවීය</title>
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
-  <link rel="manifest" href="/manifest.webmanifest" />
-  <script is:inline>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
-        navigator.serviceWorker.register('/sw.js').catch(function () {});
-      });
-    }
-  </script>
-</head>
-<body class="grid min-h-screen place-items-center bg-lagoon-950 px-6 text-white">
-  <main class="max-w-xl text-center"><img src="/favicon.svg" width="88" height="88" alt="" class="mx-auto mb-8" /><p class="text-sm font-black uppercase tracking-[.2em] text-sun-400">404</p><h1 class="mt-4 text-5xl font-black">මෙම පාර ජලයට ගියා වගේ.</h1><p class="mt-5 leading-7 text-lagoon-100/75">ඔබ සොයන පිටුව නොමැත.</p><a href="/" class="mt-8 inline-flex rounded-full bg-sun-400 px-6 py-3 font-black text-lagoon-950">මුල් පිටුවට යන්න</a></main>
-</body>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Page not found · Pettah Floating Market</title>
+    <style>
+      :root { color-scheme: light; }
+      body {
+        margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+        background: #f0fdfa; color: #0f172a; padding: 1.5rem;
+        font-family: "Noto Sans", "Noto Sans Sinhala", "Noto Sans Tamil", "Noto Sans SC", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+      }
+      .card { text-align: center; max-width: 34rem; }
+      .badge { letter-spacing: .2em; text-transform: uppercase; color: #0d9488; font-weight: 700; font-size: .75rem; }
+      h1 { font-size: 2rem; margin: .75rem 0; }
+      p { color: #475569; line-height: 1.65; }
+      a.btn { display: inline-block; margin-top: 1.25rem; background: #0f766e; color: #fff; padding: .65rem 1.4rem; border-radius: 9999px; text-decoration: none; font-weight: 600; }
+      a.btn:hover { background: #115e59; }
+      .langs { margin-top: 1.5rem; font-size: .8rem; color: #64748b; }
+      .langs a { color: #0f766e; text-decoration: none; padding: 0 .35rem; font-weight: 500; }
+      .langs a:hover { text-decoration: underline; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <p class="badge">404</p>
+      <h1>Page not found</h1>
+      <p>The page you are looking for could not be found. Return to the Pettah Floating Market visitor guide.</p>
+      <a class="btn" href="/">Back to home</a>
+      <p class="langs">
+        <a href="/">English</a> ·
+        <a href="/si/">සිංහල</a> ·
+        <a href="/ta/">தமிழ்</a> ·
+        <a href="/zh/">中文</a>
+      </p>
+    </div>
+  </body>
 </html>

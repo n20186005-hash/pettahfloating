@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Noto Sans Sinhala", "Iskoola Pota", "Nirmala UI", system-ui, sans-serif;
+  --font-sans: "Noto Sans", "Noto Sans Sinhala", "Noto Sans Tamil", "Noto Sans SC", "Iskoola Pota", "Nirmala UI", system-ui, -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
   --color-lagoon-950: #092c2c;
   --color-lagoon-900: #113f3e;
   --color-lagoon-700: #286d68;

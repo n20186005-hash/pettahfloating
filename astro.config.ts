@@ -2,12 +2,21 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
-// එකම canonical URL සැකසුම. Domain එක තීරණය වූ පසු මෙහි පමණක් URL එක දමන්න.
+// Single canonical site URL. Only set the URL here once the domain is decided.
 const SITE = 'https://pettahfloating.com';
 
 export default defineConfig({
   site: SITE || undefined,
-  integrations: SITE ? [sitemap()] : [],
+  integrations: SITE
+    ? [
+        sitemap({
+          i18n: {
+            defaultLocale: 'en',
+            locales: { en: 'en', si: 'si-LK', ta: 'ta-LK', zh: 'zh-Hans' },
+          },
+        }),
+      ]
+    : [],
   vite: {
     plugins: [tailwindcss()],
   },
