@@ -5,7 +5,7 @@ import {
   hero, about, galleryCaptions, history, visit, directions, gettingHere,
   food, nearby, services, seasons, itineraries, responsible, reviews, map, faqs, sources,
 } from '../data/content';
-import { imageSources, mapsEmbedSrc, MAPS_SHARE_URL, GOVT_TOURISM_URL, NATIONAL_TOURISM_URL, REVIEW_SYNC_PERIOD } from '../data/site';
+import { imageSources, mapsEmbedSrc, MAPS_SHARE_URL, GOVT_TOURISM_URL, NATIONAL_TOURISM_URL } from '../data/site';
 import WeatherModule from './WeatherModule.astro';
 
 interface Props { locale: Locale; }
@@ -28,7 +28,6 @@ const rv = reviews[locale];
 const m = map[locale];
 const faqList = faqs[locale];
 const sc = sources[locale];
-const period = REVIEW_SYNC_PERIOD[locale];
 ---
 
 <!-- HERO -->
@@ -50,22 +49,22 @@ const period = REVIEW_SYNC_PERIOD[locale];
       <aside class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
         <div class="grid grid-cols-2 gap-4 text-sm">
           <div>
-            <p class="text-slate-400">{h.quick.rating}</p>
+            <p class="text-slate-600">{h.quick.rating}</p>
             <p class="text-2xl font-bold text-slate-900">3.7 <span class="text-sm text-amber-500">★</span></p>
-            <p class="text-xs text-slate-400">{h.quick.reviews} 18,853</p>
+            <p class="text-sm text-slate-600">{h.quick.reviews} 18,912</p>
           </div>
           <div>
-            <p class="text-slate-400">{h.quick.free}</p>
-            <p class="text-lg font-semibold text-slate-900">Free</p>
-            <p class="text-xs text-slate-400">{h.quick.time} 30–60 min</p>
+            <p class="text-slate-600">{h.quick.free}</p>
+            <p class="text-sm text-slate-700">{v.cards[0].text}</p>
+            <p class="text-xs text-slate-600">{h.quick.time}</p>
           </div>
           <div class="col-span-2 border-t border-slate-100 pt-3">
-            <p class="text-slate-400">{h.quick.hours}</p>
+            <p class="text-slate-600">{h.quick.hours}</p>
             <p class="font-semibold text-slate-900">{h.quick.hoursValue}</p>
-            <p class="mt-1 text-[11px] text-slate-400">{h.quick.mapsNote} · {period}</p>
+            <p class="mt-2 text-sm leading-relaxed text-slate-700">{h.quick.hoursNote}</p>
           </div>
         </div>
-        <p class="mt-3 text-[11px] leading-snug text-slate-400">{h.quick.ratingNote}</p>
+        <p class="mt-4 border-t border-slate-200 pt-3 text-sm leading-relaxed text-slate-700">{h.quick.ratingNote}</p>
       </aside>
     </div>
   </div>
@@ -82,8 +81,8 @@ const period = REVIEW_SYNC_PERIOD[locale];
       <p>{a.p3}</p>
     </div>
     <figure class="overflow-hidden rounded-xl border border-slate-200">
-      <img src={imageSources[0].src} alt={imageSources[0].altEn} loading="lazy" decoding="async" class="h-64 w-full object-cover" />
-      <figcaption class="bg-slate-50 px-3 py-2 text-xs text-slate-500">{g[0]} · <a href={imageSources[0].href} class="underline hover:text-teal-700" target="_blank" rel="noopener">Wikimedia</a> · {imageSources[0].credit}</figcaption>
+      <img src={imageSources[0].src} alt={g[0]} width="1200" height="800" loading="lazy" decoding="async" class="h-64 w-full object-cover" />
+      <figcaption class="bg-slate-50 px-3 py-2 text-xs text-slate-500">{g[0]} · <a href={imageSources[0].href} class="underline hover:text-teal-700" target="_blank" rel="noopener">CC0</a> · {imageSources[0].credit}</figcaption>
     </figure>
   </div>
 </section>
@@ -93,8 +92,8 @@ const period = REVIEW_SYNC_PERIOD[locale];
   <div class="grid grid-cols-2 gap-3 md:grid-cols-4">
     {imageSources.slice(0, 4).map((img, i) => (
       <figure class="overflow-hidden rounded-xl border border-slate-200">
-        <img src={img.src} alt={img.altEn} loading="lazy" decoding="async" class="h-40 w-full object-cover" />
-        <figcaption class="truncate bg-slate-50 px-2 py-1 text-[11px] text-slate-500">{g[i]}</figcaption>
+        <img src={img.src} alt={g[i]} width="1200" height="800" loading="lazy" decoding="async" class="h-40 w-full object-cover" />
+        <figcaption class="bg-slate-50 px-2 py-1 text-[11px] text-slate-500">{g[i]} · <a href={img.href} class="underline">{img.credit}</a></figcaption>
       </figure>
     ))}
   </div>
@@ -240,13 +239,13 @@ const period = REVIEW_SYNC_PERIOD[locale];
     <p class="text-xs font-semibold uppercase tracking-wide text-teal-700">{se.label}</p>
     <h2 class="mt-2 text-2xl font-bold text-slate-900 md:text-3xl">{se.title}</h2>
     <p class="mt-3 max-w-3xl text-slate-600">{se.intro}</p>
-    <div class="mt-6 overflow-hidden rounded-xl border border-slate-200">
+    <div class="mt-6 overflow-x-auto rounded-xl border border-slate-200">
       <table class="w-full text-left text-sm">
         <thead class="bg-teal-700 text-white">
           <tr>
             <th class="px-4 py-2 font-semibold">{se.label}</th>
-            <th class="px-4 py-2 font-semibold">Weather</th>
-            <th class="px-4 py-2 font-semibold">Advice</th>
+            <th class="px-4 py-2 font-semibold">{({en:'Weather',si:'කාලගුණය',ta:'வானிலை',zh:'天气'})[locale]}</th>
+            <th class="px-4 py-2 font-semibold">{({en:'Advice',si:'උපදෙස්',ta:'ஆலோசனை',zh:'建议'})[locale]}</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-slate-200 bg-white">
@@ -313,7 +312,7 @@ const period = REVIEW_SYNC_PERIOD[locale];
   <p class="mt-2 text-slate-600">{rv.intro}</p>
   <div class="mt-4 flex flex-wrap items-center gap-3">
     <span class="text-3xl font-extrabold text-slate-900">3.7 <span class="text-amber-500">★</span></span>
-    <span class="rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-600">18,853 {rv.label}</span>
+    <span class="rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-600">18,912 {rv.label}</span>
   </div>
   <p class="mt-2 text-[11px] text-slate-400">{rv.ratingNote}</p>
   <ul class="mt-4 grid gap-2 sm:grid-cols-2">
@@ -372,5 +371,11 @@ const period = REVIEW_SYNC_PERIOD[locale];
       </div>
     </div>
     <p class="mt-3">{sc.footer}</p>
+    <ul class="mt-3 list-disc pl-5 space-y-2">
+      <li><a class="underline" href={GOVT_TOURISM_URL}>UDA — facility, event-reservation contact and separate event tariffs</a></li>
+      <li><a class="underline" href={NATIONAL_TOURISM_URL}>Sri Lanka Tourism — attraction listing</a></li>
+      <li><a class="underline" href="https://www.newswire.lk/2026/05/16/only-16-of-92-floating-market-shops-still-operating-inspection-finds/">Newswire — 16 May 2026 inspection report</a></li>
+      <li><a class="underline" href="https://www.sundaytimes.lk/260628/news/colombos-big-stink-floating-market-revival-throws-up-varied-challenges-647393.html">Sunday Times — 28 June 2026 condition report</a></li>
+    </ul>
   </div>
 </section>

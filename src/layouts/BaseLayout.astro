@@ -1,7 +1,9 @@
 ---
+import '../styles/global.css';
 import { LOCALES, localeMeta, hreflangAlternates, localizedPath, type Locale } from '../i18n';
 import { SITE_URL } from '../config';
 import { SITE_NAME, MAPS_SHARE_URL, GOVT_TOURISM_URL, NATIONAL_TOURISM_URL } from '../data/site';
+import { privacy } from '../data/privacy';
 import { ui } from '../data/content';
 
 interface Props {
@@ -26,7 +28,6 @@ const langSwitcher = LOCALES.map((l) => ({
 }));
 
 const jsonLdArr = Array.isArray(jsonLd) ? jsonLd : [jsonLd];
-const GA_ID = 'G-HXM22WWPKP';
 ---
 
 <!doctype html>
@@ -45,33 +46,35 @@ const GA_ID = 'G-HXM22WWPKP';
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={`${SITE_URL}/images/social.png`} />
     <meta property="og:locale" content={meta.ogLocale} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={`${SITE_URL}/images/social.png`} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="theme-color" content="#0f766e" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="manifest" href="/manifest.webmanifest" />
     {jsonLdArr.map((j) => (
-      <script type="application/ld+json" set:html={JSON.stringify(j)} />
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(j)} />
     ))}
     <link rel="preconnect" href="https://www.googletagmanager.com" />
     <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
     <link rel="preconnect" href="https://www.google.com" />
     <link rel="dns-prefetch" href="https://www.google.com" />
-    <link rel="preconnect" href="https://api.open-meteo.com" />
+
   </head>
   <body class="min-h-screen bg-white text-slate-800 antialiased">
     <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:m-2 focus:rounded focus:bg-white focus:px-3 focus:py-2 focus:text-sm focus:text-slate-900">{u.skip}</a>
 
     <header class="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur">
-      <div class="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-3">
+      <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-3">
         <a href={langSwitcher[0].href} class="flex flex-col leading-tight">
           <span class="text-sm font-bold text-slate-900 md:text-base">Pettah Floating Market</span>
           <span class="text-[11px] text-slate-500">Colombo · Beira Lake</span>
         </a>
 
-        <nav class="hidden items-center gap-4 text-sm text-slate-600 md:flex" aria-label="primary">
+        <nav class="order-3 flex w-full flex-wrap items-center gap-3 text-sm text-slate-600 md:order-none md:w-auto" aria-label="primary">
           <a href={`#about`} class="hover:text-slate-900">{u.navAbout}</a>
           <a href={`#weather`} class="hover:text-slate-900">{u.navWeather}</a>
           <a href={`#getting-here`} class="hover:text-slate-900">{u.navGettingHere}</a>
@@ -98,11 +101,16 @@ const GA_ID = 'G-HXM22WWPKP';
       <slot />
     </main>
 
+    <section id="privacy" class="mx-auto max-w-5xl px-4 py-10 text-sm leading-relaxed">
+      <h2 class="text-xl font-bold">{privacy[locale].title}</h2>
+      {privacy[locale].paragraphs.map((text) => <p class="mt-3">{text}</p>)}
+      <p class="mt-3 flex flex-wrap gap-4"><a class="underline" href="https://developers.cloudflare.com/web-analytics/about/">Cloudflare Web Analytics</a><a class="underline" href="https://developers.cloudflare.com/web-analytics/data-metrics/">Cloudflare metrics</a><a class="underline" href="https://policies.google.com/privacy">Google privacy</a><a class="underline" href="https://open-meteo.com/en/docs">Open-Meteo</a></p>
+    </section>
     <footer class="mt-16 border-t border-slate-200 bg-slate-50">
       <div class="mx-auto grid max-w-5xl gap-8 px-4 py-10 sm:grid-cols-2 md:grid-cols-4">
         <div>
           <h3 class="text-sm font-semibold text-slate-900">Pettah Floating Market</h3>
-          <p class="mt-2 text-xs leading-relaxed text-slate-500">W E Bastian Mawatha, Colombo 01000, Sri Lanka · Beira Lake</p>
+          <p class="mt-2 text-xs leading-relaxed text-slate-500">W E Bastian Mawatha, Colombo, Sri Lanka · Beira Lake</p>
           <a href={MAPS_SHARE_URL} class="mt-2 inline-block text-xs text-teal-700 hover:underline" target="_blank" rel="noopener">{u.googleMaps} ↗</a>
         </div>
         <div>
@@ -132,13 +140,13 @@ const GA_ID = 'G-HXM22WWPKP';
         </div>
       </div>
       <div class="border-t border-slate-200 py-4 text-center text-[11px] text-slate-400">
-        © 2026 {SITE_NAME[locale]}
+        © 2026 {SITE_NAME[locale]} · <a href="#privacy" class="underline">{privacy[locale].title}</a>
       </div>
     </footer>
 
     <script is:inline>
       (function () {
-        if (document.cookie.indexOf('gtag_consent=granted') === -1) return;
+        if (!document.cookie.split(';').some((v) => v.trim() === 'gtag_consent=granted')) return;
         var s = document.createElement('script');
         s.async = true;
         s.src = 'https://www.googletagmanager.com/gtag/js?id=G-HXM22WWPKP';

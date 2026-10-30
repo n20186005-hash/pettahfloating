@@ -1,11 +1,12 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "pettah-floating-market",
+  "name": "pettahfloating",
   "main": "worker.js",
   "compatibility_date": "2026-09-14",
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
+    "run_worker_first": true,
     "not_found_handling": "404-page"
   }
 }

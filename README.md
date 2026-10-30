@@ -1,59 +1,22 @@
-# පිටකොටුව පාවෙන වෙළඳපොළ — Pettah Floating Market
+# Pettah Floating Market independent visitor guide
 
-A Sinhala-first, single-page Astro visitor guide for Pettah Floating Market, Colombo, Sri Lanka.
+Four existing language versions: English `/`, Sinhala `/si/`, Tamil `/ta/`, simplified Chinese `/zh/`.
 
-**Live origin:** `https://pettahfloating.com` (configured in `astro.config.ts`).
+The architecture remains pure-static Astro with Tailwind through Vite. A separate root Worker serves static assets and the same-origin Open-Meteo model-weather endpoint. Node 24.21.0, pnpm 12.4.1 and exact dependency versions are retained. The committed lock and workspace build allowances are authoritative.
 
-> **Delivery status:** This archive is a source candidate, not a QA-accepted production build. The current execution container cannot resolve `registry.npmjs.org`, so a synchronized `pnpm-lock.yaml` could not be generated and the required frozen install / `astro check` / build sequence could not be run here. See `QA-NOTICE.md` and `LOCKFILE-SOURCE.md`. Do not treat the project as production-verified until `scripts/verify-clean.sh` passes in a networked environment.
-
-## Stack
-
-- Astro 7
-- Tailwind CSS 4 via `@tailwindcss/vite`
-- TypeScript 6 (kept within `@astrojs/check`'s supported peer range)
-- pnpm
-- Cloudflare Workers Static Assets
-- GA4: `G-HXM22WWPKP`
-- PWA manifest + offline-first service worker
-
-## Site URL: one configuration point
-
-The domain is already set in `astro.config.ts`:
-
-```ts
-const SITE = 'https://pettahfloating.com';
+```sh
+pnpm install --frozen-lockfile
+npm run check
+npm run build
+npx wrangler dev --ip 127.0.0.1
 ```
 
-Changing `SITE` will also toggle the `@astrojs/sitemap` integration, canonical / Open Graph absolute URLs, and the JSON-LD `@id`/`url` values.
+The observed deployment flow uses `npm run build` then `npx wrangler deploy`; release authorization and independent acceptance are separate from local validation. Do not regenerate the dependency graph to perform a content update.
 
-## Commands
+UDA facility information, event-reservation contact hours, dated Maps information and dated condition reports have different scopes. The guide does not assert a confirmed recurring market schedule, free admission or current availability of all original stalls/facilities. Public Maps values are dated third-party attribution, excluded from rating markup.
 
-A frozen install requires the real synchronized lockfile first. In a networked environment run:
+The public imagery consists of original symbolic vector illustrations, not photographs, maps or proof of present conditions. See `public/images/CREDITS.txt`. Earlier photographs remain in Git history but are retired from delivery.
 
-```bash
-corepack enable
-corepack prepare pnpm@12.4.1 --activate
-pnpm install --lockfile-only
-./scripts/verify-clean.sh
-pnpm deploy
-```
+The privacy section in every language describes hosting, observed independent Cloudflare Web Analytics, the existing cookie-conditioned Google Analytics loader, the map and weather data flow. It does not invent a measurement switch. The retiring service worker removes only this site's old cache namespace and does not intercept requests.
 
-Once `pnpm-lock.yaml` exists and is committed, normal CI should start directly with `CI=1 corepack pnpm install --frozen-lockfile`.
-
-The Cloudflare deployment is a static Astro build served by **Workers Static Assets**, using `assets.directory = ./dist` in `wrangler.jsonc`. No database, authentication, CMS, server rendering, or Worker runtime code is needed.
-
-## Entity-bound SEO highlights
-
-- Domain set to `pettahfloating.com`; canonical, `og:url`, and JSON-LD `url`/`@id` generated automatically.
-- `TouristAttraction` + `LocalBusiness` JSON-LD with `@id`, `image`, `isAccessibleForFree`, `hasMap`, `sameAs`, and `AggregateRating`.
-- `FAQPage` JSON-LD covering English location/free-to-visit questions and Sinhala practical questions.
-- Google Maps rating displayed on the page only (synced 3.7 / 18,836 reviews · September 2026) with clear source attribution; no individual review text is reproduced or injected as structured data.
-- PWA manifest + service worker for offline caching of static assets.
-
-## Images
-
-All four hero/gallery photos are real Pettah Floating Market photographs from Wikimedia Commons under CC BY-SA 4.0. They are self-hosted in `public/images/` so the page does not depend on Wikimedia thumbnail availability. The source/attribution manifest is at `public/images/README.md`.
-
-## Map localization
-
-The embedded Google Map uses `hl=si&gl=lk` for Sinhala / Sri Lanka.
+The weather endpoint validates model age, local forecast dates and numeric fields, bounds edge caching to fifteen minutes, and returns a no-store unavailable response on failure. No forecast is fetched or embedded at build time. Unknown paths and explicit error aliases return true 404/noindex through the Worker; www and HTTP canonical redirects preserve path/query when the request reaches the configured Worker.

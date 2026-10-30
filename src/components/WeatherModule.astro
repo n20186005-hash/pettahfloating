@@ -6,19 +6,6 @@ interface Props { locale: Locale; }
 const { locale } = Astro.props;
 const L = WEATHER_I18N[locale];
 
-const WEATHER_URL =
-  'https://api.open-meteo.com/v1/forecast?latitude=6.9329&longitude=79.8554' +
-  '&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,weather_code,wind_speed_10m,is_day' +
-  '&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,uv_index_max' +
-  '&timezone=Asia%2FColombo&forecast_days=7';
-
-let raw: unknown = null;
-try {
-  const res = await fetch(WEATHER_URL, { cf: { cacheTtl: 600 } });
-  if (res.ok) raw = await res.json();
-} catch {
-  raw = null;
-}
 ---
 
 <section class="mx-auto max-w-5xl px-4 py-14">
@@ -32,13 +19,13 @@ try {
 
   <p class="mt-3 text-[11px] text-slate-400">{L.ui.sourceNote}</p>
 
-  <script define:vars={{ RAW: raw, LANG: L }} is:inline>
+  <script define:vars={{ LANG: L }} is:inline>
     (function () {
       const root = document.getElementById('weather-root');
       if (!root || !LANG) return;
 
       function beaufort(kmh) {
-        const b = [0.3,1.6,3.4,5.5,8,10.8,13.9,17.2,20.8,24.5,28.5,32.7];
+        const b = [1,6,12,20,29,39,50,62,75,89,103,118];
         for (let i = 0; i < b.length; i++) if (kmh < b[i]) return i;
         return 12;
       }
@@ -53,12 +40,11 @@ try {
         const out = { clothing: [], activity: [], items: [], risk: [] };
         if (!v) return out;
         const code = v.current.weather_code;
-        const prob = v.current.precipitation_probability;
         const wind = v.current.wind_speed_10m;
         const b = beaufort(wind);
-        const isRain = [51,53,55,61,63,65,66,67,80,81,82].includes(code);
-        const isHeavy = isRain && ([65,82].includes(code) || prob >= 80);
-        const isModHeavy = isRain && !isHeavy && prob >= 50;
+        const isRain = [51,53,55,56,57,61,63,65,66,67,80,81,82].includes(code);
+        const isHeavy = [65,67,82].includes(code);
+        const isModHeavy = [53,55,57,63,66,81].includes(code);
         const isThunder = [95,96,99].includes(code);
         const isFog = [45,48].includes(code);
         const isLight = isRain && !isHeavy && !isModHeavy;
@@ -121,10 +107,10 @@ try {
 
       function render(v, lang) {
         const P = lang.phrases;
-        const w = lang.wmo[String(v.current.weather_code)] || lang.wmo['0'];
+        const w = lang.wmo[String(v.current.weather_code)] || {label: `WMO ${v.current.weather_code}`, icon: '?'};
         const b = beaufort(v.current.wind_speed_10m);
         const adv = adviceFor(v, P);
-        const today = lang.weekdays[new Date().getDay()];
+        const today = weekday(v.daily.time[0], lang);
         const cards = `
           <div class="grid gap-4 md:grid-cols-2">
             <div class="rounded-xl bg-teal-700 p-5 text-white">
@@ -147,7 +133,7 @@ try {
               <p class="text-sm font-semibold text-slate-700">${esc(lang.ui.week)}</p>
               <ul class="mt-2 space-y-1.5 text-sm">
                 ${v.daily.time.slice(0, 7).map((t, i) => {
-                  const dw = lang.wmo[String(v.daily.weather_code[i])] || lang.wmo['0'];
+                  const dw = lang.wmo[String(v.daily.weather_code[i])] || {label: `WMO ${v.daily.weather_code[i]}`, icon: '?'};
                   return `<li class="flex items-center justify-between">
                     <span class="text-slate-500">${esc(weekday(t, lang))}</span>
                     <span class="flex items-center gap-1">${dw.icon} ${esc(dw.label)}</span>
@@ -164,22 +150,25 @@ try {
         if (adv.activity.length) blocks.push(`<div class="mt-3 rounded-xl border border-slate-200 p-4"><p class="text-sm font-semibold text-slate-700">${esc(lang.ui.activityTitle)}</p><ul class="mt-1 list-disc pl-5 text-sm text-slate-600">${adv.activity.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>`);
         if (adv.items.length) blocks.push(`<div class="mt-3 rounded-xl border border-slate-200 p-4"><p class="text-sm font-semibold text-slate-700">${esc(lang.ui.itemsTitle)}</p><ul class="mt-1 list-disc pl-5 text-sm text-slate-600">${adv.items.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>`);
 
-        root.innerHTML = cards + blocks.join('');
+        root.innerHTML = `<p class="mb-3 text-xs text-slate-600">Open-Meteo · Asia/Colombo · ${esc(v.current.time)} · ${esc(v.guide.fetchedAt)}</p>` + cards + blocks.join('');
+        setTimeout(unavailable, 900000);
       }
 
-      function refresh() {
-        fetch('/api/weather?t=' + Date.now(), { cache: 'no-store' })
-          .then((r) => (r.ok ? r.json() : null))
-          .then((d) => { if (d && d.current) render(d, LANG); })
-          .catch(() => {});
+      function unavailable() { root.textContent = LANG.ui.unavailable; }
+      async function refresh() {
+        try {
+          const response = await fetch('/api/weather', {signal: AbortSignal.timeout(10000)});
+          if (!response.ok) throw new Error('unavailable');
+          const d = await response.json();
+          const stamp = Date.parse(d.guide?.fetchedAt);
+          const today = new Date(Date.now()+19800000).toISOString().slice(0,10);
+          if (!Number.isFinite(stamp) || Date.now()-stamp > 900000 || stamp-Date.now()>60000 || d.timezone!=='Asia/Colombo' || !d.current || d.daily?.time?.length!==7 || d.daily.time[0]!==today) throw new Error('stale');
+          render(d, LANG);
+        } catch { unavailable(); }
       }
-
-      if (RAW && RAW.current) {
-        render(RAW, LANG);
-        refresh();
-      } else {
-        refresh();
-      }
+      refresh();
     })();
   </script>
+  <noscript><p>{L.ui.unavailable}</p></noscript>
+  <p class="mt-3 text-xs"><a href="https://open-meteo.com/" class="underline">Open-Meteo</a> · <a href="https://creativecommons.org/licenses/by/4.0/" class="underline">CC BY 4.0</a></p>
 </section>
