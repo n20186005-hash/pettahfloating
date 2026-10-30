@@ -12,21 +12,35 @@ export function validWeather(d, now=Date.now()) {
     ['weather_code','temperature_2m_max','temperature_2m_min','precipitation_probability_max','uv_index_max'].every(k=>Array.isArray(a[k])&&a[k].length===7&&a[k].every(Number.isFinite));
 }
 const json=(body,status=200,cache='no-store')=>new Response(JSON.stringify(body),{status,headers:{'content-type':'application/json; charset=utf-8','cache-control':cache}});
+// Cache API responses can carry platform-adjusted browser TTL/age metadata.
+// Keep those internal; every client response is freshly constructed and non-storable.
+function clientWeather(body,method,status=200){
+  return new Response(method==='HEAD'?null:JSON.stringify(body),{status,headers:{
+    'content-type':'application/json; charset=utf-8',
+    'cache-control':'no-store',
+    'cdn-cache-control':'no-store',
+    'cloudflare-cdn-cache-control':'no-store',
+    'expires':'0'
+  }});
+}
 async function weather(request,ctx){
-  if(!['GET','HEAD'].includes(request.method))return new Response(null,{status:405,headers:{allow:'GET, HEAD','cache-control':'no-store'}});
-  const key=new Request('https://pettahfloating.com/api/weather');
+  if(!['GET','HEAD'].includes(request.method))return new Response(null,{status:405,headers:{allow:'GET, HEAD','cache-control':'no-store','cdn-cache-control':'no-store','cloudflare-cdn-cache-control':'no-store'}});
+  const key=new Request('https://pettahfloating.com/__guide_cache/weather-v2');
   const cache=globalThis.caches?.default;
   const cached=await cache?.match(key);
-  if(cached){try{const d=await cached.clone().json();if(validWeather(d)&&Date.now()-Date.parse(d.guide?.fetchedAt)<900000)return request.method==='HEAD'?new Response(null,cached):cached;}catch{}}
+  if(cached){try{
+    const d=await cached.json();
+    const age=Date.now()-Date.parse(d.guide?.fetchedAt);
+    if(validWeather(d)&&Number.isFinite(age)&&age>=0&&age<900000)return clientWeather(d,request.method);
+  }catch{}}
   try{
     const upstream=await fetch(WEATHER_URL,{signal:AbortSignal.timeout(8000),cf:{cacheTtl:0}});
     if(!upstream.ok)throw Error('upstream');
     const d=await upstream.json();if(!validWeather(d))throw Error('invalid or stale');
     d.guide={fetchedAt:new Date().toISOString(),source:'Open-Meteo model forecast',timezone:'Asia/Colombo'};
-    const response=json(d,200,'public, max-age=0, s-maxage=900');
-    if(cache)ctx.waitUntil(cache.put(key,response.clone()));
-    return request.method==='HEAD'?new Response(null,response):response;
-  }catch{return json({error:'weather_unavailable'},503);}
+    if(cache)ctx.waitUntil(cache.put(key,json(d,200,'public, max-age=900')));
+    return clientWeather(d,request.method);
+  }catch{return clientWeather({error:'weather_unavailable'},request.method,503);}
 }
 export default {async fetch(request,env,ctx){
   const url=new URL(request.url);

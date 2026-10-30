@@ -157,7 +157,7 @@ const L = WEATHER_I18N[locale];
       function unavailable() { root.textContent = LANG.ui.unavailable; }
       async function refresh() {
         try {
-          const response = await fetch('/api/weather', {signal: AbortSignal.timeout(10000)});
+          const response = await fetch('/api/weather', {cache: 'no-store', signal: AbortSignal.timeout(10000)});
           if (!response.ok) throw new Error('unavailable');
           const d = await response.json();
           const stamp = Date.parse(d.guide?.fetchedAt);
