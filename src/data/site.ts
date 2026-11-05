@@ -38,14 +38,14 @@ export const REVIEW_SYNC_PERIOD: Record<Locale, string> = {
   zh: '2026 年 10 月 29 日',
 };
 
-export const HERO_IMAGE = '/images/planning.svg';
+export const HERO_IMAGE = '/images/hero.jpg';
 
-export const imageSources = ['waterfront', 'pavilions', 'access', 'planning'].map((name) => ({
-  src: `/images/${name}.svg`,
-  altEn: 'Original symbolic illustration; not a photograph or map',
-  href: '/images/CREDITS.txt',
-  credit: 'Original illustration · CC0',
-}));
+export const imageSources = [
+  { src: '/images/pettah-floating-market-waterfront.jpg', href: 'https://commons.wikimedia.org/wiki/File:Pettah_Floating_Market.jpg', credit: 'Azeez Abubakr · CC BY-SA 4.0' },
+  { src: '/images/pettah-floating-market-boardwalk.jpg', href: 'https://commons.wikimedia.org/wiki/File:PFM_-_01.jpg', credit: 'Dan arndt · CC BY-SA 4.0' },
+  { src: '/images/pettah-floating-market-stalls.jpg', href: 'https://commons.wikimedia.org/wiki/File:PFM_-_02.jpg', credit: 'Dan arndt · CC BY-SA 4.0' },
+  { src: '/images/hero.jpg', href: 'https://commons.wikimedia.org/wiki/File:Pettah_Floating_Market_Colombo,_Sri_Lanka.jpg', credit: 'Shanka Anuranga · CC BY-SA 4.0' },
+];
 
 export function mapsEmbedSrc(hl: string): string {
   const q = encodeURIComponent(`${ATTRACTION_FULL_NAME}, ${STREET_ADDRESS}, ${CITY_NAME} ${POSTAL_CODE}, ${COUNTRY_NAME}`);
