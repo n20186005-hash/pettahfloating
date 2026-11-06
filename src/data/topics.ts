@@ -65,18 +65,18 @@ export const TOPICS: Topic[] = [
   { slug: 'shopping-nearby', group: 'food', priority: 'P1', related: ['nearby/pettah-market', 'local-food', 'restaurants-nearby'] },
 
   // E. Nearby attractions
-  { slug: 'nearby/pettah-market', group: 'nearby', priority: 'P0', related: ['shopping-nearby', 'walking-accessibility', 'nearby/red-mosque'] },
-  { slug: 'nearby/red-mosque', group: 'nearby', priority: 'P0', related: ['nearby/pettah-market', 'photo-spots', 'nearby/colombo-fort'] },
-  { slug: 'nearby/khan-clock-tower', group: 'nearby', priority: 'P1', related: ['nearby/colombo-fort', 'nearby/red-mosque', 'getting-there'] },
+  { slug: 'nearby/pettah-market', group: 'nearby', priority: 'P0', related: ['shopping-nearby', 'walking-accessibility', 'nearby/red-mosque', 'itineraries/pettah-walking-tour'] },
+  { slug: 'nearby/red-mosque', group: 'nearby', priority: 'P0', related: ['nearby/pettah-market', 'photo-spots', 'nearby/colombo-fort', 'itineraries/pettah-walking-tour'] },
+  { slug: 'nearby/khan-clock-tower', group: 'nearby', priority: 'P1', related: ['nearby/colombo-fort', 'nearby/red-mosque', 'getting-there', 'itineraries/pettah-walking-tour'] },
   { slug: 'nearby/colombo-fort', group: 'nearby', priority: 'P1', related: ['nearby/khan-clock-tower', 'nearby/red-mosque', 'itineraries/half-day-colombo'] },
   { slug: 'nearby/beira-lake', group: 'nearby', priority: 'P1', related: ['photos', 'sunset-photography', 'itineraries/half-day-colombo'] },
   { slug: 'nearby/dutch-museum', group: 'nearby', priority: 'P2', related: ['nearby/colombo-fort', 'history', 'nearby/khan-clock-tower'] },
-  { slug: 'nearby/lotus-tower', group: 'nearby', priority: 'P1', related: ['nearby/colombo-fort', 'nearby/beira-lake', 'itineraries/one-day-colombo'] },
+  { slug: 'nearby/lotus-tower', group: 'nearby', priority: 'P1', related: ['nearby/colombo-fort', 'nearby/beira-lake', 'itineraries/one-day-colombo', 'itineraries/pettah-walking-tour'] },
 
   // F. Itineraries & stays
   { slug: 'itineraries/half-day-colombo', group: 'itineraries', priority: 'P0', related: ['itineraries/one-day-colombo', 'nearby/colombo-fort', 'is-it-worth-visiting'] },
   { slug: 'itineraries/one-day-colombo', group: 'itineraries', priority: 'P1', related: ['itineraries/half-day-colombo', 'where-to-stay', 'nearby/lotus-tower'] },
-  { slug: 'itineraries/pettah-walking-tour', group: 'itineraries', priority: 'P1', related: ['nearby/pettah-market', 'walking-accessibility', 'nearby/red-mosque'] },
+  { slug: 'itineraries/pettah-walking-tour', group: 'itineraries', priority: 'P1', related: ['nearby/pettah-market', 'nearby/red-mosque', 'nearby/khan-clock-tower', 'nearby/lotus-tower', 'walking-accessibility'] },
   { slug: 'family-guide', group: 'itineraries', priority: 'P2', related: ['itineraries/half-day-colombo', 'walking-accessibility', 'rainy-day-guide'] },
   { slug: 'rainy-day-guide', group: 'itineraries', priority: 'P2', related: ['nearby/dutch-museum', 'family-guide', 'where-to-stay'] },
   { slug: 'where-to-stay', group: 'itineraries', priority: 'P1', related: ['itineraries/one-day-colombo', 'from-colombo-airport', 'nearby/colombo-fort'] },

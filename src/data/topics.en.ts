@@ -1021,29 +1021,120 @@ export const TOPIC_EN: Record<string, TopicContent> = {
 
   /* ----------------------------- E. NEARBY ----------------------------- */
   'nearby/pettah-market': {
-    metaTitle: 'Pettah Market – Colombo’s Great Bazaar',
-    metaDescription:
-      'Pettah Market next to the floating market: what to buy, how it compares, and how to walk between the two.',
+    metaTitle: 'Pettah Market – Colombo’s Great Bazaar by the Floating Market',
+    metaDescription: 'Pettah Market next to the floating market: what it is, how it compares, how to get there, opening times and tips.',
     h1: 'Pettah Market',
     lead: 'A few minutes from the floating market lies Pettah Market — a dense, historic bazaar and the commercial heart of old Colombo.',
     updated: UPD,
     sections: [
       {
-        heading: 'What it is',
+        heading: 'Explore & intro',
         paragraphs: [
-          'Pettah Market is a sprawling network of streets selling everything from spices and textiles to electronics and flowers, organised loosely by trade.',
+          'Pettah Market is a sprawling network of streets selling everything from spices and textiles to electronics and flowers, organised loosely by trade. The floating market is a small, calm canal-side space; most shoppers come for Pettah and add the floating market as a photo stop. They are within walking distance through Pettah’s streets.',
         ],
       },
       {
-        heading: 'Floating market vs Pettah',
-        paragraphs: [
-          'The floating market is a small, calm canal-side space; Pettah is a vast, intense working bazaar. Most shoppers come for Pettah and add the floating market as a photo stop.',
+        heading: 'Visitor tips',
+        bullets: [
+          'Go in the morning when it is cooler and a little less crowded.',
+          'Carry water, wear comfortable shoes and keep a map handy.',
+          'Ask prices first and negotiate gently before buying.',
         ],
       },
       {
-        heading: 'Getting between them',
+        heading: 'Highlights',
         paragraphs: [
-          'They are within walking distance through Pettah’s streets. Follow the Google Maps pin and expect a lively, crowded route.',
+          'Pettah is organised by trade — a spice street, a textile street, electronics and flower clusters. The density, colour and bargaining are the commercial pulse of old Colombo.',
+        ],
+      },
+      {
+        heading: 'About',
+        paragraphs: [
+          'Pettah has been Colombo’s trading and ethnic-mixing quarter since the colonial era. It remains the city’s everyday supply line and a sharp contrast to modern Fort.',
+        ],
+      },
+      {
+        heading: 'Basic info',
+        bullets: [
+          'Type: traditional wholesale bazaar and street market.',
+          'Location: Pettah district, about a 10–15 minute walk or short tuk-tuk from the floating market.',
+          'Cost: free to enter; shopping is extra and negotiable.',
+          'Rating reference: as an established Colombo landmark it has many visitor ratings and photos on third-party map platforms.',
+        ],
+      },
+      {
+        heading: 'Opening hours',
+        paragraphs: [
+          'Most stalls trade during the day and some close by evening; timings vary by street and trader. We do not publish fixed hours — confirm the day’s trading on a map app or locally before you go.',
+        ],
+        callout: 'Pettah has no single “opening time”; different streets and shops keep different hours — check on site.',
+      },
+      {
+        heading: 'Tickets & price',
+        paragraphs: [
+          'Pettah Market is free to enter; you pay only for what you buy and prices are negotiable. No ticket required.',
+        ],
+      },
+      {
+        heading: 'Getting there',
+        paragraphs: [
+          'From the floating market: walk through Pettah’s streets or take a short tuk-tuk. Following the map pin is the most reliable way to navigate.',
+        ],
+      },
+      {
+        heading: 'Discover · history',
+        paragraphs: [
+          'The name “Pettah” comes from the local word for the trading belt outside the old fort walls. For centuries it has been the spice, textile and dry-goods hub of the city.',
+        ],
+      },
+      {
+        heading: 'Discover · architecture & culture',
+        paragraphs: [
+          'Low shopfronts, arcades and a mix of mosques, Hindu kovils and Buddhist temples sit side by side — a snapshot of Colombo’s plural society.',
+        ],
+      },
+      {
+        heading: 'Suggested route',
+        bullets: [
+          '1. Start at the floating market boardwalk.',
+          '2. Walk along the main street into the Pettah core.',
+          '3. Explore the spice and textile streets first.',
+          '4. Move to the electronics and flower clusters.',
+          '5. Loop back via the Red Mosque or return to Fort.',
+        ],
+      },
+      {
+        heading: 'Good to know',
+        bullets: [
+          'Secure your belongings in crowds and avoid displaying valuables.',
+          'Female travellers should stay alert to hassle in dense lanes.',
+          'Keep your voice down and dress modestly near places of worship.',
+        ],
+      },
+      {
+        heading: 'Photo spots',
+        bullets: [
+          'Stacked spice sacks and colourful stalls are the classic shot.',
+          'The arcaded streets give depth and street-life frames.',
+          'The Red Mosque facade nearby is a strong colour contrast.',
+        ],
+      },
+      {
+        heading: 'Where to stay',
+        paragraphs: [
+          'For quiet, base yourself in Colombo Fort; for atmosphere, stay in Pettah. A common plan is Fort at night and Pettah by day. See our where-to-stay guide.',
+        ],
+      },
+      {
+        heading: 'Visitor reviews',
+        paragraphs: [
+          'Pettah Market has large numbers of visitor ratings and photos on third-party map platforms, and opinions tend to split: some love the buzz and bargains, others find it crowded and pushy. Check the latest reviews and pace yourself.',
+        ],
+      },
+      {
+        heading: 'Directions',
+        paragraphs: [
+          'Search “Pettah Market, Colombo” on your map app. It is in the Pettah district, about 1–2 km from the floating market; walk through the streets or take a short tuk-tuk.',
         ],
       },
     ],
@@ -1052,34 +1143,126 @@ export const TOPIC_EN: Record<string, TopicContent> = {
       { q: 'Which is better?', a: 'For shopping, Pettah; for a calm photo stop, the floating market.' },
       { q: 'What can I buy?', a: 'Spices, textiles, electronics, flowers and more, at negotiable prices.' },
       { q: 'Is it overwhelming?', a: 'It is busy and maze-like, but that is part of its charm.' },
+      { q: 'Is there an entry fee?', a: 'No — free to enter; you pay only for purchases.' },
+      { q: 'When is the best time to go?', a: 'Morning is cooler and a little less crowded, and good for photos.' },
     ],
   },
 
   'nearby/red-mosque': {
-    metaTitle: 'Red Mosque (Jami Ul-Alfar) Near Pettah Floating Market',
-    metaDescription:
-      'The Red Mosque by Pettah Floating Market: its history, candy-stripe design, visit tips and how to get there.',
+    metaTitle: 'Red Mosque (Jami Ul-Alfar) – By Pettah Floating Market',
+    metaDescription: 'The Red Mosque near the floating market: its candy-stripe design, history, visit etiquette, hours and how to get there.',
     h1: 'Red Mosque (Jami Ul-Alfar)',
     lead: 'One of Colombo’s most photographed buildings, the Red Mosque sits close to the floating market and is an easy, unmissable add-on.',
     updated: UPD,
     sections: [
       {
-        heading: 'The building',
+        heading: 'Explore & intro',
         paragraphs: [
-          'The Jami Ul-Alfar Mosque is known for its red-and-white candy-stripe brickwork and Indo-Saracenic design. It is a working place of worship as well as a landmark.',
+          'The Jami Ul-Alfar Mosque is a short walk from the floating market and one of Pettah’s most photogenic buildings. It is both a working place of worship and a Colombo landmark.',
         ],
       },
       {
-        heading: 'Visiting respectfully',
-        paragraphs: [
-          'Dress modestly, remove shoes, and avoid photoing worshippers. Non-Muslim visitors are usually welcome outside prayer times; check locally.',
+        heading: 'Visitor tips',
+        bullets: [
+          'Go in daylight, when the facade photographs best.',
+          'Avoid the crowded prayer times (e.g. Friday Jummah).',
+          'Pair it with a Pettah Market loop.',
         ],
-        callout: 'We do not publish fixed visiting hours for the mosque; confirm locally and respect prayer times.',
+      },
+      {
+        heading: 'Highlights',
+        paragraphs: [
+          'Its signature is the red-and-white candy-stripe brickwork in an Indo-Saracenic style, striking against Pettah’s grey, older streets.',
+        ],
+      },
+      {
+        heading: 'About',
+        paragraphs: [
+          'The mosque serves Pettah’s large Muslim community and is a key piece of Colombo’s multi-faith landscape.',
+        ],
+      },
+      {
+        heading: 'Basic info',
+        bullets: [
+          'Type: active mosque.',
+          'Location: Pettah district, walking distance from the floating market.',
+          'Cost: typically free entry; donations optional.',
+          'Rating reference: many visitor ratings and photos on third-party map platforms.',
+        ],
+      },
+      {
+        heading: 'Opening hours',
+        paragraphs: [
+          'As a working place of worship, respect prayer times; we do not list fixed visiting hours — confirm locally or on site.',
+        ],
+        callout: 'We do not publish fixed visiting hours for the mosque; respect prayer times and visit quietly outside them.',
+      },
+      {
+        heading: 'Tickets & price',
+        paragraphs: [
+          'Entry is typically free; donations are optional, with no compulsory ticket.',
+        ],
       },
       {
         heading: 'Getting there',
         paragraphs: [
           'It is a short walk from both the floating market and Pettah Market — a natural photo stop on a Pettah loop.',
+        ],
+      },
+      {
+        heading: 'Discover · history',
+        paragraphs: [
+          'The Red Mosque was built in the early 20th century; its red-and-white striped facade was rare at the time and quickly became one of Colombo’s most recognisable religious buildings.',
+        ],
+      },
+      {
+        heading: 'Discover · architecture & culture',
+        paragraphs: [
+          'The Indo-Saracenic style blends Islamic, Indian and Gothic elements, and the red-and-white brickwork is its visual signature. It remains an active mosque.',
+        ],
+      },
+      {
+        heading: 'Suggested route',
+        bullets: [
+          '1. Start at the floating market boardwalk.',
+          '2. Walk through Pettah streets to the mosque.',
+          '3. Admire the red-and-white facade from the outer square.',
+          '4. Enter the courtyard if permitted.',
+          '5. Loop back to Pettah Market or return to Fort.',
+        ],
+      },
+      {
+        heading: 'Good to know',
+        bullets: [
+          'Dress modestly and cover appropriately.',
+          'Remove shoes before entering and avoid photographing worshippers.',
+          'Women may carry a scarf and follow on-site guidance.',
+        ],
+      },
+      {
+        heading: 'Photo spots',
+        bullets: [
+          'The street corner facing the main facade frames the full stripes.',
+          'Contrasting-colour walls in neighbouring lanes also work well.',
+          'Morning or late-morning side light brings out the texture.',
+        ],
+      },
+      {
+        heading: 'Where to stay',
+        paragraphs: [
+          'Staying in Colombo Fort makes an early start easy; Pettah is closer but noisier. See our where-to-stay guide.',
+        ],
+      },
+      {
+        heading: 'Visitor reviews',
+        paragraphs: [
+          'The Red Mosque rates highly on third-party map platforms, with visitors praising its look; as a place of worship, some remind visitors about dress and prayer times. Check the latest reviews before you go.',
+        ],
+      },
+      {
+        heading: 'Directions',
+        paragraphs: [
+          'Search “Jami Ul-Alfar Mosque, Pettah, Colombo” on your map app; it is about a 10–15 minute walk from the floating market.',
         ],
       },
     ],
@@ -1088,35 +1271,126 @@ export const TOPIC_EN: Record<string, TopicContent> = {
       { q: 'Can tourists visit?', a: 'Generally yes outside prayer times; dress modestly and be respectful.' },
       { q: 'How far from the floating market?', a: 'A short walk through Pettah.' },
       { q: 'Is it free?', a: 'Entry is typically free; donations are optional.' },
+      { q: 'Is there an entry ticket?', a: 'No compulsory ticket; donations optional.' },
+      { q: 'When is the best time to go?', a: 'Daylight, outside prayer times, is best for both access and photos.' },
     ],
   },
 
   'nearby/khan-clock-tower': {
-    metaTitle: 'Khan Clock Tower Near Pettah Floating Market',
-    metaDescription:
-      'The Khan Clock Tower in Colombo Fort: its colonial history, location and how to include it on your walk.',
+    metaTitle: 'Khan Clock Tower – Colombo Fort Landmark by the Floating Market',
+    metaDescription: 'The Khan Clock Tower in Colombo Fort: colonial history, where it is, and how to include it on your walk.',
     h1: 'Khan Clock Tower',
     lead: 'Standing at the edge of Colombo Fort, the Khan Clock Tower is a handy orientation point and a piece of colonial-era history.',
     updated: UPD,
     sections: [
       {
-        heading: 'History',
+        heading: 'Explore & intro',
         paragraphs: [
-          'The clock tower was built in the early 20th century and remains a recognizable Fort landmark, useful for getting your bearings.',
+          'The clock tower is a short walk or tuk-tuk from the floating market and a natural navigation point on a Pettah loop, also useful as a meeting spot.',
         ],
       },
       {
-        heading: 'On your route',
-        paragraphs: [
-          'It sits near the Fort railway station and the approach to Pettah, making it a natural waypoint between the fort, the Red Mosque and the floating market.',
-        ],
-      },
-      {
-        heading: 'Tips',
+        heading: 'Visitor tips',
         bullets: [
-          'Use it as a meeting point if split up.',
-          'Combine with a Fort walking loop.',
-          'Photograph from the surrounding square.',
+          'Visit in daylight for the best exterior photos.',
+          'Use it as a waypoint on a Fort walking loop.',
+          'Plan it together with the Red Mosque and Pettah Market.',
+        ],
+      },
+      {
+        heading: 'Highlights',
+        paragraphs: [
+          'It was long one of Colombo’s tallest structures and remains the most recognisable vertical landmark in the Pettah area.',
+        ],
+      },
+      {
+        heading: 'About',
+        paragraphs: [
+          'The Fort–Pettah belt has been the city’s administrative and trading centre since colonial times, and the clock tower is a remnant of that era.',
+        ],
+      },
+      {
+        heading: 'Basic info',
+        bullets: [
+          'Type: colonial-era clock tower (mainly an external landmark).',
+          'Location: centre of Colombo Fort, short walk or tuk-tuk from the floating market.',
+          'Cost: free to view from outside.',
+          'Rating reference: visitor ratings and photos on third-party map platforms.',
+        ],
+      },
+      {
+        heading: 'Opening hours',
+        paragraphs: [
+          'As an external landmark there is no separate “opening time”; the interior is usually not open to visitors.',
+        ],
+        callout: 'We do not confirm interior access; treat it as a landmark to view from outside.',
+      },
+      {
+        heading: 'Tickets & price',
+        paragraphs: [
+          'Free to view from outside; no ticket required.',
+        ],
+      },
+      {
+        heading: 'Getting there',
+        paragraphs: [
+          'From the floating market: walk through Pettah or take a short tuk-tuk to the Fort centre.',
+        ],
+      },
+      {
+        heading: 'Discover · history',
+        paragraphs: [
+          'Built in the early 20th century, the tower long served as Colombo’s timekeeping and navigation reference and is part of the colonial-era city infrastructure.',
+        ],
+      },
+      {
+        heading: 'Discover · architecture & culture',
+        paragraphs: [
+          'It carries the mass and proportion of colonial public architecture; its simple shaft and clock face stand out among Pettah’s low streets.',
+        ],
+      },
+      {
+        heading: 'Suggested route',
+        bullets: [
+          '1. Start at the floating market boardwalk.',
+          '2. Walk or tuk-tuk into the Fort centre.',
+          '3. Orient and photograph at the clock-tower square.',
+          '4. Continue to the Red Mosque or Pettah Market.',
+          '5. Return to Fort to finish.',
+        ],
+      },
+      {
+        heading: 'Good to know',
+        bullets: [
+          'The interior is usually closed; do not force entry.',
+          'Traffic and crowds around it are heavy — stay alert.',
+          'Use it as a bearing to avoid getting lost.',
+        ],
+      },
+      {
+        heading: 'Photo spots',
+        bullets: [
+          'The square facing the tower gives a full vertical frame.',
+          'Blue-hour in the evening also works.',
+          'Pairing it with Pettah street life adds local texture.',
+        ],
+      },
+      {
+        heading: 'Where to stay',
+        paragraphs: [
+          'Colombo Fort is within walking distance or a short tuk-tuk; see our where-to-stay guide.',
+        ],
+      },
+      {
+        heading: 'Visitor reviews',
+        paragraphs: [
+          'Most visitors treat it as a handy Fort landmark and photo stop; as a historic building, reviews are neutral. Check the latest on third-party map platforms.',
+        ],
+      },
+      {
+        heading: 'Directions',
+        paragraphs: [
+          'Search “Khan Clock Tower, Colombo Fort” on your map app; it is about 1–2 km from the floating market.',
         ],
       },
     ],
@@ -1125,35 +1399,125 @@ export const TOPIC_EN: Record<string, TopicContent> = {
       { q: 'Can you go inside?', a: 'It is primarily an external landmark; we do not confirm interior access.' },
       { q: 'Is it worth visiting?', a: 'As a quick photo and orientation point on a Fort walk, yes.' },
       { q: 'How does it connect to the market?', a: 'It is on the Fort-to-Pettah route that also reaches the floating market.' },
+      { q: 'Is there an entry fee?', a: 'No — free to view from outside.' },
+      { q: 'When is the best time to go?', a: 'Daylight suits exterior photos; evening blue-hour also works.' },
     ],
   },
 
   'nearby/colombo-fort': {
-    metaTitle: 'Colombo Fort – History & Things to See',
-    metaDescription:
-      'Colombo Fort near the floating market: colonial buildings, the fort area, transport hub and how to explore it.',
+    metaTitle: 'Colombo Fort – History, Buildings & Transport Hub',
+    metaDescription: 'Colombo Fort near the floating market: colonial buildings, the transport hub, what to see and how to explore it.',
     h1: 'Colombo Fort',
     lead: 'Colombo Fort is the historic core and transport hub of the city, and the gateway to both Pettah and the floating market.',
     updated: UPD,
     sections: [
       {
-        heading: 'What it is',
+        heading: 'Explore & intro',
         paragraphs: [
-          'Once a colonial fortification, today the Fort area mixes government buildings, banks, the main railway station and busy commercial streets.',
+          'Fort is close to Pettah and is a good place to cool down, grab coffee and see colonial buildings after the bazaar, and it is also the transport hub for the rest of the city.',
         ],
       },
       {
-        heading: 'Things to see',
+        heading: 'Visitor tips',
         bullets: [
-          'Colonial-era architecture around the fort.',
-          'The railway station and clock tower.',
-          'The gateway streets into Pettah.',
+          'After a Pettah morning, rest in Fort in the afternoon.',
+          'Use the cafés and Wi-Fi to regroup.',
+          'Plan your evening exit from here.',
         ],
       },
       {
-        heading: 'Exploring',
+        heading: 'Highlights',
         paragraphs: [
-          'Fort is best on foot for short distances, with tuk-tuks for longer hops. It pairs naturally with the floating market and Red Mosque.',
+          'Fort mixes colonial-era architecture, museums, cafés and commercial complexes; modern towers stand beside old facades.',
+        ],
+      },
+      {
+        heading: 'About',
+        paragraphs: [
+          'Fort is Colombo’s historic and financial core; many state institutions and old firms are based here — the origin of the city’s power and trade.',
+        ],
+      },
+      {
+        heading: 'Basic info',
+        bullets: [
+          'Type: historic district + financial and transport hub.',
+          'Location: Colombo Fort area, adjacent to Pettah.',
+          'Cost: free to walk the streets.',
+          'Rating reference: visitor ratings and photos on third-party map platforms.',
+        ],
+      },
+      {
+        heading: 'Opening hours',
+        paragraphs: [
+          'Streets are accessible all day; museums, cafés and complexes keep their own hours — confirm before you go.',
+        ],
+      },
+      {
+        heading: 'Tickets & price',
+        paragraphs: [
+          'Walking the streets is free; specific museums and complexes charge separately — follow local notices.',
+        ],
+      },
+      {
+        heading: 'Getting there',
+        paragraphs: [
+          'From the floating market: a short tuk-tuk or walk through Pettah reaches Fort; it is the main transport hub.',
+        ],
+      },
+      {
+        heading: 'Discover · history',
+        paragraphs: [
+          'Since colonial times Fort has been Colombo’s administrative and trading centre, leaving many Dutch and British-era buildings.',
+        ],
+      },
+      {
+        heading: 'Discover · architecture & culture',
+        paragraphs: [
+          'In Fort, Gothic and neoclassical facades sit next to glass towers — an open-air cross-section of modern Sri Lankan history.',
+        ],
+      },
+      {
+        heading: 'Suggested route',
+        bullets: [
+          '1. Leave the floating market and hop to Fort.',
+          '2. Walk along the colonial building cluster.',
+          '3. Enter a museum or complex.',
+          '4. Rest and use Wi-Fi at a café.',
+          '5. Continue from the railway or bus station.',
+        ],
+      },
+      {
+        heading: 'Good to know',
+        bullets: [
+          'As a transport hub, plan your night exit in advance.',
+          'Watch for mixed pedestrian and vehicle traffic.',
+          'Keep valuables secure.',
+        ],
+      },
+      {
+        heading: 'Photo spots',
+        bullets: [
+          'Colonial facades and street corners.',
+          'Street scenes contrasting old and new.',
+          'The dusk skyline.',
+        ],
+      },
+      {
+        heading: 'Where to stay',
+        paragraphs: [
+          'Fort is one of the most convenient bases in Colombo, next to the transport hub; see our where-to-stay guide.',
+        ],
+      },
+      {
+        heading: 'Visitor reviews',
+        paragraphs: [
+          'Fort rates fairly well on third-party map platforms, with visitors praising its colonial architecture and convenience; some note to watch crowds and traffic at night. Check the latest reviews.',
+        ],
+      },
+      {
+        heading: 'Directions',
+        paragraphs: [
+          'Search “Colombo Fort, Sri Lanka” on your map app; it is about 1–2 km from the floating market — tuk-tuk or walk through Pettah.',
         ],
       },
     ],
@@ -1162,35 +1526,125 @@ export const TOPIC_EN: Record<string, TopicContent> = {
       { q: 'How do I get from Fort to the market?', a: 'A short tuk-tuk or walk through Pettah; see our Fort-station directions.' },
       { q: 'Is Fort safe?', a: 'Busy and generally fine by day; keep belongings secure.' },
       { q: 'What else is nearby?', a: 'The Red Mosque, Khan Clock Tower and Pettah Market are all close.' },
+      { q: 'Is there a street-entry fee?', a: 'No — streets are free to walk; venues charge separately.' },
+      { q: 'Is afternoon a good time?', a: 'Yes — cool down and rest, but plan your night transport in advance.' },
     ],
   },
 
   'nearby/beira-lake': {
-    metaTitle: 'Beira Lake Near Pettah Floating Market',
-    metaDescription:
-      'Beira Lake in Colombo: its setting, waterfront walks and how it relates to the canal-side floating market.',
+    metaTitle: 'Beira Lake – Colombo’s Urban Lake by the Floating Market',
+    metaDescription: 'Beira Lake in central Colombo: its setting, waterfront walks and Seema Malaka, and how to pair it with the floating market.',
     h1: 'Beira Lake',
     lead: 'Beira Lake is the watery heart of central Colombo and shares the canal-side character that makes the floating market appealing.',
     updated: UPD,
     sections: [
       {
-        heading: 'The lake',
+        heading: 'Explore & intro',
         paragraphs: [
-          'Beira Lake is a large urban lake with promenades and islands, offering a calmer waterfront contrast to busy Pettah.',
+          'The lake is a short distance west of Pettah; a tuk-tuk or walk through Fort both work. It suits a quiet afternoon or evening after the market crowds.',
         ],
       },
       {
-        heading: 'Connection to the market',
-        paragraphs: [
-          'Both the lake and the floating market draw on Colombo’s canal and lagoon geography. A lake walk pairs well with sunset photography.',
-        ],
-      },
-      {
-        heading: 'Visiting',
+        heading: 'Visitor tips',
         bullets: [
-          'Walk the promenades for fresh air and views.',
-          'Visit near sunset for reflections.',
-          'Combine with the floating market in a half-day loop.',
+          'Evenings are cooler and good for photos.',
+          'Use it as a relaxing closing leg from the market.',
+          'Check walkway and opening times.',
+        ],
+      },
+      {
+        heading: 'Highlights',
+        paragraphs: [
+          'The lake is a green, breezy space amid the city; its island temple Seema Malaka, reached by bridge, is a rare waterside meditation spot in Colombo.',
+        ],
+      },
+      {
+        heading: 'About',
+        paragraphs: [
+          'Beira Lake is Colombo’          s urban green lung, present for centuries as the city grew around it and carrying residents’ leisure memory.',
+        ],
+      },
+      {
+        heading: 'Basic info',
+        bullets: [
+          'Type: urban lake + promenades + island temple.',
+          'Location: central Colombo, west of Pettah.',
+          'Cost: lake-side promenades are free; the island temple may have a small island fee.',
+          'Rating reference: visitor ratings and photos on third-party map platforms.',
+        ],
+      },
+      {
+        heading: 'Opening hours',
+        paragraphs: [
+          'Most promenades are open by day; Seema Malaka keeps its own hours — follow on-site notices.',
+        ],
+      },
+      {
+        heading: 'Tickets & price',
+        paragraphs: [
+          'The promenades are usually free; the island temple may have a small fee — follow on-site notices. We do not publish fixed prices.',
+        ],
+      },
+      {
+        heading: 'Getting there',
+        paragraphs: [
+          'From the floating market: take a tuk-tuk, or walk through Fort to the eastern shore; it is a short distance west of Pettah.',
+        ],
+      },
+      {
+        heading: 'Discover · history',
+        paragraphs: [
+          'Since colonial times Beira Lake has been Colombo’s urban water; its shores were reshaped repeatedly as the city expanded — a witness to urban growth.',
+        ],
+      },
+      {
+        heading: 'Discover · architecture & culture',
+        paragraphs: [
+          'The island temple Seema Malaka, designed by a modern Sri Lankan architect and floating on water, blends tradition and modernity as a meditation space.',
+        ],
+      },
+      {
+        heading: 'Suggested route',
+        bullets: [
+          '1. Leave the floating market.',
+          '2. Tuk-tuk or walk through Fort to the eastern shore.',
+          '3. Stroll the promenade.',
+          '4. Cross to Seema Malaka.',
+          '5. Finish at the lake at dusk.',
+        ],
+      },
+      {
+        heading: 'Good to know',
+        bullets: [
+          'The island temple may charge a small fee and have a dress code.',
+          'Evening light is good but note closing times.',
+          'Watch slippery spots on the walkway.',
+        ],
+      },
+      {
+        heading: 'Photo spots',
+        bullets: [
+          'Reflections on the water and the sky.',
+          'The bridge and floating platform of Seema Malaka.',
+          'The city outline in warm evening light.',
+        ],
+      },
+      {
+        heading: 'Where to stay',
+        paragraphs: [
+          'Both Fort and the lake side are convenient; see our where-to-stay guide.',
+        ],
+      },
+      {
+        heading: 'Visitor reviews',
+        paragraphs: [
+          'Beira Lake rates reasonably on third-party map platforms; visitors like the rare calm in the city centre, with some noting to check opening times and island fees. Check the latest reviews.',
+        ],
+      },
+      {
+        heading: 'Directions',
+        paragraphs: [
+          'Search “Beira Lake, Colombo” or “Seema Malaka” on your map app; it is about 2–3 km from the floating market — a tuk-tuk is easiest.',
         ],
       },
     ],
@@ -1199,34 +1653,126 @@ export const TOPIC_EN: Record<string, TopicContent> = {
       { q: 'Is it near the floating market?', a: 'Not adjacent, but both are canal-and-water themed; reachable in a half-day loop.' },
       { q: 'Can you walk around it?', a: 'Yes, promenades exist; conditions vary by section.' },
       { q: 'Good for photos?', a: 'Yes, especially at sunset.' },
+      { q: 'Is the lake side free?', a: 'Promenades are usually free; the island temple may have a small fee.' },
+      { q: 'Can you stroll it?', a: 'Yes — the lake-side promenade suits a relaxing evening walk.' },
     ],
   },
 
   'nearby/dutch-museum': {
-    metaTitle: 'Dutch Museum Colombo – History Near the Floating Market',
-    metaDescription:
-      'The Dutch Museum in Colombo Fort: colonial history, what to see, and how it fits a rainy-day or Fort walk.',
+    metaTitle: 'Dutch Museum Colombo – Colonial History by the Floating Market',
+    metaDescription: 'The Dutch Museum in Colombo Fort: colonial history, what to see, and how it fits a rainy-day or Fort walk.',
     h1: 'Dutch Museum (Colombo)',
     lead: 'Housed in a colonial building in Colombo Fort, the Dutch Museum is a calm, indoor option close to the floating market route.',
     updated: UPD,
     sections: [
       {
-        heading: 'What it is',
+        heading: 'Explore & intro',
         paragraphs: [
-          'The museum occupies a restored Dutch-era building and covers aspects of Sri Lanka’s colonial history, with period furnishings and exhibits.',
+          'The museum is a short walk from the market, housed in one of Colombo’s oldest buildings, and fits a Pettah half-day — especially good on a rainy day or when you want a quiet look at exhibits.',
         ],
       },
       {
-        heading: 'Why visit',
+        heading: 'Visitor tips',
+        bullets: [
+          'Pair it with a Pettah visit.',
+          'It suits a rainy day or a hot afternoon.',
+          'Photography inside may be restricted — follow guidance.',
+        ],
+      },
+      {
+        heading: 'Highlights',
         paragraphs: [
-          'It is a good rainy-day stop and a quiet break from Pettah’s bustle. We do not publish entry fees or hours we cannot verify — confirm locally.',
+          'The museum covers Sri Lanka’s Dutch colonial period with period furnishings and exhibits, giving you another thread to understand Colombo’s past.',
+        ],
+      },
+      {
+        heading: 'About',
+        paragraphs: [
+          'The building itself is a key remnant of Colombo’s colonial history and one of the better-preserved Dutch-era structures.',
+        ],
+      },
+      {
+        heading: 'Basic info',
+        bullets: [
+          'Type: history museum (Dutch colonial period).',
+          'Location: Colombo Fort, walking distance from the floating market.',
+          'Cost: there may be a ticket; confirm the amount in advance.',
+          'Rating reference: visitor ratings and photos on third-party map platforms.',
+        ],
+      },
+      {
+        heading: 'Opening hours',
+        paragraphs: [
+          'Opening hours may change on official channels; we do not publish fixed hours we cannot verify — confirm before you go.',
         ],
         callout: 'Check current opening hours and ticket prices on official or on-site sources before going.',
       },
       {
+        heading: 'Tickets & price',
+        paragraphs: [
+          'Tickets and hours may change; we do not publish fixed prices — confirm on official or on-site sources.',
+        ],
+      },
+      {
         heading: 'Getting there',
         paragraphs: [
-          'It sits in Colombo Fort, a short hop from the floating market via Pettah. Pair it with the Fort walking loop.',
+          'From the floating market: walk through Pettah into Fort to reach the museum.',
+        ],
+      },
+      {
+        heading: 'Discover · history',
+        paragraphs: [
+          'The museum focuses on Sri Lanka’s Dutch period (17th–18th centuries): administration and daily life, a physical entry point to the colonial archive.',
+        ],
+      },
+      {
+        heading: 'Discover · architecture & culture',
+        paragraphs: [
+          'The building is itself an exhibit: thick walls, timber and a courtyard keep the form of a Dutch-era public building.',
+        ],
+      },
+      {
+        heading: 'Suggested route',
+        bullets: [
+          '1. Leave the floating market.',
+          '2. Walk through Pettah into Fort.',
+          '3. Arrive at the Dutch Museum.',
+          '4. See the galleries and courtyard.',
+          '5. Continue to other Fort colonial buildings.',
+        ],
+      },
+      {
+        heading: 'Good to know',
+        bullets: [
+          'Confirm fees and hours in advance.',
+          'Photography inside may be restricted.',
+          'Keep quiet and follow museum guidance.',
+        ],
+      },
+      {
+        heading: 'Photo spots',
+        bullets: [
+          'The building exterior and courtyard.',
+          'The Pettah–Fort transition street scenes.',
+          'The colonial facades.',
+        ],
+      },
+      {
+        heading: 'Where to stay',
+        paragraphs: [
+          'Fort is the most convenient base, within walking distance of the museum; see our where-to-stay guide.',
+        ],
+      },
+      {
+        heading: 'Visitor reviews',
+        paragraphs: [
+          'The Dutch Museum rates moderately to positively on third-party map platforms; visitors value its history, with some noting to confirm opening and ticketing on site. Check the latest reviews.',
+        ],
+      },
+      {
+        heading: 'Directions',
+        paragraphs: [
+          'Search “Dutch Museum, Colombo Fort” on your map app; it is about 1–2 km from the floating market — walk through Pettah.',
         ],
       },
     ],
@@ -1235,36 +1781,126 @@ export const TOPIC_EN: Record<string, TopicContent> = {
       { q: 'Is it good on a rainy day?', a: 'Yes — it is an indoor, calm alternative to outdoor markets.' },
       { q: 'How much are tickets?', a: 'We do not publish unverified prices; confirm on official or on-site sources.' },
       { q: 'How far from the market?', a: 'In Colombo Fort, reachable via Pettah on a Fort walking loop.' },
+      { q: 'Does it suit a Fort walk?', a: 'Yes — pair it with the Fort colonial-building loop.' },
+      { q: 'What does it cover?', a: 'Sri Lanka’s Dutch colonial period: history, architecture and artefacts.' },
     ],
   },
 
   'nearby/lotus-tower': {
-    metaTitle: 'Colombo Lotus Tower – Views Near the Floating Market',
-    metaDescription:
-      'Lotus Tower in Colombo: what it is, the observation deck, and how to fit it into a Colombo day with the floating market.',
+    metaTitle: 'Colombo Lotus Tower – Views & Deck by the Floating Market',
+    metaDescription: 'Lotus Tower in Colombo: what it is, the observation deck, and how to fit it into a day with the floating market.',
     h1: 'Colombo Lotus Tower',
     lead: 'The Lotus Tower is Colombo’s tall communications and observation tower, offering city views that pair well with a daytime market visit.',
     updated: UPD,
     sections: [
       {
-        heading: 'The tower',
+        heading: 'Explore & intro',
         paragraphs: [
-          'Shaped like a lotus, the tower includes an observation deck and dining with panoramic views over Colombo and the lagoon.',
+          'The tower is a short distance from Pettah; take a tuk-tuk or city bus. If you want the deck, confirm fees and opening status on local channels.',
         ],
       },
       {
-        heading: 'Fitting it in',
+        heading: 'Visitor tips',
+        bullets: [
+          'Arrive early to avoid peak crowds.',
+          'Sunset gives the best light and lit tower.',
+          'Confirm deck prices locally.',
+        ],
+      },
+      {
+        heading: 'Highlights',
         paragraphs: [
-          'It works as a late-afternoon or evening counterpoint to a daytime floating-market and Pettah walk. We do not publish ticket prices or hours we cannot verify.',
+          'Shaped like a lotus, the tower is one of Sri Lanka’s modern landmarks, with an observation deck and dining, lit up at night as a skyline focus.',
+        ],
+      },
+      {
+        heading: 'About',
+        paragraphs: [
+          'As a communications and observation tower, Lotus Tower symbolises Colombo’s turn toward a skyline city, contrasting with the history of Pettah and Fort.',
+        ],
+      },
+      {
+        heading: 'Basic info',
+        bullets: [
+          'Type: communications and observation tower (deck + dining).',
+          'Location: central Colombo, a short distance from Pettah.',
+          'Cost: the deck may be charged; confirm the amount locally.',
+          'Rating reference: visitor ratings and photos on third-party map platforms.',
+        ],
+      },
+      {
+        heading: 'Opening hours',
+        paragraphs: [
+          'Opening status may change; we do not publish fixed hours — confirm on local channels before visiting.',
         ],
         callout: 'Confirm current deck hours and prices on official or on-site sources before visiting.',
       },
       {
-        heading: 'Tips',
+        heading: 'Tickets & price',
+        paragraphs: [
+          'Deck and facility fees may change; we do not publish fixed prices — confirm locally.',
+        ],
+      },
+      {
+        heading: 'Getting there',
+        paragraphs: [
+          'From the floating market: take a tuk-tuk or city bus; the tower is a short distance from Pettah.',
+        ],
+      },
+      {
+        heading: 'Discover · history',
+        paragraphs: [
+          'The Lotus Tower is a recent modern project, representing Colombo’s ambition as a skyline city and a new-generation landmark.',
+        ],
+      },
+      {
+        heading: 'Discover · architecture & culture',
+        paragraphs: [
+          'The tower uses the lotus as its motif, echoing a Sri Lankan cultural symbol — tradition and modern structure combined.',
+        ],
+      },
+      {
+        heading: 'Suggested route',
         bullets: [
-          'Go near sunset for the best light.',
-          'Book or arrive early in peak season.',
-          'Combine with a Fort-to-Pettah day.',
+          '1. Leave the floating market.',
+          '2. Tuk-tuk or bus to the tower base.',
+          '3. Buy a deck ticket and go up.',
+          '4. See the city panorama from the restaurant or deck.',
+          '5. Watch the lighting and night view at dusk.',
+        ],
+      },
+      {
+        heading: 'Good to know',
+        bullets: [
+          'Confirm tickets and opening locally.',
+          'Lifts may queue at peak times.',
+          'Carry ID if needed.',
+        ],
+      },
+      {
+        heading: 'Photo spots',
+        bullets: [
+          'The city panorama from the deck.',
+          'The lotus shape from the plaza outside.',
+          'The tower at dusk and night.',
+        ],
+      },
+      {
+        heading: 'Where to stay',
+        paragraphs: [
+          'Both Fort and the city centre are convenient; see our where-to-stay guide.',
+        ],
+      },
+      {
+        heading: 'Visitor reviews',
+        paragraphs: [
+          'The Lotus Tower splits opinions on third-party map platforms: some love the panorama and novelty, others mind the ticket and queues; as prices and service change often, check the latest reviews before you go.',
+        ],
+      },
+      {
+        heading: 'Directions',
+        paragraphs: [
+          'Search “Colombo Lotus Tower” on your map app; it is about 2–3 km from the floating market — a tuk-tuk or city bus is easiest.',
         ],
       },
     ],
@@ -1273,6 +1909,8 @@ export const TOPIC_EN: Record<string, TopicContent> = {
       { q: 'Is it worth it?', a: 'For skyline views, yes — a good bookend to a daytime market visit.' },
       { q: 'How much are tickets?', a: 'We do not publish unverified prices; confirm officially or on site.' },
       { q: 'How does it fit my day?', a: 'Pair it with a Fort and Pettah walk, ideally near sunset.' },
+      { q: 'Can you go up?', a: 'Yes — there is a deck; confirm fees and hours locally.' },
+      { q: 'Is it good for the skyline?', a: 'Yes — the deck overlooks Colombo.' },
     ],
   },
 
