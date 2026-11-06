@@ -5,6 +5,7 @@ import { SITE_NAME } from '../data/site';
 import { topicPath, getTopic, TOPIC_UI, type Topic, type TopicContent } from '../data/topics';
 import { buildTopicWebPageSchema, buildBreadcrumbSchema, buildFaqSchema } from '../lib/schema';
 import type { Locale } from '../i18n';
+import NearbyAttractionPage from './NearbyAttractionPage.astro';
 
 interface Props {
   locale: Locale;
@@ -13,6 +14,7 @@ interface Props {
 }
 
 const { locale, topic, content } = Astro.props;
+const isNearby = topic.group === 'nearby';
 const t = TOPIC_UI[locale];
 
 const canonical = SITE_URL.replace(/\/$/, '') + topicPath(topic.slug, locale);
@@ -36,6 +38,9 @@ const jsonLd = [
 ];
 ---
 
+{isNearby ? (
+  <NearbyAttractionPage locale={locale} topic={topic} content={content} />
+) : (
 <BaseLayout
   locale={locale}
   basePath={topicPath(topic.slug, locale)}
@@ -103,3 +108,4 @@ const jsonLd = [
     </p>
   </article>
 </BaseLayout>
+)}
