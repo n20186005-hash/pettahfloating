@@ -1,0 +1,19 @@
+---
+import TopicPage from '../components/TopicPage.astro';
+import { TOPICS, getTopic, type Topic } from '../data/topics';
+import type { Locale } from '../i18n';
+
+export function getStaticPaths() {
+  return TOPICS
+    .filter((topic) => getTopic(topic.slug, 'en'))
+    .map((topic) => ({
+      params: { topic: topic.slug },
+      props: { locale: 'en' as Locale, topic },
+    }));
+}
+
+const { locale, topic } = Astro.props as { locale: Locale; topic: Topic };
+const content = getTopic(topic.slug, locale)!;
+---
+
+<TopicPage locale={locale} topic={topic} content={content} />

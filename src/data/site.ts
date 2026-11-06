@@ -30,7 +30,7 @@ export const TELEPHONE_TEL = '+94112797200';
 
 /* Google Maps rating snapshot — rendered on the page only, never as Review markup */
 export const GOOGLE_RATING = 3.7;
-export const GOOGLE_REVIEW_COUNT = 18912;
+export const GOOGLE_REVIEW_COUNT = 18920;
 export const REVIEW_SYNC_PERIOD: Record<Locale, string> = {
   en: '29 October 2026',
   si: '2026 ඔක්තෝබර් 29',

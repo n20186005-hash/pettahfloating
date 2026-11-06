@@ -116,7 +116,7 @@ export const hero = {
       "time": "",
       "hours": "Hours",
       "hoursValue": "Confirm visitor and stall hours",
-      "ratingNote": "Google Maps · 29 October 2026 · 3.7/5, 18,912 reviews. Dated third-party snapshot; values may change.",
+      "ratingNote": "Google Maps · 29 October 2026 · 3.7/5, 18,920 reviews. Dated third-party snapshot; values may change.",
       "hoursNote": "Visitor and stall hours need confirmation; UDA reservation contact hours are separate."
     }
   },
@@ -135,7 +135,7 @@ export const hero = {
       "time": "",
       "hours": "වේලාව",
       "hoursValue": "ප්‍රවේශ හා කඩ වේලාවන් තහවුරු කරන්න",
-      "ratingNote": "Google Maps · 2026 ඔක්තෝබර් 29 · 3.7/5, සමාලෝචන 18,912. දින සඳහන් බාහිර සටහනකි; අගයන් වෙනස් විය හැක.",
+      "ratingNote": "Google Maps · 2026 ඔක්තෝබර් 29 · 3.7/5, සමාලෝචන 18,920. දින සඳහන් බාහිර සටහනකි; අගයන් වෙනස් විය හැක.",
       "hoursNote": "අමුත්තන්ගේ හා කඩවල වේලාවන් තහවුරු කරන්න; UDA වෙන්කිරීම් සම්බන්ධතා වේලාව වෙනමය."
     }
   },
@@ -154,7 +154,7 @@ export const hero = {
       "time": "",
       "hours": "நேரம்",
       "hoursValue": "அணுகல் மற்றும் கடை நேரத்தை உறுதிப்படுத்தவும்",
-      "ratingNote": "Google Maps · 29 அக்டோபர் 2026 · 3.7/5, 18,912 மதிப்புரைகள். தேதியிட்ட வெளித் தரவு; மதிப்புகள் மாறலாம்.",
+      "ratingNote": "Google Maps · 29 அக்டோபர் 2026 · 3.7/5, 18,920 மதிப்புரைகள். தேதியிட்ட வெளித் தரவு; மதிப்புகள் மாறலாம்.",
       "hoursNote": "பார்வையாளர் மற்றும் கடை நேரத்தை உறுதிப்படுத்துங்கள்; UDA முன்பதிவுத் தொடர்பு நேரம் தனியானது."
     }
   },
@@ -173,7 +173,7 @@ export const hero = {
       "time": "",
       "hours": "时间",
       "hoursValue": "请确认入口与各店铺时间",
-      "ratingNote": "Google Maps · 2026年10月29日 · 3.7/5、18,912则评价。第三方日期快照，数值可能变化。",
+      "ratingNote": "Google Maps · 2026年10月29日 · 3.7/5、18,920则评价。第三方日期快照，数值可能变化。",
       "hoursNote": "访客与店铺时间待确认；UDA预约联系时段另计。"
     }
   }
@@ -1284,8 +1284,8 @@ export const reviews = {
     "label": "Google Maps reviews",
     "kicker": "Reviews of Floating Market - Pettah",
     "title": "Questions to check on your visit",
-    "intro": "Third-party Google Maps snapshot checked 29 October 2026:3.7/5 from 18,912 reviews. Values may change; this guide does not collect reviews or reproduce their text, and does not automatically synchronize.",
-    "ratingNote": "Third-party Google Maps snapshot checked 29 October 2026:3.7/5 from 18,912 reviews. Values may change; this guide does not collect reviews or reproduce their text, and does not automatically synchronize.",
+    "intro": "Third-party Google Maps snapshot checked 29 October 2026:3.7/5 from 18,920 reviews. Values may change; this guide does not collect reviews or reproduce their text, and does not automatically synchronize.",
+    "ratingNote": "Third-party Google Maps snapshot checked 29 October 2026:3.7/5 from 18,920 reviews. Values may change; this guide does not collect reviews or reproduce their text, and does not automatically synchronize.",
     "topics": [
       "Waterfront walk and photo opportunities",
       "Short eats, drinks and food-court experience",
@@ -1298,8 +1298,8 @@ export const reviews = {
     "label": "Google Maps සමාලෝචන",
     "kicker": "Reviews of Floating Market - Pettah",
     "title": "ඔබේ පැමිණීමේදී පරීක්ෂා කළ යුතු ප්‍රශ්න",
-    "intro": "2026 ඔක්තෝබර්29 පරීක්ෂා කළ තෙවන පාර්ශ්ව Google Maps සටහන:3.7/5, සමාලෝචන18,912. අගයන් වෙනස් විය හැක. මෙම මාර්ගෝපදේශය සමාලෝචන එකතු නොකරන අතර පෙළ නැවත පළ නොකරයි; ස්වයංක්‍රීය සමමුහුර්ත කිරීමක් නැත.",
-    "ratingNote": "2026 ඔක්තෝබර්29 පරීක්ෂා කළ තෙවන පාර්ශ්ව Google Maps සටහන:3.7/5, සමාලෝචන18,912. අගයන් වෙනස් විය හැක. මෙම මාර්ගෝපදේශය සමාලෝචන එකතු නොකරන අතර පෙළ නැවත පළ නොකරයි; ස්වයංක්‍රීය සමමුහුර්ත කිරීමක් නැත.",
+    "intro": "2026 ඔක්තෝබර්29 පරීක්ෂා කළ තෙවන පාර්ශ්ව Google Maps සටහන:3.7/5, සමාලෝචන18,920. අගයන් වෙනස් විය හැක. මෙම මාර්ගෝපදේශය සමාලෝචන එකතු නොකරන අතර පෙළ නැවත පළ නොකරයි; ස්වයංක්‍රීය සමමුහුර්ත කිරීමක් නැත.",
+    "ratingNote": "2026 ඔක්තෝබර්29 පරීක්ෂා කළ තෙවන පාර්ශ්ව Google Maps සටහන:3.7/5, සමාලෝචන18,920. අගයන් වෙනස් විය හැක. මෙම මාර්ගෝපදේශය සමාලෝචන එකතු නොකරන අතර පෙළ නැවත පළ නොකරයි; ස්වයංක්‍රීය සමමුහුර්ත කිරීමක් නැත.",
     "topics": [
       "ජලතීර ඇවිදීම සහ ඡායාරූප අවස්ථා",
       "කෙටි ආහාර, බීම සහ food court අත්දැකීම",
@@ -1312,8 +1312,8 @@ export const reviews = {
     "label": "Google Maps மதிப்புரைகள்",
     "kicker": "Reviews of Floating Market - Pettah",
     "title": "வருகையில் சரிபார்க்க வேண்டிய கேள்விகள்",
-    "intro": "2026 அக்டோபர்29 சரிபார்த்த மூன்றாம் தரப்பு Google Maps பதிவு:3.7/5,18,912 மதிப்புரைகள். எண்ணிக்கை மாறலாம்; இந்த வழிகாட்டி மதிப்புரைகளைச் சேகரிக்கவோ உரையை மறுபதிப்பிடவோ இல்லை; தானியங்கிச் சமநிலைப்படுத்தலும் இல்லை.",
-    "ratingNote": "2026 அக்டோபர்29 சரிபார்த்த மூன்றாம் தரப்பு Google Maps பதிவு:3.7/5,18,912 மதிப்புரைகள். எண்ணிக்கை மாறலாம்; இந்த வழிகாட்டி மதிப்புரைகளைச் சேகரிக்கவோ உரையை மறுபதிப்பிடவோ இல்லை; தானியங்கிச் சமநிலைப்படுத்தலும் இல்லை.",
+    "intro": "2026 அக்டோபர்29 சரிபார்த்த மூன்றாம் தரப்பு Google Maps பதிவு:3.7/5,18,920 மதிப்புரைகள். எண்ணிக்கை மாறலாம்; இந்த வழிகாட்டி மதிப்புரைகளைச் சேகரிக்கவோ உரையை மறுபதிப்பிடவோ இல்லை; தானியங்கிச் சமநிலைப்படுத்தலும் இல்லை.",
+    "ratingNote": "2026 அக்டோபர்29 சரிபார்த்த மூன்றாம் தரப்பு Google Maps பதிவு:3.7/5,18,920 மதிப்புரைகள். எண்ணிக்கை மாறலாம்; இந்த வழிகாட்டி மதிப்புரைகளைச் சேகரிக்கவோ உரையை மறுபதிப்பிடவோ இல்லை; தானியங்கிச் சமநிலைப்படுத்தலும் இல்லை.",
     "topics": [
       "நீரோர நடைப்பயிற்சி மற்றும் புகைப்பட வாய்ப்புகள்",
       "சிறுஉணவுகள், பானங்கள் மற்றும் உணவு மைய அனுபவம்",
@@ -1326,8 +1326,8 @@ export const reviews = {
     "label": "Google 地图评价",
     "kicker": "Reviews of Floating Market - Pettah",
     "title": "到访时需要核对的问题",
-    "intro": "第三方Google地图快照，核对于2026年10月29日：3.7/5、18,912条评价。数字会变化；本站不收集评价或转载评价原文，也不自动同步。",
-    "ratingNote": "第三方Google地图快照，核对于2026年10月29日：3.7/5、18,912条评价。数字会变化；本站不收集评价或转载评价原文，也不自动同步。",
+    "intro": "第三方Google地图快照，核对于2026年10月29日：3.7/5、18,920条评价。数字会变化；本站不收集评价或转载评价原文，也不自动同步。",
+    "ratingNote": "第三方Google地图快照，核对于2026年10月29日：3.7/5、18,920条评价。数字会变化；本站不收集评价或转载评价原文，也不自动同步。",
     "topics": [
       "水岸漫步与拍照机会",
       "小吃、饮品与美食广场体验",
@@ -1537,7 +1537,7 @@ export const sources = {
     "title": "Sources · Image & data credits",
     "intro": "Sources checked 29 October 2026. UDA facility information, the official tourism listing, dated reporting and a third-party Maps snapshot have different scopes. Verify current visitor access directly.",
     "reviewsKicker": "Reviews",
-    "reviewsText": "Third-party Google Maps snapshot checked 29 October 2026:3.7/5 from 18,912 reviews. Values may change; this guide does not collect reviews or reproduce their text, and does not automatically synchronize.",
+    "reviewsText": "Third-party Google Maps snapshot checked 29 October 2026:3.7/5 from 18,920 reviews. Values may change; this guide does not collect reviews or reproduce their text, and does not automatically synchronize.",
     "placeKicker": "Place data",
     "placeText": "W E Bastian Mawatha, Pettah, Colombo, Sri Lanka; the map pin is not confirmation of a usable entrance.",
     "footer": "Sri Lanka / Western Province Official Tourism Portal"
@@ -1546,7 +1546,7 @@ export const sources = {
     "title": "මූලාශ්‍ර · ඡායාරූප සහ දත්ත සලකුණු",
     "intro": "මූලාශ්‍ර පරීක්ෂාව2026 ඔක්තෝබර්29. UDA පහසුකම් විස්තර, නිල සංචාරක ලැයිස්තුව, දින සහිත වාර්තා හා තෙවන පාර්ශ්ව Maps සටහන වෙනස් සීමා දරයි. වත්මන් ප්‍රවේශය සෘජුව තහවුරු කරන්න.",
     "reviewsKicker": "සමාලෝචන",
-    "reviewsText": "2026 ඔක්තෝබර්29 පරීක්ෂා කළ තෙවන පාර්ශ්ව Google Maps සටහන:3.7/5, සමාලෝචන18,912. අගයන් වෙනස් විය හැක. මෙම මාර්ගෝපදේශය සමාලෝචන එකතු නොකරන අතර පෙළ නැවත පළ නොකරයි; ස්වයංක්‍රීය සමමුහුර්ත කිරීමක් නැත.",
+    "reviewsText": "2026 ඔක්තෝබර්29 පරීක්ෂා කළ තෙවන පාර්ශ්ව Google Maps සටහන:3.7/5, සමාලෝචන18,920. අගයන් වෙනස් විය හැක. මෙම මාර්ගෝපදේශය සමාලෝචන එකතු නොකරන අතර පෙළ නැවත පළ නොකරයි; ස්වයංක්‍රීය සමමුහුර්ත කිරීමක් නැත.",
     "placeKicker": "ස්ථාන තොරතුරු",
     "placeText": "W E Bastian Mawatha, පිටකොටුව, කොළඹ, ශ්‍රී ලංකාව; සිතියම් සලකුණ භාවිත කළ හැකි දොරටුවක් තහවුරු නොකරයි.",
     "footer": "ශ්‍රී ලංකා / බස්නාහිර පළාත් නිල සංචාරක පොර්ටලය"
@@ -1555,7 +1555,7 @@ export const sources = {
     "title": "மூலங்கள் · படம் மற்றும் தரவுக் கடன்கள்",
     "intro": "2026 அக்டோபர்29 ஆதாரங்கள் சரிபார்க்கப்பட்டன. UDA வசதி விளக்கம், அதிகாரப்பூர்வ சுற்றுலாப் பதிவு, தேதியிட்ட செய்தி, மூன்றாம் தரப்பு Maps ஆகியவை வெவ்வேறு வரம்புடையவை. தற்போதைய அணுகலை நேரடியாக உறுதிசெய்யவும்.",
     "reviewsKicker": "மதிப்புரைகள்",
-    "reviewsText": "2026 அக்டோபர்29 சரிபார்த்த மூன்றாம் தரப்பு Google Maps பதிவு:3.7/5,18,912 மதிப்புரைகள். எண்ணிக்கை மாறலாம்; இந்த வழிகாட்டி மதிப்புரைகளைச் சேகரிக்கவோ உரையை மறுபதிப்பிடவோ இல்லை; தானியங்கிச் சமநிலைப்படுத்தலும் இல்லை.",
+    "reviewsText": "2026 அக்டோபர்29 சரிபார்த்த மூன்றாம் தரப்பு Google Maps பதிவு:3.7/5,18,920 மதிப்புரைகள். எண்ணிக்கை மாறலாம்; இந்த வழிகாட்டி மதிப்புரைகளைச் சேகரிக்கவோ உரையை மறுபதிப்பிடவோ இல்லை; தானியங்கிச் சமநிலைப்படுத்தலும் இல்லை.",
     "placeKicker": "இடத் தரவு",
     "placeText": "W E Bastian Mawatha, பெட்டா, கொழும்பு, இலங்கை; வரைபடக் குறி பயன்படுத்தக்கூடிய வாயிலை உறுதிசெய்யாது.",
     "footer": "இலங்கை / மேல் மாகாண அதிகாரப்பூர்வ சுற்றுலா போர்ட்டல்"
@@ -1564,7 +1564,7 @@ export const sources = {
     "title": "来源 · 图片与数据署名",
     "intro": "资料核对于2026年10月29日。UDA设施介绍、官方旅游名录、有日期的报道与第三方地图快照适用范围不同，请直接确认当前通行。",
     "reviewsKicker": "评价",
-    "reviewsText": "第三方Google地图快照，核对于2026年10月29日：3.7/5、18,912条评价。数字会变化；本站不收集评价或转载评价原文，也不自动同步。",
+    "reviewsText": "第三方Google地图快照，核对于2026年10月29日：3.7/5、18,920条评价。数字会变化；本站不收集评价或转载评价原文，也不自动同步。",
     "placeKicker": "地点数据",
     "placeText": "斯里兰卡科伦坡佩塔W E Bastian Mawatha；地图图钉不确认入口可用。",
     "footer": "斯里兰卡 / 西部省官方旅游门户"

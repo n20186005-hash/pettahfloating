@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import type { Locale } from '../i18n';
+import { localizedPath, localeMeta } from '../i18n';
+import { SITE_URL } from '../config';
+import { legal, type LegalKey } from '../data/legal';
+
+interface Props {
+  locale: Locale;
+  section: LegalKey;
+}
+
+const { locale, section } = Astro.props;
+const data = legal[section][locale];
+const meta = localeMeta(locale);
+const basePath =
+  section === 'privacy'
+    ? '/privacy-policy'
+    : section === 'terms'
+      ? '/terms-of-service'
+      : '/cookie-settings';
+const root = SITE_URL.replace(/\/$/, '');
+const canonical = root + localizedPath(locale, basePath);
+const description = data.paragraphs[0];
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': canonical.replace(/\/$/, '') + '#webpage',
+  url: canonical.replace(/\/$/, ''),
+  name: data.title,
+  description,
+  inLanguage: meta.htmlLang,
+  isPartOf: { '@type': 'WebSite', '@id': `${root}/#website` },
+  about: { '@type': 'TouristAttraction', '@id': `${root}/#attraction` },
+};
+---
+
+<BaseLayout
+  locale={locale}
+  basePath={basePath}
+  title={data.title}
+  description={description}
+  jsonLd={jsonLd}
+  showInlinePrivacy={false}
+>
+  <article class="mx-auto max-w-3xl px-4 py-10 leading-relaxed">
+    <h1 class="text-2xl font-bold text-slate-900">{data.title}</h1>
+    <div class="mt-6 space-y-4 text-slate-700">
+      {data.paragraphs.map((p) => <p>{p}</p>)}
+    </div>
+  </article>
+</BaseLayout>
